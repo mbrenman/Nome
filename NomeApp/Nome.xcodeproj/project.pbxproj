@@ -14,7 +14,6 @@
 		AA494D5D19968C670078D70F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494D5C19968C670078D70F /* main.m */; };
 		AA494D6119968C670078D70F /* NomeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494D6019968C670078D70F /* NomeAppDelegate.m */; };
 		AA494D6419968C670078D70F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA494D6219968C670078D70F /* Main.storyboard */; };
-		AA494D6719968C670078D70F /* NomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494D6619968C670078D70F /* NomeViewController.m */; };
 		AA494D6919968C670078D70F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA494D6819968C670078D70F /* Images.xcassets */; };
 		AA494D7019968C680078D70F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D6F19968C680078D70F /* XCTest.framework */; };
 		AA494D7119968C680078D70F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D5019968C670078D70F /* Foundation.framework */; };
@@ -30,8 +29,11 @@
 		AA494D9419968D1A0078D70F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D9319968D1A0078D70F /* Security.framework */; };
 		AA494D9619968D1E0078D70F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D9519968D1E0078D70F /* StoreKit.framework */; };
 		AA494D9819968D250078D70F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D9719968D250078D70F /* SystemConfiguration.framework */; };
-		AA494D9A19968E1B0078D70F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D9919968E1B0078D70F /* Parse.framework */; };
 		AA494DA2199690BB0078D70F /* NomeSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494DA1199690BB0078D70F /* NomeSecrets.m */; };
+		AA494DA5199696B40078D70F /* NomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494DA4199696B40078D70F /* NomeViewController.m */; };
+		AA494DA7199698720078D70F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DA6199698720078D70F /* Social.framework */; };
+		AA494DA9199698840078D70F /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DA8199698840078D70F /* Accounts.framework */; };
+		AA494DAB19969F790078D70F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DAA19969F790078D70F /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,8 +58,6 @@
 		AA494D5F19968C670078D70F /* NomeAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NomeAppDelegate.h; sourceTree = "<group>"; };
 		AA494D6019968C670078D70F /* NomeAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomeAppDelegate.m; sourceTree = "<group>"; };
 		AA494D6319968C670078D70F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		AA494D6519968C670078D70F /* NomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NomeViewController.h; sourceTree = "<group>"; };
-		AA494D6619968C670078D70F /* NomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomeViewController.m; sourceTree = "<group>"; };
 		AA494D6819968C670078D70F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		AA494D6E19968C680078D70F /* NomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NomeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA494D6F19968C680078D70F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -73,9 +73,13 @@
 		AA494D9319968D1A0078D70F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		AA494D9519968D1E0078D70F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		AA494D9719968D250078D70F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		AA494D9919968E1B0078D70F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		AA494DA0199690BB0078D70F /* NomeSecrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NomeSecrets.h; sourceTree = "<group>"; };
 		AA494DA1199690BB0078D70F /* NomeSecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NomeSecrets.m; sourceTree = "<group>"; };
+		AA494DA3199696B40078D70F /* NomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NomeViewController.h; sourceTree = "<group>"; };
+		AA494DA4199696B40078D70F /* NomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NomeViewController.m; sourceTree = "<group>"; };
+		AA494DA6199698720078D70F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		AA494DA8199698840078D70F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		AA494DAA19969F790078D70F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,13 +87,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA494DA9199698840078D70F /* Accounts.framework in Frameworks */,
+				AA494DA7199698720078D70F /* Social.framework in Frameworks */,
 				AA494D9819968D250078D70F /* SystemConfiguration.framework in Frameworks */,
 				AA494D9619968D1E0078D70F /* StoreKit.framework in Frameworks */,
+				AA494DAB19969F790078D70F /* Parse.framework in Frameworks */,
 				AA494D9419968D1A0078D70F /* Security.framework in Frameworks */,
 				AA494D9219968D150078D70F /* QuartzCore.framework in Frameworks */,
 				AA494D9019968D100078D70F /* MobileCoreServices.framework in Frameworks */,
 				AA494D8E19968D080078D70F /* libz.dylib in Frameworks */,
-				AA494D9A19968E1B0078D70F /* Parse.framework in Frameworks */,
 				AA494D8C19968D010078D70F /* CoreLocation.framework in Frameworks */,
 				AA494D8A19968CF80078D70F /* CFNetwork.framework in Frameworks */,
 				AA494D8819968CF30078D70F /* AudioToolbox.framework in Frameworks */,
@@ -134,7 +140,9 @@
 		AA494D4F19968C670078D70F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AA494D9919968E1B0078D70F /* Parse.framework */,
+				AA494DAA19969F790078D70F /* Parse.framework */,
+				AA494DA8199698840078D70F /* Accounts.framework */,
+				AA494DA6199698720078D70F /* Social.framework */,
 				AA494D9719968D250078D70F /* SystemConfiguration.framework */,
 				AA494D9519968D1E0078D70F /* StoreKit.framework */,
 				AA494D9319968D1A0078D70F /* Security.framework */,
@@ -156,12 +164,12 @@
 			isa = PBXGroup;
 			children = (
 				AA494D5F19968C670078D70F /* NomeAppDelegate.h */,
+				AA494D6019968C670078D70F /* NomeAppDelegate.m */,
 				AA494DA0199690BB0078D70F /* NomeSecrets.h */,
 				AA494DA1199690BB0078D70F /* NomeSecrets.m */,
-				AA494D6019968C670078D70F /* NomeAppDelegate.m */,
 				AA494D6219968C670078D70F /* Main.storyboard */,
-				AA494D6519968C670078D70F /* NomeViewController.h */,
-				AA494D6619968C670078D70F /* NomeViewController.m */,
+				AA494DA3199696B40078D70F /* NomeViewController.h */,
+				AA494DA4199696B40078D70F /* NomeViewController.m */,
 				AA494D6819968C670078D70F /* Images.xcassets */,
 				AA494D5719968C670078D70F /* Supporting Files */,
 			);
@@ -298,7 +306,7 @@
 				AA494DA2199690BB0078D70F /* NomeSecrets.m in Sources */,
 				AA494D5D19968C670078D70F /* main.m in Sources */,
 				AA494D6119968C670078D70F /* NomeAppDelegate.m in Sources */,
-				AA494D6719968C670078D70F /* NomeViewController.m in Sources */,
+				AA494DA5199696B40078D70F /* NomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

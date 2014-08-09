@@ -7,12 +7,21 @@
 //
 
 #import "NomeAppDelegate.h"
+#import <Parse/Parse.h>
+#import "NomeSecrets.h"
 
 @implementation NomeAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    //Setting up Parse
+    [Parse setApplicationId: parseAppID
+                  clientKey: parseClientKey];
+    
+    //Parse Analytics
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     return YES;
 }
 							
