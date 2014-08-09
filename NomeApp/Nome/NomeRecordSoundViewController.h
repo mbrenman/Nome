@@ -19,4 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *stopButton;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 
+//Audio Info
+@property (nonatomic) int bpm;
+@property (nonatomic) int numBeats;
+
+
 @end

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 mbrenman. All rights reserved.
 //
 
+const double SECONDS_PER_MIN = 60.0;
+
 #import "NomeRecordSoundViewController.h"
 #import <Parse/Parse.h>
 
@@ -19,20 +21,27 @@
 @property (nonatomic) AVAudioPlayer *player1;
 @property (nonatomic) AVAudioPlayer *player2;
 
+
+@property (nonatomic) NSTimeInterval recordingDuration;
 @end
 
 @implementation NomeRecordSoundViewController
 
 - (IBAction)startRecordingAudio:(id)sender {
+    _playButton.enabled = NO;
+    _stopButton.enabled = NO;
+    _recButton.enabled  = NO;
     if (!_audioRecorder){
         //Remake the recorder for a different file url
         _audioRecorder = [self newAudioRecorderWithFileName:[[NSString stringWithFormat:@"%d", _count++] stringByAppendingString:@".caf"]];
     }
     if (!_audioRecorder.recording)
     {
-        _playButton.enabled = NO;
-        _stopButton.enabled = YES;
-        [_audioRecorder record];
+        [_audioRecorder setDelegate:self];
+        [self prepareForPlay];
+        [self playSounds];
+        [_audioRecorder prepareToRecord];
+        [_audioRecorder recordForDuration:_recordingDuration];
     }
 }
 
@@ -41,40 +50,41 @@
     _playButton.enabled = YES;
     _recButton.enabled = YES;
     
-    if (_audioRecorder.recording)
-    {
-        [_audioRecorder stop];
-        NSString *url = [[NSString alloc] initWithString:[_audioRecorder.url absoluteString]];
-        [_urlArray addObject:url];
-        _audioRecorder = nil;
-    } else if (_audioPlayer.playing) {
-        [_audioPlayer stop];
+    for (AVAudioPlayer *player in _playerArray){
+        if (player.playing){
+            [player stop];
+        }
     }
 }
 
-- (IBAction)playAudio:(id)sender {
-    if (!_audioRecorder.recording)
-    {
-        _stopButton.enabled = YES;
-        _recButton.enabled = NO;
-        
-        //Empty the player array to not double everything
-        [_playerArray removeAllObjects];
-        
-        for (NSString *urlstring in _urlArray){
-            NSLog(urlstring);
-            NSURL *url = [self NSURLfrom:urlstring];
-            [_playerArray addObject:[self newAudioPlayerWithURL:url]];
-        }
-        
-        NSLog([_playerArray description]);
-        
-        for (AVAudioPlayer *player in _playerArray){
-            NSLog([player description]);
-            NSLog([[player settings] description]);
-            [player play];
-        }
+- (IBAction)playAudioClick:(id)sender {
+    _stopButton.enabled = YES;
+    _recButton.enabled = NO;
+    
+    [self prepareForPlay];
+    [self playSounds];
+}
 
+- (void)playSounds
+{
+    for (AVAudioPlayer *player in _playerArray){
+        NSLog([player description]);
+        NSLog([[player settings] description]);
+        [player play];
+    }
+}
+
+- (void)prepareForPlay
+{
+    //Empty the player array to not double everything
+    [_playerArray removeAllObjects];
+    
+    for (NSString *urlstring in _urlArray){
+        NSLog(urlstring);
+        NSURL *url = [self NSURLfrom:urlstring];
+        AVAudioPlayer *player = [self newAudioPlayerWithURL:url];
+        [player prepareToPlay];
+        [_playerArray addObject:player];
     }
 }
 
@@ -105,10 +115,23 @@
     //Pull username and display it
     [_nameLabel setText:[[PFUser currentUser] username]];
     
+    
+    //THESE SHOULD BE SET WHEN THIS IS CALLED - OR SET FROM THE PROJECT
+    _bpm = 60;
+    _numBeats = 4;
+    
+    [self setupRecordingDuration];
+    
     _playButton.enabled = NO;
     _stopButton.enabled = NO;
     
     _audioRecorder = [self newAudioRecorderWithFileName:@"sound.caf"];
+}
+
+- (void)setupRecordingDuration
+{
+    double beatLen = SECONDS_PER_MIN/((double)_bpm);
+    _recordingDuration = beatLen * _numBeats;
 }
 
 - (AVAudioRecorder *)newAudioRecorderWithFileName:(NSString *)fileName
@@ -207,6 +230,10 @@
 (AVAudioRecorder *)recorder
                           successfully:(BOOL)flag
 {
+    NSString *url = [[NSString alloc] initWithString:[_audioRecorder.url absoluteString]];
+    [_urlArray addObject:url];
+    _audioRecorder = nil;
+    [self stopRecordingAudio:nil];
 }
 
 -(void)audioRecorderEncodeErrorDidOccur:
