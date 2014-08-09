@@ -10,13 +10,24 @@
 #import <Parse/Parse.h>
 
 @interface NomeRecordSoundViewController ()
+
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (nonatomic, strong) NSMutableArray *urlArray;
+@property (nonatomic, strong) NSMutableArray *playerArray;
+@property int count;
+
+@property (nonatomic) AVAudioPlayer *player1;
+@property (nonatomic) AVAudioPlayer *player2;
 
 @end
 
 @implementation NomeRecordSoundViewController
 
 - (IBAction)startRecordingAudio:(id)sender {
+    if (!_audioRecorder){
+        //Remake the recorder for a different file url
+        _audioRecorder = [self newAudioRecorderWithFileName:[[NSString stringWithFormat:@"%d", _count++] stringByAppendingString:@".caf"]];
+    }
     if (!_audioRecorder.recording)
     {
         _playButton.enabled = NO;
@@ -33,6 +44,9 @@
     if (_audioRecorder.recording)
     {
         [_audioRecorder stop];
+        NSString *url = [[NSString alloc] initWithString:[_audioRecorder.url absoluteString]];
+        [_urlArray addObject:url];
+        _audioRecorder = nil;
     } else if (_audioPlayer.playing) {
         [_audioPlayer stop];
     }
@@ -44,20 +58,31 @@
         _stopButton.enabled = YES;
         _recButton.enabled = NO;
         
-        NSError *error;
+        //Empty the player array to not double everything
+        [_playerArray removeAllObjects];
         
-        _audioPlayer = [[AVAudioPlayer alloc]
-                        initWithContentsOfURL:_audioRecorder.url
-                        error:&error];
+        for (NSString *urlstring in _urlArray){
+            NSLog(urlstring);
+            NSURL *url = [self NSURLfrom:urlstring];
+            [_playerArray addObject:[self newAudioPlayerWithURL:url]];
+        }
         
-        _audioPlayer.delegate = self;
+        NSLog([_playerArray description]);
         
-        if (error)
-            NSLog(@"Error: %@",
-                  [error localizedDescription]);
-        else
-            [_audioPlayer play];
+        for (AVAudioPlayer *player in _playerArray){
+            NSLog([player description]);
+            NSLog([[player settings] description]);
+            [player play];
+        }
+
     }
+}
+
+- (NSURL *)NSURLfrom:(NSString *)nsstring
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@", nsstring];
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    return url;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -74,19 +99,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    _count = 0;
+    _urlArray = [[NSMutableArray alloc] init];
+    _playerArray = [[NSMutableArray alloc] init];
     //Pull username and display it
     [_nameLabel setText:[[PFUser currentUser] username]];
     
     _playButton.enabled = NO;
     _stopButton.enabled = NO;
     
+    _audioRecorder = [self newAudioRecorderWithFileName:@"sound.caf"];
+}
+
+- (AVAudioRecorder *)newAudioRecorderWithFileName:(NSString *)fileName
+{
     NSArray *dirPaths;
     NSString *docsDir;
     
     dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     docsDir = dirPaths[0];
     
-    NSString *soundFilePath = [docsDir stringByAppendingPathComponent:@"sound.caf"];
+    NSString *soundFilePath = [docsDir stringByAppendingPathComponent:fileName];
     
     NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
     
@@ -108,7 +141,7 @@
     [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord
                         error:nil];
     
-    _audioRecorder = [[AVAudioRecorder alloc]
+    AVAudioRecorder *audioRecorder = [[AVAudioRecorder alloc]
                       initWithURL:soundFileURL
                       settings:recordSettings
                       error:&error];
@@ -117,8 +150,25 @@
     {
         NSLog(@"error: %@", [error localizedDescription]);
     } else {
-        [_audioRecorder prepareToRecord];
+        [audioRecorder prepareToRecord];
     }
+    return audioRecorder;
+}
+
+- (AVAudioPlayer *)newAudioPlayerWithURL: (NSURL *)url
+{
+    NSError *error;
+    
+    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc]
+                    initWithContentsOfURL:url
+                    error:&error];
+    
+    audioPlayer.delegate = self;
+    
+    if (error)
+        NSLog(@"Error: %@", [error localizedDescription]);
+    
+    return audioPlayer;
 }
 
 - (void)didReceiveMemoryWarning

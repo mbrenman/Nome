@@ -80,6 +80,7 @@
                     <connections>
                         <outlet property="nameLabel" destination="tQF-O5-hg0" id="fIy-r6-YMO"/>
                         <outlet property="playButton" destination="1UD-hD-P2y" id="ydt-Vs-Xrp"/>
+                        <outlet property="recButton" destination="2J9-WE-Xea" id="JPf-ZG-OE9"/>
                         <outlet property="stopButton" destination="cqd-uf-Jzu" id="qp0-94-WcS"/>
                     </connections>
                 </viewController>
