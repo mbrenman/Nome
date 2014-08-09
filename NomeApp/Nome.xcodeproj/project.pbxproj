@@ -31,6 +31,7 @@
 		AA494D9619968D1E0078D70F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D9519968D1E0078D70F /* StoreKit.framework */; };
 		AA494D9819968D250078D70F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D9719968D250078D70F /* SystemConfiguration.framework */; };
 		AA494D9A19968E1B0078D70F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494D9919968E1B0078D70F /* Parse.framework */; };
+		AA494DA2199690BB0078D70F /* NomeSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494DA1199690BB0078D70F /* NomeSecrets.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		AA494D9519968D1E0078D70F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		AA494D9719968D250078D70F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AA494D9919968E1B0078D70F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		AA494DA0199690BB0078D70F /* NomeSecrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NomeSecrets.h; sourceTree = "<group>"; };
+		AA494DA1199690BB0078D70F /* NomeSecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NomeSecrets.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				AA494D5F19968C670078D70F /* NomeAppDelegate.h */,
+				AA494DA0199690BB0078D70F /* NomeSecrets.h */,
+				AA494DA1199690BB0078D70F /* NomeSecrets.m */,
 				AA494D6019968C670078D70F /* NomeAppDelegate.m */,
 				AA494D6219968C670078D70F /* Main.storyboard */,
 				AA494D6519968C670078D70F /* NomeViewController.h */,
@@ -290,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA494DA2199690BB0078D70F /* NomeSecrets.m in Sources */,
 				AA494D5D19968C670078D70F /* main.m in Sources */,
 				AA494D6119968C670078D70F /* NomeAppDelegate.m in Sources */,
 				AA494D6719968C670078D70F /* NomeViewController.m in Sources */,
