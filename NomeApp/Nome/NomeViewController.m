@@ -45,6 +45,8 @@
         
         // Present the log in view controller
         [self presentViewController:logInViewController animated:YES completion:NULL];
+    } else {
+        [self performSegueWithIdentifier:@"LoginToRecordSound" sender:nil];
     }
 }
 
@@ -84,7 +86,8 @@
 // Sent to the delegate when a PFUser is logged in.
 - (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
     NSLog(@"logged in");
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self performSegueWithIdentifier:@"LoginToRecordSound" sender:nil];
+//    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 // Sent to the delegate when the log in attempt fails.

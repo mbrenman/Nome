@@ -34,6 +34,7 @@
 		AA494DA7199698720078D70F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DA6199698720078D70F /* Social.framework */; };
 		AA494DA9199698840078D70F /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DA8199698840078D70F /* Accounts.framework */; };
 		AA494DAB19969F790078D70F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DAA19969F790078D70F /* Parse.framework */; };
+		AA494DAE1996A0F70078D70F /* NomeRecordSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494DAD1996A0F70078D70F /* NomeRecordSoundViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		AA494DA6199698720078D70F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		AA494DA8199698840078D70F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		AA494DAA19969F790078D70F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		AA494DAC1996A0F70078D70F /* NomeRecordSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NomeRecordSoundViewController.h; sourceTree = "<group>"; };
+		AA494DAD1996A0F70078D70F /* NomeRecordSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NomeRecordSoundViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +173,8 @@
 				AA494D6219968C670078D70F /* Main.storyboard */,
 				AA494DA3199696B40078D70F /* NomeViewController.h */,
 				AA494DA4199696B40078D70F /* NomeViewController.m */,
+				AA494DAC1996A0F70078D70F /* NomeRecordSoundViewController.h */,
+				AA494DAD1996A0F70078D70F /* NomeRecordSoundViewController.m */,
 				AA494D6819968C670078D70F /* Images.xcassets */,
 				AA494D5719968C670078D70F /* Supporting Files */,
 			);
@@ -307,6 +312,7 @@
 				AA494D5D19968C670078D70F /* main.m in Sources */,
 				AA494D6119968C670078D70F /* NomeAppDelegate.m in Sources */,
 				AA494DA5199696B40078D70F /* NomeViewController.m in Sources */,
+				AA494DAE1996A0F70078D70F /* NomeRecordSoundViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
