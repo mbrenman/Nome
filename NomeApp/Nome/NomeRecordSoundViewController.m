@@ -38,11 +38,20 @@ const double SECONDS_PER_MIN = 60.0;
     if (!_audioRecorder.recording)
     {
         [_audioRecorder setDelegate:self];
+        
+        //Prepare to play and record
         [self prepareForPlay];
-        [self playSounds];
         [_audioRecorder prepareToRecord];
+        
+        //Play and Record
+        [self playSounds];
         [_audioRecorder recordForDuration:_recordingDuration];
     }
+}
+
+- (void)startRecorder
+{
+    [_audioRecorder recordForDuration:_recordingDuration];
 }
 
 - (IBAction)stopRecordingAudio:(id)sender {
@@ -67,10 +76,15 @@ const double SECONDS_PER_MIN = 60.0;
 
 - (void)playSounds
 {
-    for (AVAudioPlayer *player in _playerArray){
-        NSLog([player description]);
-        NSLog([[player settings] description]);
-        [player play];
+    if ([_playerArray count] > 0){
+        NSTimeInterval shortStartDelay = 0.01;            // seconds
+        NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
+        
+        for (AVAudioPlayer *player in _playerArray){
+            NSLog([player description]);
+            NSLog([[player settings] description]);
+            [player playAtTime: now + shortStartDelay];
+        }
     }
 }
 
@@ -118,7 +132,7 @@ const double SECONDS_PER_MIN = 60.0;
     
     //THESE SHOULD BE SET WHEN THIS IS CALLED - OR SET FROM THE PROJECT
     _bpm = 60;
-    _numBeats = 4;
+    _numBeats = 8;
     
     [self setupRecordingDuration];
     
