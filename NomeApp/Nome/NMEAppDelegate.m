@@ -9,6 +9,7 @@
 #import "NMEAppDelegate.h"
 #import "NMESecrets.h"
 #import <Parse/Parse.h>
+#import <Venmo-iOS-SDK/Venmo.h>
 
 @interface NMEAppDelegate ()
 
@@ -33,6 +34,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [Venmo startWithAppId:venmoID secret:venmoKey name:@"Nome"];
+
     
     //Setting up Parse
     [Parse setApplicationId: parseAppID

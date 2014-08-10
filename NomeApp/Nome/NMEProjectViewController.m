@@ -105,7 +105,7 @@ const double SECONDS_PER_MIN = 60.0;
     }
     [self.metronomeArray removeAllObjects];
     
-    for (int i=0; i<=(self.numBeats + 4); i++) {
+    for (int i=0; i<=(self.numBeats + 5); i++) {
         
         NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
         AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
