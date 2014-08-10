@@ -96,7 +96,13 @@ const double SECONDS_PER_MIN = 60.0;
     for (NSString *urlstring in _urlArray){
         NSLog(urlstring);
         NSURL *url = [self NSURLfrom:urlstring];
-        AVAudioPlayer *player = [self newAudioPlayerWithURL:url];
+        
+        //Load from Data
+        NSString *path = [url path];
+        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+        AVAudioPlayer *player = [self newAudioPlayerWithData:data];
+        
+        //AVAudioPlayer *player = [self newAudioPlayerWithURL:url];
         [player prepareToPlay];
         [_playerArray addObject:player];
     }
@@ -199,6 +205,22 @@ const double SECONDS_PER_MIN = 60.0;
     AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc]
                     initWithContentsOfURL:url
                     error:&error];
+    
+    audioPlayer.delegate = self;
+    
+    if (error)
+        NSLog(@"Error: %@", [error localizedDescription]);
+    
+    return audioPlayer;
+}
+
+- (AVAudioPlayer *)newAudioPlayerWithData:(NSData *)data
+{
+    NSError *error;
+    
+    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc]
+                                  initWithData:data
+                                  error:&error];
     
     audioPlayer.delegate = self;
     
