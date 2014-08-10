@@ -29,7 +29,6 @@
 		B9859E08199696B9000984E5 /* NMEDiscoveryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E07199696B9000984E5 /* NMEDiscoveryTableViewController.m */; };
 		B9859E0E199697B4000984E5 /* NMEAddProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E0D199697B4000984E5 /* NMEAddProjectViewController.m */; };
 		B9859E1219969ABA000984E5 /* NMEProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E1119969ABA000984E5 /* NMEProjectViewController.m */; };
-		B9859E1B1996AE7D000984E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E1A1996AE7D000984E5 /* Parse.framework */; };
 		B9859E1D1996AED1000984E5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E1C1996AED1000984E5 /* AudioToolbox.framework */; };
 		B9859E1F1996AEDF000984E5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E1E1996AEDF000984E5 /* CFNetwork.framework */; };
 		B9859E211996AEEE000984E5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E201996AEEE000984E5 /* CoreLocation.framework */; };
@@ -41,6 +40,7 @@
 		B9859E2D1996AF36000984E5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E2C1996AF36000984E5 /* SystemConfiguration.framework */; };
 		B9859E301996BDD3000984E5 /* NMEProjectsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E2F1996BDD3000984E5 /* NMEProjectsTableCell.m */; };
 		B9859E331996C68C000984E5 /* NMEProjectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E321996C68C000984E5 /* NMEProjectTableViewCell.m */; };
+		B9859E38199731F9000984E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E37199731F9000984E5 /* Parse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,7 +87,6 @@
 		B9859E0D199697B4000984E5 /* NMEAddProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEAddProjectViewController.m; sourceTree = "<group>"; };
 		B9859E1019969ABA000984E5 /* NMEProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEProjectViewController.h; sourceTree = "<group>"; };
 		B9859E1119969ABA000984E5 /* NMEProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEProjectViewController.m; sourceTree = "<group>"; };
-		B9859E1A1996AE7D000984E5 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		B9859E1C1996AED1000984E5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B9859E1E1996AEDF000984E5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		B9859E201996AEEE000984E5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -101,6 +100,7 @@
 		B9859E2F1996BDD3000984E5 /* NMEProjectsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEProjectsTableCell.m; sourceTree = "<group>"; };
 		B9859E311996C68C000984E5 /* NMEProjectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEProjectTableViewCell.h; sourceTree = "<group>"; };
 		B9859E321996C68C000984E5 /* NMEProjectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEProjectTableViewCell.m; sourceTree = "<group>"; };
+		B9859E37199731F9000984E5 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,10 +117,10 @@
 				B9859E251996AF06000984E5 /* MobileCoreServices.framework in Frameworks */,
 				B9859E231996AEFC000984E5 /* libz.dylib in Frameworks */,
 				B9859E211996AEEE000984E5 /* CoreLocation.framework in Frameworks */,
+				B9859E38199731F9000984E5 /* Parse.framework in Frameworks */,
 				B9859DCB19968D13000984E5 /* CoreGraphics.framework in Frameworks */,
 				B9859E1F1996AEDF000984E5 /* CFNetwork.framework in Frameworks */,
 				B9859E1D1996AED1000984E5 /* AudioToolbox.framework in Frameworks */,
-				B9859E1B1996AE7D000984E5 /* Parse.framework in Frameworks */,
 				B9859DCD19968D13000984E5 /* UIKit.framework in Frameworks */,
 				B9859DC919968D13000984E5 /* Foundation.framework in Frameworks */,
 			);
@@ -161,6 +161,7 @@
 		B9859DC719968D13000984E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B9859E37199731F9000984E5 /* Parse.framework */,
 				AA494DB11996FADD0078D70F /* Social.framework */,
 				AA494DAF1996FAD00078D70F /* Accounts.framework */,
 				B9859E2C1996AF36000984E5 /* SystemConfiguration.framework */,
@@ -172,7 +173,6 @@
 				B9859E201996AEEE000984E5 /* CoreLocation.framework */,
 				B9859E1E1996AEDF000984E5 /* CFNetwork.framework */,
 				B9859E1C1996AED1000984E5 /* AudioToolbox.framework */,
-				B9859E1A1996AE7D000984E5 /* Parse.framework */,
 				B9859DC819968D13000984E5 /* Foundation.framework */,
 				B9859DCA19968D13000984E5 /* CoreGraphics.framework */,
 				B9859DCC19968D13000984E5 /* UIKit.framework */,

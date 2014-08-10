@@ -335,9 +335,9 @@ const double SECONDS_PER_MIN = 60.0;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.'
-    NSLog(@"COUNT! %u",[self.project[@"loops"] count]);
-
-    return [self.project[@"loops"] count];
+//    NSLog(@"COUNT! %u",[self.project[@"loops"] count]);
+    NSArray *loops = self.project[@"loops"];
+    return [loops count];
 }
 
 //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

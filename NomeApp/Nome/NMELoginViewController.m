@@ -39,9 +39,11 @@
         // Create the sign up view controller
         PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
         [signUpViewController setDelegate:self]; // Set ourselves as the delegate
-        
+        [signUpViewController setFields:  PFSignUpFieldsSignUpButton | PFSignUpFieldsDismissButton];
+        [signUpViewController.signUpView.passwordField setPlaceholder:@"Password"];
         // Assign our sign up controller to be displayed from the login controller
         [logInViewController setSignUpController:signUpViewController];
+        
         
         // Present the log in view controller
         [self presentViewController:logInViewController animated:YES completion:NULL];
@@ -66,6 +68,11 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+}
 
 #pragma mark - Log In
 // Sent to the delegate to determine whether the log in request should be submitted to the server.
