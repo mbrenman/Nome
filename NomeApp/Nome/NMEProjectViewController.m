@@ -249,7 +249,7 @@ const double SECONDS_PER_MIN = 60.0;
     
     //THESE SHOULD BE SET WHEN THIS IS CALLED - OR SET FROM THE PROJECT
     _bpm = 60;
-    _numBeats = 8;
+    _numBeats = 1;
     
     [self setupRecordingDuration];
     
@@ -342,8 +342,43 @@ const double SECONDS_PER_MIN = 60.0;
 {
     NSString *url = [[NSString alloc] initWithString:[_audioRecorder.url absoluteString]];
     [_urlArray addObject:url];
-    _audioRecorder = nil;
+    
     [self stopRecordingAudio:nil];
+    [self showAlert];
+}
+
+- (void)showAlert
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Title" message:@"Please name your loop!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Keep", nil];
+    av.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [av textFieldAtIndex:0].delegate = self;
+    [av show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1){
+        NSLog([[alertView textFieldAtIndex:0] text]);
+        NSString *loopTitle = [[alertView textFieldAtIndex:0] text];
+        NSString *loopLocalFile = [_audioRecorder.url absoluteString];
+        NSLog(loopLocalFile);
+        
+        NSURL *url = [self NSURLfrom:loopLocalFile];
+        
+        //Load from Data
+        NSString *path = [url path];
+        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+        
+        PFObject *loopDataObject = [self createLoopObjectWithData:data];
+        NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
+        NSString *username = [[PFUser currentUser] username];
+        [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
+        _project[@"loops"] = loops;
+        [_project saveInBackground];
+        [loopDataObject saveInBackground];
+        
+        _audioRecorder = nil;
+    }
 }
 
 -(void)audioRecorderEncodeErrorDidOccur:
@@ -352,5 +387,16 @@ const double SECONDS_PER_MIN = 60.0;
 {
     NSLog(@"Encode Error occurred");
 }
+
+#pragma mark - Parse Data Handling
+- (PFObject *)createLoopObjectWithData:(NSData *)data
+{
+    PFObject *loopObject = [[PFObject alloc] initWithClassName:@"loopObject"];
+    PFFile *loopFile = [PFFile fileWithName:@"audio.caf" data:data];
+    loopObject[@"file"] = loopFile;
+    return loopObject;
+}
+
+
 
 @end
