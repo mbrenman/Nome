@@ -369,7 +369,7 @@ const double SECONDS_PER_MIN = 60.0;
     [query whereKey:@"objectId" containedIn:objectIDs];
 //    [query includeKey:@"file"];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        self.loopObjects = [[NSMutableArray alloc] initWithArray: objects];
+        _loopObjects = [[NSMutableArray alloc] initWithArray: objects];
 //        NSLog([NSString stringWithFormat:@"%@", objects]);
         [self.tableView reloadData];
         [self loadFiles];
@@ -521,12 +521,19 @@ const double SECONDS_PER_MIN = 60.0;
         [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
         NSLog(@"finadding4");
 
+        //Add to loopObjects and rawSound
+//        [self.loopObjects]
+        
         //Redownload loops to avoid overwriting friends data
         _project[@"loops"] = loops;
         [_project saveInBackground];
         [loopDataObject saveInBackground];
         
         //hold users from leaving until we sync data?
+        
+        //Reload table to see new tracks
+        [self.tableView reloadData];
+        [self.rawSoundData addObject:data];
         
         _audioRecorder = nil;
     }
