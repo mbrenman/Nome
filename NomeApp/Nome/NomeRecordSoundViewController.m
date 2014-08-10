@@ -18,10 +18,6 @@ const double SECONDS_PER_MIN = 60.0;
 @property (nonatomic, strong) NSMutableArray *playerArray;
 @property int count;
 
-@property (nonatomic) AVAudioPlayer *player1;
-@property (nonatomic) AVAudioPlayer *player2;
-
-
 @property (nonatomic) NSTimeInterval recordingDuration;
 @end
 

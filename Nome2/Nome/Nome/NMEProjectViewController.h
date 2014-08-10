@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Parse/Parse.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface NMEProjectViewController : UIViewController  <UITableViewDelegate, UITableViewDataSource>
+@interface NMEProjectViewController : UIViewController  <UITableViewDelegate, UITableViewDataSource, AVAudioRecorderDelegate, AVAudioPlayerDelegate>
 
 @property (nonatomic,strong) PFObject *project;
 
