@@ -50,6 +50,7 @@ const double SECONDS_PER_MIN = 60.0;
     _playButton.enabled = NO;
     _stopButton.enabled = NO;
     _recordButton.enabled  = NO;
+    _loopButton.enabled  = NO;
     if (!_audioRecorder){
         //Remake the recorder for a different file url
         _audioRecorder = [self newAudioRecorderWithFileName:[[NSString stringWithFormat:@"%d", _count++] stringByAppendingString:@".caf"]];
@@ -74,6 +75,7 @@ const double SECONDS_PER_MIN = 60.0;
     _stopButton.enabled = NO;
     _playButton.enabled = YES;
     _recordButton.enabled = YES;
+    _loopButton.enabled  = YES;
     
     for (AVAudioPlayer *player in _playerArray){
         if (player.playing){
@@ -88,7 +90,9 @@ const double SECONDS_PER_MIN = 60.0;
 - (void)playButtonTouch:(BOOL) loop
 {
     _stopButton.enabled = YES;
+    _playButton.enabled = NO;
     _recordButton.enabled = NO;
+    _loopButton.enabled = NO;
     
     [self prepareForPlay];
     [self playSoundsAndLoop:loop];
@@ -251,6 +255,11 @@ const double SECONDS_PER_MIN = 60.0;
     // Do any additional setup after loading the view.
     self.projectNameLabel = self.project[@"name"];
 
+    _playButton.enabled = NO;
+    _stopButton.enabled = NO;
+    _recordButton.enabled = NO;
+    _loopButton.enabled = NO;
+    
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
     [self.tableView reloadData];
@@ -264,8 +273,6 @@ const double SECONDS_PER_MIN = 60.0;
     
     NSLog(@"REC DURATION");
     [self setupRecordingDuration];
-    
-    _stopButton.enabled = NO;
     
     _audioRecorder = [self newAudioRecorderWithFileName:@"0.caf"];
 }
@@ -305,9 +312,11 @@ const double SECONDS_PER_MIN = 60.0;
             NSLog(@"adding2");
             [self.rawSoundData addObject:data];
             NSLog(@"finadding2");
-
         }];
     }
+    _playButton.enabled = YES;
+    _recordButton.enabled = YES;
+    _loopButton.enabled = YES;
 }
 
 - (void)viewDidLayoutSubviews
@@ -380,6 +389,8 @@ const double SECONDS_PER_MIN = 60.0;
 {
     _recordButton.enabled = YES;
     _stopButton.enabled = NO;
+    _playButton.enabled = YES;
+    _loopButton.enabled = YES;
 }
 
 -(void)audioPlayerDecodeErrorDidOccur:
