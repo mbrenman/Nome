@@ -49,6 +49,7 @@
 		B9859E38199731F9000984E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E37199731F9000984E5 /* Parse.framework */; };
 		B9C767A819979F9F006627A1 /* Top_Charts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C767A719979F9F006627A1 /* Top_Charts@2x.png */; };
 		B9C767AA19979FB0006627A1 /* Search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C767A919979FB0006627A1 /* Search@2x.png */; };
+		B9C767AD1997CA41006627A1 /* NMEDiscoverTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9C767AC1997CA41006627A1 /* NMEDiscoverTableCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +119,8 @@
 		B9859E37199731F9000984E5 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		B9C767A719979F9F006627A1 /* Top_Charts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Top_Charts@2x.png"; sourceTree = "<group>"; };
 		B9C767A919979FB0006627A1 /* Search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search@2x.png"; sourceTree = "<group>"; };
+		B9C767AB1997CA41006627A1 /* NMEDiscoverTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEDiscoverTableCell.h; sourceTree = "<group>"; };
+		B9C767AC1997CA41006627A1 /* NMEDiscoverTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEDiscoverTableCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -308,6 +311,8 @@
 			children = (
 				B9859E06199696B9000984E5 /* NMEDiscoveryTableViewController.h */,
 				B9859E07199696B9000984E5 /* NMEDiscoveryTableViewController.m */,
+				B9C767AB1997CA41006627A1 /* NMEDiscoverTableCell.h */,
+				B9C767AC1997CA41006627A1 /* NMEDiscoverTableCell.m */,
 			);
 			name = "Discovery Table";
 			sourceTree = "<group>";
@@ -471,6 +476,7 @@
 				B9859E301996BDD3000984E5 /* NMEProjectsTableCell.m in Sources */,
 				B9859E331996C68C000984E5 /* NMEProjectTableViewCell.m in Sources */,
 				B9859E08199696B9000984E5 /* NMEDiscoveryTableViewController.m in Sources */,
+				B9C767AD1997CA41006627A1 /* NMEDiscoverTableCell.m in Sources */,
 				B9859E05199692BD000984E5 /* NMEProjectsTableViewController.m in Sources */,
 				AA494DB51996FBF10078D70F /* NMESecrets.m in Sources */,
 				B9859DD919968D13000984E5 /* NMEAppDelegate.m in Sources */,
