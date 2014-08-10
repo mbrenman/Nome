@@ -41,6 +41,10 @@ const double SECONDS_PER_MIN = 60.0;
 
 //Audio info
 @property (nonatomic) NSTimeInterval recordingDuration;
+
+@property (nonatomic, strong) NSMutableArray *loopObjects;
+@property (nonatomic, strong) NSMutableArray *rawSoundData;
+
 @end
 
 @implementation NMEProjectViewController
@@ -118,14 +122,15 @@ const double SECONDS_PER_MIN = 60.0;
 {
     //Empty the player array to not double everything
     [_playerArray removeAllObjects];
-    
-    for (NSString *urlstring in _urlArray){
-        NSURL *url = [self NSURLfrom:urlstring];
-        
-        //Load from Data
-        NSString *path = [url path];
-        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
-        
+//    
+//    for (NSString *urlstring in _urlArray){
+//        NSURL *url = [self NSURLfrom:urlstring];
+//        
+//        //Load from Data
+//        NSString *path = [url path];
+//        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+
+    for (NSData *data in self.rawSoundData){
         AVAudioPlayer *player = [self newAudioPlayerWithData:data];
         
         //AVAudioPlayer *player = [self newAudioPlayerWithURL:url];
@@ -242,6 +247,8 @@ const double SECONDS_PER_MIN = 60.0;
     [self.tableView setDataSource:self];
     [self.tableView reloadData];
     
+    [self getAudioFromParse];
+    
     _count = 1; //For initial .caf file
     _urlArray = [[NSMutableArray alloc] init];
     _playerArray = [[NSMutableArray alloc] init];
@@ -253,13 +260,41 @@ const double SECONDS_PER_MIN = 60.0;
     
     [self setupRecordingDuration];
     
-    _playButton.enabled = NO;
     _stopButton.enabled = NO;
     
     _audioRecorder = [self newAudioRecorderWithFileName:@"0.caf"];
 }
 
-- (void)viewDidLayoutSubviews{
+- (void)getAudioFromParse
+{
+    NSArray *loopDictionaries = self.project[@"loops"];
+    NSMutableArray *objectIDs = [[NSMutableArray alloc] init];
+    for (PFObject *object in loopDictionaries) {
+        PFObject *objectPointer = object[@"id"];
+        [objectIDs addObject:[objectPointer objectId]];
+    }
+    PFQuery *query = [PFQuery queryWithClassName:@"loopObject"];
+    [query whereKey:@"objectId" containedIn:objectIDs];
+//    [query includeKey:@"file"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        self.loopObjects = [[NSMutableArray alloc] initWithArray: objects];
+//        NSLog([NSString stringWithFormat:@"%@", objects]);
+        [self.tableView reloadData];
+        [self loadFiles];
+    }];
+}
+
+- (void)loadFiles{
+    _rawSoundData = [[NSMutableArray alloc] init];
+    for (PFObject* object in self.loopObjects) {
+        [[object objectForKey:@"file"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            [self.rawSoundData addObject:data];
+        }];
+    }
+}
+
+- (void)viewDidLayoutSubviews
+{
     [super viewDidLayoutSubviews];
     self.tableView.frame = CGRectMake(0., 0., 320, 320);
 }
