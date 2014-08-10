@@ -12,6 +12,10 @@
 		AA494DB21996FADD0078D70F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DB11996FADD0078D70F /* Social.framework */; };
 		AA494DB51996FBF10078D70F /* NMESecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494DB41996FBF10078D70F /* NMESecrets.m */; };
 		AA494DB719975F8C0078D70F /* claveHit.caf in Resources */ = {isa = PBXBuildFile; fileRef = AA494DB619975F8B0078D70F /* claveHit.caf */; };
+		AA494DBD19977A510078D70F /* LoopIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA494DB919977A510078D70F /* LoopIcon.png */; };
+		AA494DBE19977A510078D70F /* PlayIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA494DBA19977A510078D70F /* PlayIcon.png */; };
+		AA494DBF19977A510078D70F /* RecordIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA494DBB19977A510078D70F /* RecordIcon.png */; };
+		AA494DC019977A510078D70F /* StopIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA494DBC19977A510078D70F /* StopIcon.png */; };
 		B9859DC919968D13000984E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DC819968D13000984E5 /* Foundation.framework */; };
 		B9859DCB19968D13000984E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DCA19968D13000984E5 /* CoreGraphics.framework */; };
 		B9859DCD19968D13000984E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DCC19968D13000984E5 /* UIKit.framework */; };
@@ -63,6 +67,10 @@
 		AA494DB31996FBF10078D70F /* NMESecrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMESecrets.h; sourceTree = "<group>"; };
 		AA494DB41996FBF10078D70F /* NMESecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMESecrets.m; sourceTree = "<group>"; };
 		AA494DB619975F8B0078D70F /* claveHit.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = claveHit.caf; sourceTree = "<group>"; };
+		AA494DB919977A510078D70F /* LoopIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoopIcon.png; sourceTree = "<group>"; };
+		AA494DBA19977A510078D70F /* PlayIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayIcon.png; sourceTree = "<group>"; };
+		AA494DBB19977A510078D70F /* RecordIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecordIcon.png; sourceTree = "<group>"; };
+		AA494DBC19977A510078D70F /* StopIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StopIcon.png; sourceTree = "<group>"; };
 		B9859DC519968D13000984E5 /* Nome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9859DC819968D13000984E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B9859DCA19968D13000984E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -145,6 +153,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA494DB819977A510078D70F /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				AA494DB919977A510078D70F /* LoopIcon.png */,
+				AA494DBA19977A510078D70F /* PlayIcon.png */,
+				AA494DBB19977A510078D70F /* RecordIcon.png */,
+				AA494DBC19977A510078D70F /* StopIcon.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
 		B9859DBC19968D13000984E5 = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +224,7 @@
 		B9859DCF19968D13000984E5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AA494DB819977A510078D70F /* Icons */,
 				AA494DB619975F8B0078D70F /* claveHit.caf */,
 				B9859DD019968D13000984E5 /* Nome-Info.plist */,
 				B9859DD119968D13000984E5 /* InfoPlist.strings */,
@@ -376,9 +396,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA494DBF19977A510078D70F /* RecordIcon.png in Resources */,
+				AA494DBE19977A510078D70F /* PlayIcon.png in Resources */,
 				AA494DB719975F8C0078D70F /* claveHit.caf in Resources */,
+				AA494DBD19977A510078D70F /* LoopIcon.png in Resources */,
 				B9859DE119968D13000984E5 /* Images.xcassets in Resources */,
 				B9859DD319968D13000984E5 /* InfoPlist.strings in Resources */,
+				AA494DC019977A510078D70F /* StopIcon.png in Resources */,
 				B9859DDC19968D13000984E5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,7 +598,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nome/Nome-Prefix.pch";
 				INFOPLIST_FILE = "Nome/Nome-Info.plist";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"$(BUILT_PRODUCTS_DIR)/libPods-Venmo-iOS-SDK.a",
+					"-force_load",
+					"$(BUILT_PRODUCTS_DIR)/libPods-VENCore.a",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -593,7 +622,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nome/Nome-Prefix.pch";
 				INFOPLIST_FILE = "Nome/Nome-Info.plist";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"$(BUILT_PRODUCTS_DIR)/libPods-Venmo-iOS-SDK.a",
+					"$(BUILT_PRODUCTS_DIR)/libPods-VENCore.a",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

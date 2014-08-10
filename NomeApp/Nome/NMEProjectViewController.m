@@ -12,6 +12,7 @@ const double SECONDS_PER_MIN = 60.0;
 #import "NMEProjectTableViewCell.h"
 #import "NMEAppDelegate.h"
 #import "NMEDataManager.h"
+#import <Venmo-iOS-SDK/Venmo.h>
 
 @interface NMEProjectViewController () 
 
@@ -48,6 +49,24 @@ const double SECONDS_PER_MIN = 60.0;
 @end
 
 @implementation NMEProjectViewController
+- (IBAction)donatePresed:(id)sender {
+//    NSString *recipient = self.project[@"venmo"];
+    NSString *recipient = @"Julian-Locke";
+    
+    NSString *username = [[PFUser currentUser] username];
+    NSString *note = [NSString stringWithFormat:@"%@ sent you some money for your awesome music!", username];
+    
+    NSUInteger amount = 1;
+    
+    [[Venmo sharedInstance] sendPaymentTo:recipient amount:amount note:note completionHandler:^(VENTransaction *transaction, BOOL success, NSError *error) {
+        if (success) {
+            NSLog(@"Yay money!");
+        } else {
+            NSLog(@"Nope. No money...");
+        }
+    }];
+
+}
 
 - (IBAction)recordButtonPressed:(id)sender {
     _playButton.enabled = NO;
@@ -79,6 +98,10 @@ const double SECONDS_PER_MIN = 60.0;
     }
 }
 - (IBAction)playButtonPressed:(id)sender {
+    _stopButton.enabled = YES;
+    _playButton.enabled = NO;
+    _recordButton.enabled = NO;
+    _loopButton.enabled = NO;
     [self playButtonTouch:false];
 }
 - (IBAction)pressedStopButton:(id)sender {
@@ -109,8 +132,7 @@ const double SECONDS_PER_MIN = 60.0;
         
         NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
         AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
-        
-        
+
         
         NSLog(@"claveeee");
         
@@ -148,15 +170,15 @@ const double SECONDS_PER_MIN = 60.0;
 }
 
 - (IBAction)stopRecordingAudio:(id)sender {
-    _stopButton.enabled = NO;
-    _playButton.enabled = YES;
-    _recordButton.enabled = YES;
-    
-    for (AVAudioPlayer *player in _playerArray){
-        if (player.playing){
-            [player stop];
-        }
-    }
+//    _stopButton.enabled = NO;
+//    _playButton.enabled = YES;
+//    _recordButton.enabled = YES;
+//    
+//    for (AVAudioPlayer *player in _playerArray){
+//        if (player.playing){
+//            [player stop];
+//        }
+//    }
 }
 
 - (void)playSoundsAndLoop:(BOOL) loop atTime:(NSTimeInterval) now
@@ -432,10 +454,15 @@ const double SECONDS_PER_MIN = 60.0;
 -(void)audioPlayerDidFinishPlaying:
 (AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    _recordButton.enabled = YES;
-    _stopButton.enabled = NO;
-    _playButton.enabled = YES;
-    _loopButton.enabled = YES;
+    NSURL *calvUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
+    //Doesn't stop it changing on clav
+    if ([[player url] filePathURL] != [calvUrl filePathURL]){
+        NSLog(@"chagned");
+        _recordButton.enabled = YES;
+        _stopButton.enabled = NO;
+        _playButton.enabled = YES;
+        _loopButton.enabled = YES;
+    }
 }
 
 -(void)audioPlayerDecodeErrorDidOccur:

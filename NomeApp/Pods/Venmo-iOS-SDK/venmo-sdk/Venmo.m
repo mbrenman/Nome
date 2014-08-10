@@ -12,8 +12,8 @@
 #import "VENUser.h"
 #import "VENSession.h"
 
-#import <VENCore/VENCore.h>
 #import <VENCore/VENCreateTransactionRequest.h>
+#import <VENCore/VENCore.h>
 
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_6_0
 #import "UIDevice+IdentifierAddition.h"
