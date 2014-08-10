@@ -96,17 +96,17 @@ typedef enum : NSUInteger {
                                 cancelButtonTitle:@"Dismiss"
                                 otherButtonTitles: nil];
         [badInfo show];
+    } else {
+        PFObject *projectObject = [[PFObject alloc] initWithClassName:@"projectObject"];
+        projectObject[@"projectName"] = projectName;
+        projectObject[@"collaborators"] = collaborators;
+        projectObject[@"bpm"] = @([bpm integerValue]);
+        projectObject[@"totalBeats"] = @([totalBeats integerValue]);
+        projectObject[@"tags"] = tags;
+        projectObject[@"loops"] = loops;
+        [projectObject saveInBackground];
+        [self.navigationController popViewControllerAnimated:YES];
     }
-    
-    PFObject *projectObject = [[PFObject alloc] initWithClassName:@"projectObject"];
-    projectObject[@"projectName"] = projectName;
-    projectObject[@"collaborators"] = collaborators;
-    projectObject[@"bpm"] = bpm;
-    projectObject[@"totalBeats"] = totalBeats;
-    projectObject[@"tags"] = tags;
-    projectObject[@"loops"] = loops;
-    [projectObject saveInBackground];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
