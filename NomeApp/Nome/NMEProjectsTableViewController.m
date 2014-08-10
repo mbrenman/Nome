@@ -38,6 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableView.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -94,17 +95,20 @@
     
     PFObject *currentProject = [self.projects objectAtIndex:indexPath.row];
    
-    cell.backgroundColor = [UIColor colorWithHue:.49 saturation:.22 brightness:.95 alpha:1.];
-//    cell.backgroundColor = [UIColor colorWithHue:.49 saturation:.22 brightness:.95 alpha:1.];
-
+    cell.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
+ 
+    
+    
+    cell.secondaryLabel.text = [NSString stringWithFormat:@"%u BPM", [[currentProject[@"bpm"] description] intValue]];
+    cell.secondaryLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
+    cell.secondaryLabel.font = [UIFont fontWithName:@"Avenir-Light" size:18];
+    
     cell.projectNameLabel.text = currentProject[@"projectName"];
-    cell.projectNameLabel.font = [UIFont fontWithName:@"Avenir" size:18];
+    cell.projectNameLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
+    cell.projectNameLabel.font = [UIFont fontWithName:@"Avenir" size:28];
 //    cell.projectNameLabel.textColor = [UIColor colorWithHue:.03 saturation:.64 brightness:.99 alpha:1.];
 //    cell.projectNameLabel.textColor = [UIColor colorWithHue:.49 saturation:.22 brightness:.95 alpha:1.];
 //    cell.projectNameLabel.textColor = [UIColor colorWithHue:.03 saturation:.64 brightness:.99 alpha:1.];
-    cell.projectNameLabel.textColor = [UIColor colorWithWhite:.4 alpha:1.];
-
-    
     return cell;
 }
 

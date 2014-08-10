@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -30,8 +30,9 @@
             <objects>
                 <tabBarController definesPresentationContext="YES" id="xgS-CY-3UP" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="gXJ-AD-Hpy"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="GqM-nq-eFm">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" id="GqM-nq-eFm">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -49,20 +50,27 @@
         <scene sceneID="FD7-eN-ofh">
             <objects>
                 <tableViewController id="dgV-cI-u0w" customClass="NMEProjectsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pD7-wk-Cou">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" id="pD7-wk-Cou">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="projectsTableCell" id="khw-8p-rmA" customClass="NMEProjectsTableCell">
-                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="projectsTableCell" rowHeight="84" id="khw-8p-rmA" customClass="NMEProjectsTableCell">
+                                <rect key="frame" x="0.0" y="66" width="320" height="84"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="khw-8p-rmA" id="ezQ-RG-ekV">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="83"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxe-jN-ayb">
-                                            <rect key="frame" x="20" y="11" width="215" height="21"/>
+                                            <rect key="frame" x="20" y="6" width="215" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vnp-ca-xOs">
+                                            <rect key="frame" x="20" y="52" width="126" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -72,6 +80,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="projectNameLabel" destination="oxe-jN-ayb" id="FAj-YX-IUN"/>
+                                    <outlet property="secondaryLabel" destination="Vnp-ca-xOs" id="hj8-Qh-swN"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -95,6 +104,8 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
                         <segue destination="c1M-oK-rc2" kind="push" identifier="projectListToAddProject" id="lvX-9a-chn"/>
                         <segue destination="ZoF-h7-KcO" kind="push" identifier="projectsToProject" id="rtd-9y-CLs"/>
@@ -117,72 +128,52 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Project Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="de2-T6-geX">
-                                <rect key="frame" x="20" y="78" width="165" height="30"/>
+                                <rect key="frame" x="21" y="75" width="165" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Collaborators" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0ZR-IE-0zX">
-                                <rect key="frame" x="20" y="116" width="165" height="30"/>
+                                <rect key="frame" x="21" y="113" width="165" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="BPM" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rpT-Yl-JPp">
-                                <rect key="frame" x="20" y="231" width="165" height="30"/>
+                                <rect key="frame" x="20" y="228" width="136" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="63d-ff-x15">
-                                <rect key="frame" x="20" y="154" width="165" height="69"/>
+                                <rect key="frame" x="21" y="151" width="165" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Total Beats" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cCK-nY-Xmd">
-                                <rect key="frame" x="20" y="269" width="165" height="30"/>
+                                <rect key="frame" x="21" y="266" width="135" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tags" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gcO-p3-EFo">
-                                <rect key="frame" x="20" y="345" width="165" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfg-va-Lul">
+                                <rect key="frame" x="194" y="112" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVc-2Y-1n0">
-                                <rect key="frame" x="20" y="387" width="165" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfg-va-Lul">
-                                <rect key="frame" x="189" y="115" width="127" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add Collaborator">
+                                <state key="normal" title="Add">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="addCollaboratorButtonPressed:" destination="c1M-oK-rc2" eventType="touchUpInside" id="bMn-9a-Gwl"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zpe-wb-HQC">
-                                <rect key="frame" x="209" y="344" width="107" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2jK-pc-ToN">
+                                <rect key="frame" x="0.0" y="385" width="320" height="81"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add Tag">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="addTagPressed:" destination="c1M-oK-rc2" eventType="touchUpInside" id="WaF-uM-lah"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2jK-pc-ToN">
-                                <rect key="frame" x="201" y="387" width="115" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Finalize Project">
+                                <color key="backgroundColor" red="0.63820592518792385" green="1" blue="0.68344577821499486" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Init Project">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -190,7 +181,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Venmo Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Wz-eg-QnH">
-                                <rect key="frame" x="20" y="307" width="165" height="30"/>
+                                <rect key="frame" x="21" y="304" width="135" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -201,11 +192,11 @@
                     <navigationItem key="navigationItem" id="DAN-jI-Gpa"/>
                     <connections>
                         <outlet property="bpmTextField" destination="rpT-Yl-JPp" id="UN0-fM-6NV"/>
+                        <outlet property="colabAdd" destination="qfg-va-Lul" id="cPT-gf-hmZ"/>
                         <outlet property="collaboratorsLabel" destination="63d-ff-x15" id="mtb-x7-uer"/>
                         <outlet property="collaboratorsTextField" destination="0ZR-IE-0zX" id="DlM-gY-k2s"/>
+                        <outlet property="finalButton" destination="2jK-pc-ToN" id="92Q-Kf-6aM"/>
                         <outlet property="projectNameTextField" destination="de2-T6-geX" id="VnF-lh-WlR"/>
-                        <outlet property="tagsLabel" destination="bVc-2Y-1n0" id="nxT-PL-Yz1"/>
-                        <outlet property="tagsTextField" destination="gcO-p3-EFo" id="v0t-wi-h0X"/>
                         <outlet property="totalBeatsTextField" destination="cCK-nY-Xmd" id="q1C-NP-byp"/>
                         <outlet property="venmoLabel" destination="1Wz-eg-QnH" id="xnO-Uz-3xG"/>
                     </connections>
@@ -218,12 +209,12 @@
         <scene sceneID="kpO-UT-Bky">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yxz-XQ-QmA" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Your Projects" id="VzL-3i-6yi"/>
+                    <tabBarItem key="tabBarItem" title="Your Projects" image="Top_Charts.png" id="VzL-3i-6yi"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j5z-Au-iVI">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="j5z-Au-iVI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -277,13 +268,19 @@
         <scene sceneID="vzD-Jb-2TG">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Bkq-E8-0HN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Discover" id="Xaw-Rv-Nbc"/>
+                    <tabBarItem key="tabBarItem" title="Discover" image="Search.png" id="Xaw-Rv-Nbc"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OOv-RM-tdb">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="OOv-RM-tdb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" id="gCf-Jo-tfA">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="rjy-dH-oei" kind="relationship" relationship="rootViewController" id="i6Z-KF-jUQ"/>
                     </connections>
@@ -375,7 +372,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygu-9c-W6A">
-                                <rect key="frame" x="0.0" y="332" width="320" height="30"/>
+                                <rect key="frame" x="0.0" y="327" width="320" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Donate to musician">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -389,6 +386,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="M9l-J8-ads"/>
                     <connections>
+                        <outlet property="donateButton" destination="ygu-9c-W6A" id="GAy-CT-5ci"/>
                         <outlet property="loopButton" destination="kPB-G6-lTY" id="uAs-vh-Svt"/>
                         <outlet property="playButton" destination="2gA-3T-Kvr" id="N3A-dc-UKv"/>
                         <outlet property="recordButton" destination="rN4-RI-dbU" id="KeF-YN-Pea"/>
@@ -405,7 +403,9 @@
         <image name="LoopIcon.png" width="120" height="120"/>
         <image name="PlayIcon.png" width="120" height="120"/>
         <image name="RecordIcon.png" width="120" height="120"/>
+        <image name="Search.png" width="24" height="24"/>
         <image name="StopIcon.png" width="120" height="120"/>
+        <image name="Top_Charts.png" width="27" height="23"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

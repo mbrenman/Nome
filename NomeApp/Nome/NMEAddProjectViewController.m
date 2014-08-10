@@ -19,20 +19,19 @@ typedef enum : NSUInteger {
 
 @interface NMEAddProjectViewController () <UITextFieldDelegate>
 
+@property (strong, nonatomic) IBOutlet UIButton *colabAdd;
 @property (strong, nonatomic) IBOutlet UITextField *projectNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *collaboratorsTextField;
 @property (strong, nonatomic) IBOutlet UILabel *collaboratorsLabel;
 @property (strong, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (strong, nonatomic) IBOutlet UITextField *totalBeatsTextField;
-@property (strong, nonatomic) IBOutlet UITextField *tagsTextField;
 @property (weak, nonatomic) IBOutlet UITextField *venmoLabel;
-@property (strong, nonatomic) IBOutlet UILabel *tagsLabel;
+@property (strong, nonatomic) IBOutlet UIButton *finalButton;
 //@property (strong, nonatomic) IBOutlet UIButton *finalButton;
 
 @property (strong, nonatomic) UITapGestureRecognizer* tapRecognizer;
 
 @property (strong, nonatomic) NSMutableArray *collaboratorsArray;
-@property (strong, nonatomic) NSMutableArray *tagsArray;
 
 @end
 
@@ -44,6 +43,8 @@ typedef enum : NSUInteger {
         [self.collaboratorsArray addObject:toAdd];
     }
     
+    
+    
     NSString *total = [[NSString alloc]init];
     for (NSString *string in self.collaboratorsArray) {
         total = [total stringByAppendingString:string];
@@ -54,22 +55,22 @@ typedef enum : NSUInteger {
 
     [self tapped];
 }
-- (IBAction)addTagPressed:(id)sender {
-    NSString *toAdd =self.tagsTextField.text;
-    if (![toAdd isEqualToString:@""]) {
-        [self.tagsArray addObject:toAdd];
-    }
-    
-    NSString *total = [[NSString alloc]init];
-    for (NSString *string in self.tagsArray) {
-        total = [total stringByAppendingString:string];
-        total = [total stringByAppendingString:@" "];
-    }
-    self.tagsLabel.text = total;
-    self.tagsTextField.text = @"";
-    
-    [self tapped];
-}
+//- (IBAction)addTagPressed:(id)sender {
+//    NSString *toAdd =self.tagsTextField.text;
+//    if (![toAdd isEqualToString:@""]) {
+//        [self.tagsArray addObject:toAdd];
+//    }
+//    
+//    NSString *total = [[NSString alloc]init];
+//    for (NSString *string in self.tagsArray) {
+//        total = [total stringByAppendingString:string];
+//        total = [total stringByAppendingString:@" "];
+//    }
+//    self.tagsLabel.text = total;
+//    self.tagsTextField.text = @"";
+//    
+//    [self tapped];
+//}
 
 - (IBAction)pushToParse:(id)sender {
     [self finalProjectTapped:nil];
@@ -82,15 +83,14 @@ typedef enum : NSUInteger {
     NSArray *collaborators = self.collaboratorsArray;
     NSString *bpm = self.bpmTextField.text;
     NSString *totalBeats = self.totalBeatsTextField.text;
-    NSArray *tags = self.tagsArray;
+//    NSArray *tags = self.tagsArray;
     NSString *venmoUsername = self.venmoLabel.text;
     NSArray* loops = [[NSArray alloc] init];
     
     if ([projectName isEqualToString:@""] ||
         (collaborators.count < 1) ||
         [bpm isEqualToString:@""] ||
-         [totalBeats isEqualToString:@""] ||
-         (tags.count < 1)) {
+         [totalBeats isEqualToString:@""]) {
         UIAlertView *badInfo = [[UIAlertView alloc]
                                 initWithTitle:@"Bad info"
                                 message:@"Please make sure to fill all the fields!"
@@ -104,7 +104,6 @@ typedef enum : NSUInteger {
         projectObject[@"collaborators"] = collaborators;
         projectObject[@"bpm"] = @([bpm integerValue]);
         projectObject[@"totalBeats"] = @([totalBeats integerValue]);
-        projectObject[@"tags"] = tags;
         projectObject[@"loops"] = loops;
         projectObject[@"venmo"] = venmoUsername;
         [projectObject saveInBackground];
@@ -147,7 +146,6 @@ typedef enum : NSUInteger {
     [super viewDidLoad];
     
     self.collaboratorsArray = [[NSMutableArray alloc] init];
-    self.tagsArray = [[NSMutableArray alloc] init];
     
     self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
     [self.view addGestureRecognizer:self.tapRecognizer];
@@ -164,22 +162,27 @@ typedef enum : NSUInteger {
     
     [self.totalBeatsTextField setDelegate:self];
     [self.totalBeatsTextField setTag:totalBeats];
-    
-    [self.tagsTextField setDelegate:self];
-    [self.tagsTextField setTag:tags];
-    
+
     [self.venmoLabel setDelegate:self];
     
     [self.collaboratorsLabel setText:@""];
-    [self.tagsLabel setText:@""];
+//    [self.tagsLabel setText:@""];
     
     self.collaboratorsLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.collaboratorsLabel.numberOfLines = 0;
-    self.tagsLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.tagsLabel.numberOfLines = 0;
+    self.collaboratorsLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
+
+//    self.tagsLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//    self.tagsLabel.numberOfLines = 0;
+//    self.tagsLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
+//
+//    
+    self.finalButton.backgroundColor = [UIColor colorWithHue:.03 saturation:.64 brightness:1. alpha:1.];
+    self.finalButton.font = [UIFont fontWithName:@"Avenir" size:38];
     
-    
-    
+    self.view.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
+    self.colabAdd.font = [UIFont fontWithName:@"Avenir" size:14];
+
     // Do any additional setup after loading the view.
 }
 

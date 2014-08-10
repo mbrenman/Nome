@@ -47,6 +47,8 @@
 		B9859E301996BDD3000984E5 /* NMEProjectsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E2F1996BDD3000984E5 /* NMEProjectsTableCell.m */; };
 		B9859E331996C68C000984E5 /* NMEProjectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E321996C68C000984E5 /* NMEProjectTableViewCell.m */; };
 		B9859E38199731F9000984E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E37199731F9000984E5 /* Parse.framework */; };
+		B9C767A819979F9F006627A1 /* Top_Charts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C767A719979F9F006627A1 /* Top_Charts@2x.png */; };
+		B9C767AA19979FB0006627A1 /* Search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C767A919979FB0006627A1 /* Search@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +116,8 @@
 		B9859E311996C68C000984E5 /* NMEProjectTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEProjectTableViewCell.h; sourceTree = "<group>"; };
 		B9859E321996C68C000984E5 /* NMEProjectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEProjectTableViewCell.m; sourceTree = "<group>"; };
 		B9859E37199731F9000984E5 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		B9C767A719979F9F006627A1 /* Top_Charts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Top_Charts@2x.png"; sourceTree = "<group>"; };
+		B9C767A919979FB0006627A1 /* Search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +228,8 @@
 		B9859DCF19968D13000984E5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B9C767A919979FB0006627A1 /* Search@2x.png */,
+				B9C767A719979F9F006627A1 /* Top_Charts@2x.png */,
 				AA494DB819977A510078D70F /* Icons */,
 				AA494DB619975F8B0078D70F /* claveHit.caf */,
 				B9859DD019968D13000984E5 /* Nome-Info.plist */,
@@ -398,9 +404,11 @@
 			files = (
 				AA494DBF19977A510078D70F /* RecordIcon.png in Resources */,
 				AA494DBE19977A510078D70F /* PlayIcon.png in Resources */,
+				B9C767AA19979FB0006627A1 /* Search@2x.png in Resources */,
 				AA494DB719975F8C0078D70F /* claveHit.caf in Resources */,
 				AA494DBD19977A510078D70F /* LoopIcon.png in Resources */,
 				B9859DE119968D13000984E5 /* Images.xcassets in Resources */,
+				B9C767A819979F9F006627A1 /* Top_Charts@2x.png in Resources */,
 				B9859DD319968D13000984E5 /* InfoPlist.strings in Resources */,
 				AA494DC019977A510078D70F /* StopIcon.png in Resources */,
 				B9859DDC19968D13000984E5 /* Main.storyboard in Resources */,

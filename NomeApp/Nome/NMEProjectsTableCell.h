@@ -11,5 +11,6 @@
 @interface NMEProjectsTableCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *projectNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *secondaryLabel;
 
 @end

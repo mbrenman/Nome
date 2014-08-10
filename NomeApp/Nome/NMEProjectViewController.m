@@ -25,6 +25,7 @@ const double SECONDS_PER_MIN = 60.0;
 @property (strong, nonatomic) IBOutlet UILabel *projectNameLabel;
 
 @property (strong, nonatomic) IBOutlet UITableView  *tableView;
+@property (strong, nonatomic) IBOutlet UIButton *donateButton;
 
 //Player information
 @property (strong, nonatomic) AVAudioRecorder *audioRecorder;
@@ -331,6 +332,9 @@ const double SECONDS_PER_MIN = 60.0;
     [self.tableView setDataSource:self];
     [self.tableView reloadData];
     
+    self.donateButton.font = [UIFont fontWithName:@"Avenir-Light" size:16];
+    [self.donateButton setTitleColor:[UIColor colorWithHue:.32 saturation:.3 brightness:1. alpha:1.] forState:UIControlStateNormal];
+    
     [self getAudioFromParse];
     
     _count = 1; //For initial .caf file
@@ -390,6 +394,8 @@ const double SECONDS_PER_MIN = 60.0;
 {
     [super viewDidLayoutSubviews];
     self.tableView.frame = CGRectMake(0., 0., 320, 320);
+    self.tableView.backgroundColor =[UIColor colorWithWhite:.7 alpha:1.];
+    self.view.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.4 alpha:1.];
 }
 
 - (void)didReceiveMemoryWarning
@@ -415,6 +421,7 @@ const double SECONDS_PER_MIN = 60.0;
     cell.loopNameLabel.font = [UIFont fontWithName:@"Avenir" size:18];
     cell.loopNameLabel.textColor = [UIColor colorWithWhite:.35 alpha:1.];
     
+    cell.backgroundColor = [UIColor colorWithWhite:.7 alpha:1.];
     return cell;
 }
 
