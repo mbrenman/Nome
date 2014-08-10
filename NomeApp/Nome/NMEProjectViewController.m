@@ -19,6 +19,7 @@ const double SECONDS_PER_MIN = 60.0;
 @property (strong, nonatomic) IBOutlet UIButton *recordButton;
 @property (strong, nonatomic) IBOutlet UIButton *playButton;
 @property (strong, nonatomic) IBOutlet UIButton *stopButton;
+@property (strong, nonatomic) IBOutlet UIButton *loopButton;
 
 @property (strong, nonatomic) IBOutlet UILabel *projectNameLabel;
 
@@ -27,10 +28,6 @@ const double SECONDS_PER_MIN = 60.0;
 //Player information
 @property (strong, nonatomic) AVAudioRecorder *audioRecorder;
 @property (strong, nonatomic) AVAudioPlayer *audioPlayer;
-
-//Audio Info
-@property (nonatomic) int bpm;
-@property (nonatomic) int numBeats;
 
 //Storage for audio parts
 @property (nonatomic, strong) NSMutableArray *urlArray;
@@ -66,16 +63,12 @@ const double SECONDS_PER_MIN = 60.0;
         [_audioRecorder prepareToRecord];
         
         //Play and Record
-        [self playSounds];
+        [self playSoundsAndLoop:false];
         [_audioRecorder recordForDuration:_recordingDuration];
     }
 }
 - (IBAction)playButtonPressed:(id)sender {
-    _stopButton.enabled = YES;
-    _recordButton.enabled = NO;
-    
-    [self prepareForPlay];
-    [self playSounds];
+    [self playButtonTouch:false];
 }
 - (IBAction)pressedStopButton:(id)sender {
     _stopButton.enabled = NO;
@@ -88,6 +81,19 @@ const double SECONDS_PER_MIN = 60.0;
         }
     }
 }
+- (IBAction)pressedLoopButton:(id)sender {
+    [self playButtonTouch:true];
+}
+
+- (void)playButtonTouch:(BOOL) loop
+{
+    _stopButton.enabled = YES;
+    _recordButton.enabled = NO;
+    
+    [self prepareForPlay];
+    [self playSoundsAndLoop:loop];
+}
+
 
 - (void)startRecorder
 {
@@ -106,14 +112,18 @@ const double SECONDS_PER_MIN = 60.0;
     }
 }
 
-- (void)playSounds
+- (void)playSoundsAndLoop:(BOOL) loop
 {
     if ([_playerArray count] > 0){
         NSTimeInterval shortStartDelay = 0.01;            // seconds
         NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
         
         for (AVAudioPlayer *player in _playerArray){
+            if (loop){
+                [player setNumberOfLoops:-1];
+            }
             [player playAtTime: now + shortStartDelay];
+            
         }
     }
 }
@@ -122,13 +132,6 @@ const double SECONDS_PER_MIN = 60.0;
 {
     //Empty the player array to not double everything
     [_playerArray removeAllObjects];
-//    
-//    for (NSString *urlstring in _urlArray){
-//        NSURL *url = [self NSURLfrom:urlstring];
-//        
-//        //Load from Data
-//        NSString *path = [url path];
-//        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
 
     for (NSData *data in self.rawSoundData){
         AVAudioPlayer *player = [self newAudioPlayerWithData:data];
@@ -150,8 +153,11 @@ const double SECONDS_PER_MIN = 60.0;
 
 - (void)setupRecordingDuration
 {
-    double beatLen = SECONDS_PER_MIN/((double)_bpm);
-    _recordingDuration = beatLen * _numBeats;
+    NSInteger bpm = [[_project[@"bpm"] description] intValue];
+    NSInteger numBeats = [[_project[@"totalBeats"] description] intValue];
+    
+    double beatLen = SECONDS_PER_MIN/((double)bpm);
+    _recordingDuration = beatLen * numBeats;
 }
 
 - (AVAudioRecorder *)newAudioRecorderWithFileName:(NSString *)fileName
@@ -256,10 +262,7 @@ const double SECONDS_PER_MIN = 60.0;
     _playerArray = [[NSMutableArray alloc] init];
     //Pull username and display it
     
-    //THESE SHOULD BE SET WHEN THIS IS CALLED - OR SET FROM THE PROJECT
-    _bpm = 60;
-    _numBeats = 1;
-    
+    NSLog(@"REC DURATION");
     [self setupRecordingDuration];
     
     _stopButton.enabled = NO;
