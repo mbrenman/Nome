@@ -50,6 +50,16 @@ const double SECONDS_PER_MIN = 60.0;
 @end
 
 @implementation NMEProjectViewController
+
+
+- (IBAction)addCollaboratorClick:(id)sender {
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Title" message:@"Who's joining the team?" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Keep", nil];
+    av.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [av textFieldAtIndex:0].delegate = self;
+    [av show];
+}
+
+
 - (IBAction)donatePresed:(id)sender {
 //    NSString *recipient = self.project[@"venmo"];
     NSString *recipient = @"Julian-Locke";
