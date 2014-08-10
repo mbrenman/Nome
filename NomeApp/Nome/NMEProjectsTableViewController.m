@@ -38,15 +38,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NMEDataManager *dataManager = [NMEAppDelegate delegate].dataManager;
-    [dataManager getMyProjectsFromServer];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.projects = dataManager.myProjects;
-        [self.tableView reloadData];
-    });
+    [self getProjectNames];
 }
 
+- (void)getProjectNames
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"projectObject"];
+    [query whereKey:@"collaborators" equalTo:@"Bob"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        self.projects = [[NSMutableArray alloc] initWithArray:objects];
+        [self.tableView reloadData];
+    }];
+}
 
 - (void)didReceiveMemoryWarning
 {
