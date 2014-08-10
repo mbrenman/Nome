@@ -48,7 +48,9 @@
 - (void)getProjectNames
 {
     PFQuery *query = [PFQuery queryWithClassName:@"projectObject"];
-    [query whereKey:@"collaborators" equalTo:@"Bob"];
+    NSString *username = [[PFUser currentUser] username];
+    NSLog(username);
+    [query whereKey:@"collaborators" equalTo:username];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         self.projects = [[NSMutableArray alloc] initWithArray:objects];
         [self.tableView reloadData];
