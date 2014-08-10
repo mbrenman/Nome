@@ -2,8 +2,8 @@
 //  NomeTests.m
 //  NomeTests
 //
-//  Created by Matt Brenman on 8/9/14.
-//  Copyright (c) 2014 mbrenman. All rights reserved.
+//  Created by Julian Locke on 8/9/14.
+//  Copyright (c) 2014 Julian Locke. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
