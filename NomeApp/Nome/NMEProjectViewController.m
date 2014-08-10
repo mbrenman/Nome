@@ -135,7 +135,9 @@ const double SECONDS_PER_MIN = 60.0;
         
         //AVAudioPlayer *player = [self newAudioPlayerWithURL:url];
         [player prepareToPlay];
+        NSLog(@"adding5");
         [_playerArray addObject:player];
+        NSLog(@"finadding5");
     }
 }
 
@@ -271,7 +273,16 @@ const double SECONDS_PER_MIN = 60.0;
     NSMutableArray *objectIDs = [[NSMutableArray alloc] init];
     for (PFObject *object in loopDictionaries) {
         PFObject *objectPointer = object[@"id"];
-        [objectIDs addObject:[objectPointer objectId]];
+        NSLog(@"adding1");
+        NSLog([object description]);
+        NSLog([objectPointer objectId]);
+        NSLog(@"continuing");
+        if ([objectPointer objectId]){
+            [objectIDs addObject:[objectPointer objectId]];
+        } else {
+            NSLog(@"SKIPPED EMPTY");
+        }
+        NSLog(@"finadding1");
     }
     PFQuery *query = [PFQuery queryWithClassName:@"loopObject"];
     [query whereKey:@"objectId" containedIn:objectIDs];
@@ -288,7 +299,10 @@ const double SECONDS_PER_MIN = 60.0;
     _rawSoundData = [[NSMutableArray alloc] init];
     for (PFObject* object in self.loopObjects) {
         [[object objectForKey:@"file"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            NSLog(@"adding2");
             [self.rawSoundData addObject:data];
+            NSLog(@"finadding2");
+
         }];
     }
 }
@@ -335,9 +349,10 @@ const double SECONDS_PER_MIN = 60.0;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.'
-    NSLog(@"COUNT! %u",[self.project[@"loops"] count]);
+    NSMutableArray *loops = self.project[@"loops"];
+    NSLog(@"COUNT! %u",[loops count]);
 
-    return [self.project[@"loops"] count];
+    return [loops count];
 }
 
 //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -376,8 +391,10 @@ const double SECONDS_PER_MIN = 60.0;
                           successfully:(BOOL)flag
 {
     NSString *url = [[NSString alloc] initWithString:[_audioRecorder.url absoluteString]];
+    NSLog(@"adding3");
     [_urlArray addObject:url];
-    
+    NSLog(@"finadding3");
+
     [self stopRecordingAudio:nil];
     [self showAlert];
 }
@@ -407,10 +424,16 @@ const double SECONDS_PER_MIN = 60.0;
         PFObject *loopDataObject = [self createLoopObjectWithData:data];
         NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
         NSString *username = [[PFUser currentUser] username];
+        NSLog(@"adding4");
         [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
+        NSLog(@"finadding4");
+
+        //Redownload loops to avoid overwriting friends data
         _project[@"loops"] = loops;
         [_project saveInBackground];
         [loopDataObject saveInBackground];
+        
+        //hold users from leaving until we sync data?
         
         _audioRecorder = nil;
     }
