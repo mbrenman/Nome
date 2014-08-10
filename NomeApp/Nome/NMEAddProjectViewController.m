@@ -168,6 +168,8 @@ typedef enum : NSUInteger {
     [self.tagsTextField setDelegate:self];
     [self.tagsTextField setTag:tags];
     
+    [self.venmoLabel setDelegate:self];
+    
     [self.collaboratorsLabel setText:@""];
     [self.tagsLabel setText:@""];
     
