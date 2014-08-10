@@ -100,6 +100,9 @@ const double SECONDS_PER_MIN = 60.0;
         //Load from Data
         NSString *path = [url path];
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+        
+        NSLog([data description]);
+        
         AVAudioPlayer *player = [self newAudioPlayerWithData:data];
         
         //AVAudioPlayer *player = [self newAudioPlayerWithURL:url];

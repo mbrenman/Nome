@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA494DB01996FAD00078D70F /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DAF1996FAD00078D70F /* Accounts.framework */; };
+		AA494DB21996FADD0078D70F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA494DB11996FADD0078D70F /* Social.framework */; };
+		AA494DB51996FBF10078D70F /* NMESecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = AA494DB41996FBF10078D70F /* NMESecrets.m */; };
 		B9859DC919968D13000984E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DC819968D13000984E5 /* Foundation.framework */; };
 		B9859DCB19968D13000984E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DCA19968D13000984E5 /* CoreGraphics.framework */; };
 		B9859DCD19968D13000984E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DCC19968D13000984E5 /* UIKit.framework */; };
@@ -51,6 +54,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA494DAF1996FAD00078D70F /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		AA494DB11996FADD0078D70F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		AA494DB31996FBF10078D70F /* NMESecrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMESecrets.h; sourceTree = "<group>"; };
+		AA494DB41996FBF10078D70F /* NMESecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMESecrets.m; sourceTree = "<group>"; };
 		B9859DC519968D13000984E5 /* Nome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9859DC819968D13000984E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B9859DCA19968D13000984E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -101,6 +108,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA494DB21996FADD0078D70F /* Social.framework in Frameworks */,
+				AA494DB01996FAD00078D70F /* Accounts.framework in Frameworks */,
 				B9859E2D1996AF36000984E5 /* SystemConfiguration.framework in Frameworks */,
 				B9859E2B1996AF22000984E5 /* StoreKit.framework in Frameworks */,
 				B9859E291996AF19000984E5 /* Security.framework in Frameworks */,
@@ -152,6 +161,8 @@
 		B9859DC719968D13000984E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA494DB11996FADD0078D70F /* Social.framework */,
+				AA494DAF1996FAD00078D70F /* Accounts.framework */,
 				B9859E2C1996AF36000984E5 /* SystemConfiguration.framework */,
 				B9859E2A1996AF22000984E5 /* StoreKit.framework */,
 				B9859E281996AF19000984E5 /* Security.framework */,
@@ -217,6 +228,8 @@
 			children = (
 				B9859DD719968D13000984E5 /* NMEAppDelegate.h */,
 				B9859DD819968D13000984E5 /* NMEAppDelegate.m */,
+				AA494DB31996FBF10078D70F /* NMESecrets.h */,
+				AA494DB41996FBF10078D70F /* NMESecrets.m */,
 			);
 			name = "App Delegate";
 			sourceTree = "<group>";
@@ -382,6 +395,7 @@
 				B9859E331996C68C000984E5 /* NMEProjectTableViewCell.m in Sources */,
 				B9859E08199696B9000984E5 /* NMEDiscoveryTableViewController.m in Sources */,
 				B9859E05199692BD000984E5 /* NMEProjectsTableViewController.m in Sources */,
+				AA494DB51996FBF10078D70F /* NMESecrets.m in Sources */,
 				B9859DD919968D13000984E5 /* NMEAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

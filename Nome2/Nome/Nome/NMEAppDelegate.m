@@ -7,6 +7,8 @@
 //
 
 #import "NMEAppDelegate.h"
+#import "NMESecrets.h"
+#import <Parse/Parse.h>
 
 @interface NMEAppDelegate ()
 
@@ -31,6 +33,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    //Setting up Parse
+    [Parse setApplicationId: parseAppID
+                  clientKey: parseClientKey];
+    
+    //Parse Analytics
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     return YES;
 }
 							
