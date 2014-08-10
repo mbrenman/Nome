@@ -32,12 +32,15 @@ const double SECONDS_PER_MIN = 60.0;
 //Storage for audio parts
 @property (nonatomic, strong) NSMutableArray *urlArray;
 @property (nonatomic, strong) NSMutableArray *playerArray;
+@property (nonatomic, strong) NSMutableArray *metronomeArray;
 
 //For naming .caf files
 @property int count;
 
 //Audio info
 @property (nonatomic) NSTimeInterval recordingDuration;
+@property (nonatomic) NSInteger bpm;
+@property (nonatomic) NSInteger numBeats;
 
 @property (nonatomic, strong) NSMutableArray *loopObjects;
 @property (nonatomic, strong) NSMutableArray *rawSoundData;
@@ -63,9 +66,16 @@ const double SECONDS_PER_MIN = 60.0;
         [self prepareForPlay];
         [_audioRecorder prepareToRecord];
         
+        //Create metronome
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
+        AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
+        [player prepareToPlay];
+        NSTimeInterval now = [player deviceCurrentTime];
+        now = [self createMetronome:now];
+        
         //Play and Record
-        [self playSoundsAndLoop:false];
-        [_audioRecorder recordForDuration:_recordingDuration];
+        [self playSoundsAndLoop:false atTime:now];
+        [_audioRecorder recordAtTime:now forDuration:self.recordingDuration];
     }
 }
 - (IBAction)playButtonPressed:(id)sender {
@@ -87,15 +97,48 @@ const double SECONDS_PER_MIN = 60.0;
     [self playButtonTouch:true];
 }
 
+- (NSTimeInterval)createMetronome:(NSTimeInterval) now
+{
+    double beatLen = SECONDS_PER_MIN/((double)self.bpm);
+    if (!self.metronomeArray){
+        _metronomeArray = [[NSMutableArray alloc] init];
+    }
+    [self.metronomeArray removeAllObjects];
+    
+    for (int i=0; i<=(self.numBeats + 4); i++) {
+        
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
+        AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
+        
+        
+        
+        NSLog(@"claveeee");
+        
+        [player prepareToPlay];
+        
+        [self.metronomeArray addObject:player];
+        [player playAtTime:now + (i * beatLen)];
+    }
+    return now + 5*beatLen;
+}
+
 - (void)playButtonTouch:(BOOL) loop
 {
     _stopButton.enabled = YES;
     _playButton.enabled = NO;
     _recordButton.enabled = NO;
     _loopButton.enabled = NO;
-    
-    [self prepareForPlay];
-    [self playSoundsAndLoop:loop];
+
+    //Create metronome
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
+    AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
+    [player prepareToPlay];
+    NSTimeInterval now = [player deviceCurrentTime];
+        [self prepareForPlay];
+    if (!loop) {
+        now = [self createMetronome:now];
+    }
+    [self playSoundsAndLoop:loop atTime:now];
 }
 
 
@@ -116,17 +159,17 @@ const double SECONDS_PER_MIN = 60.0;
     }
 }
 
-- (void)playSoundsAndLoop:(BOOL) loop
+- (void)playSoundsAndLoop:(BOOL) loop atTime:(NSTimeInterval) now
 {
     if ([_playerArray count] > 0){
-        NSTimeInterval shortStartDelay = 0.01;            // seconds
-        NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
+//        NSTimeInterval shortStartDelay = 0.05;            // seconds
+//        NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
         
         for (AVAudioPlayer *player in _playerArray){
             if (loop){
                 [player setNumberOfLoops:-1];
             }
-            [player playAtTime: now + shortStartDelay];
+            [player playAtTime: now];
             
         }
     }
@@ -162,6 +205,8 @@ const double SECONDS_PER_MIN = 60.0;
     
     double beatLen = SECONDS_PER_MIN/((double)bpm);
     _recordingDuration = beatLen * numBeats;
+    _bpm = bpm;
+    _numBeats = numBeats;
 }
 
 - (AVAudioRecorder *)newAudioRecorderWithFileName:(NSString *)fileName
