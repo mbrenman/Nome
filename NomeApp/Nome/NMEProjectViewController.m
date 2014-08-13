@@ -161,7 +161,7 @@ const double SECONDS_PER_MIN = 60.0;
     _playButton.enabled = NO;
     _recordButton.enabled = NO;
     _loopButton.enabled = NO;
-
+    
     //Create metronome
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
     AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
@@ -174,6 +174,33 @@ const double SECONDS_PER_MIN = 60.0;
     [self playSoundsAndLoop:loop atTime:now];
 }
 
+- (void)setToPlayThroughSpeakers
+{
+    //get your app's audioSession singleton object
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+    
+    //error handling
+    BOOL success;
+    NSError* error;
+    
+    //set the audioSession category.
+    //Needs to be Record or PlayAndRecord to use audioRouteOverride:
+    
+    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                             error:&error];
+    
+    if (!success)  NSLog(@"AVAudioSession error setting category:%@",error);
+    
+    //set the audioSession override
+    success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+                                         error:&error];
+    if (!success)  NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+    
+    //activate the audio session
+    success = [session setActive:YES error:&error];
+    if (!success) NSLog(@"AVAudioSession error activating: %@",error);
+    else NSLog(@"audioSession active");
+}
 
 - (void)startRecorder
 {
@@ -333,6 +360,8 @@ const double SECONDS_PER_MIN = 60.0;
     // Do any additional setup after loading the view.
     self.projectNameLabel = self.project[@"name"];
 
+    [self setToPlayThroughSpeakers];
+    
     _playButton.enabled = NO;
     _stopButton.enabled = NO;
     _recordButton.enabled = NO;
