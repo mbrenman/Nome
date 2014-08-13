@@ -174,7 +174,13 @@ const double SECONDS_PER_MIN = 60.0;
     [self playSoundsAndLoop:loop atTime:now];
 }
 
-- (void)setToPlayThroughSpeakers
+/*
+ * This function allows the audio to always play through the speakers, even
+ * when recording, and it comes from this Stack Overflow link:
+ *
+ * http://stackoverflow.com/questions/18807157/how-do-i-route-audio-to-speaker-without-using-audiosessionsetproperty/18808124#18808124
+ */
+ - (void)setToPlayThroughSpeakers
 {
     //get your app's audioSession singleton object
     AVAudioSession* session = [AVAudioSession sharedInstance];
