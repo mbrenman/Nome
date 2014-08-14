@@ -12,7 +12,7 @@ const double SECONDS_PER_MIN = 60.0;
 #import "NMEProjectTableViewCell.h"
 #import "NMEAppDelegate.h"
 #import "NMEDataManager.h"
-#import <Venmo-iOS-SDK/Venmo.h>
+//#import <Venmo-iOS-SDK/Venmo.h>
 
 @interface NMEProjectViewController () 
 
@@ -69,13 +69,13 @@ const double SECONDS_PER_MIN = 60.0;
     
     NSUInteger amount = 1;
     
-    [[Venmo sharedInstance] sendPaymentTo:recipient amount:amount note:note completionHandler:^(VENTransaction *transaction, BOOL success, NSError *error) {
-        if (success) {
-            NSLog(@"Yay money!");
-        } else {
-            NSLog(@"Nope. No money...");
-        }
-    }];
+//    [[Venmo sharedInstance] sendPaymentTo:recipient amount:amount note:note completionHandler:^(VENTransaction *transaction, BOOL success, NSError *error) {
+//        if (success) {
+//            NSLog(@"Yay money!");
+//        } else {
+//            NSLog(@"Nope. No money...");
+//        }
+//    }];
 
 }
 

@@ -169,7 +169,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2jK-pc-ToN">
-                                <rect key="frame" x="0.0" y="385" width="320" height="81"/>
+                                <rect key="frame" x="0.0" y="304" width="320" height="81"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.63820592518792385" green="1" blue="0.68344577821499486" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Init Project">
@@ -180,12 +180,6 @@
                                     <action selector="finalProjectTapped:" destination="c1M-oK-rc2" eventType="touchUpInside" id="ODc-qU-nvv"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Venmo Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Wz-eg-QnH">
-                                <rect key="frame" x="21" y="304" width="135" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -198,7 +192,6 @@
                         <outlet property="finalButton" destination="2jK-pc-ToN" id="92Q-Kf-6aM"/>
                         <outlet property="projectNameTextField" destination="de2-T6-geX" id="VnF-lh-WlR"/>
                         <outlet property="totalBeatsTextField" destination="cCK-nY-Xmd" id="q1C-NP-byp"/>
-                        <outlet property="venmoLabel" destination="1Wz-eg-QnH" id="xnO-Uz-3xG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WX6-Wv-gF6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -371,16 +364,6 @@
                                     <action selector="pressedLoopButton:" destination="ZoF-h7-KcO" eventType="touchUpInside" id="NOL-Pn-dJg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygu-9c-W6A">
-                                <rect key="frame" x="0.0" y="327" width="320" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Donate to musician">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="donatePresed:" destination="ZoF-h7-KcO" eventType="touchUpInside" id="48c-9Q-ONo"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -400,7 +383,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="donateButton" destination="ygu-9c-W6A" id="GAy-CT-5ci"/>
                         <outlet property="loopButton" destination="kPB-G6-lTY" id="uAs-vh-Svt"/>
                         <outlet property="playButton" destination="2gA-3T-Kvr" id="N3A-dc-UKv"/>
                         <outlet property="recordButton" destination="rN4-RI-dbU" id="KeF-YN-Pea"/>

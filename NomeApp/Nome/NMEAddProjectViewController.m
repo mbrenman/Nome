@@ -25,7 +25,7 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) IBOutlet UILabel *collaboratorsLabel;
 @property (strong, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (strong, nonatomic) IBOutlet UITextField *totalBeatsTextField;
-@property (weak, nonatomic) IBOutlet UITextField *venmoLabel;
+//@property (weak, nonatomic) IBOutlet UITextField *venmoLabel;
 @property (strong, nonatomic) IBOutlet UIButton *finalButton;
 //@property (strong, nonatomic) IBOutlet UIButton *finalButton;
 
@@ -84,7 +84,7 @@ typedef enum : NSUInteger {
     NSString *bpm = self.bpmTextField.text;
     NSString *totalBeats = self.totalBeatsTextField.text;
 //    NSArray *tags = self.tagsArray;
-    NSString *venmoUsername = self.venmoLabel.text;
+//    NSString *venmoUsername = self.venmoLabel.text;
     NSArray* loops = [[NSArray alloc] init];
     
     if ([projectName isEqualToString:@""] ||
@@ -105,7 +105,7 @@ typedef enum : NSUInteger {
         projectObject[@"bpm"] = @([bpm integerValue]);
         projectObject[@"totalBeats"] = @([totalBeats integerValue]);
         projectObject[@"loops"] = loops;
-        projectObject[@"venmo"] = venmoUsername;
+//        projectObject[@"venmo"] = venmoUsername;
         [projectObject saveInBackground];
         
         [self.navigationController popViewControllerAnimated:YES];
@@ -163,7 +163,7 @@ typedef enum : NSUInteger {
     [self.totalBeatsTextField setDelegate:self];
     [self.totalBeatsTextField setTag:totalBeats];
 
-    [self.venmoLabel setDelegate:self];
+//    [self.venmoLabel setDelegate:self];
     
     [self.collaboratorsLabel setText:@""];
 //    [self.tagsLabel setText:@""];
