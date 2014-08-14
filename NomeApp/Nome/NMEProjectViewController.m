@@ -12,7 +12,6 @@ const double SECONDS_PER_MIN = 60.0;
 #import "NMEProjectTableViewCell.h"
 #import "NMEAppDelegate.h"
 #import "NMEDataManager.h"
-//#import <Venmo-iOS-SDK/Venmo.h>
 
 @interface NMEProjectViewController () 
 
@@ -57,26 +56,6 @@ const double SECONDS_PER_MIN = 60.0;
     av.alertViewStyle = UIAlertViewStylePlainTextInput;
 //    [av textFieldAtIndex:0].delegate = self;
     [av show];
-}
-
-
-- (IBAction)donatePresed:(id)sender {
-//    NSString *recipient = self.project[@"venmo"];
-    NSString *recipient = @"Julian-Locke";
-    
-    NSString *username = [[PFUser currentUser] username];
-    NSString *note = [NSString stringWithFormat:@"%@ sent you some money for your awesome music!", username];
-    
-    NSUInteger amount = 1;
-    
-//    [[Venmo sharedInstance] sendPaymentTo:recipient amount:amount note:note completionHandler:^(VENTransaction *transaction, BOOL success, NSError *error) {
-//        if (success) {
-//            NSLog(@"Yay money!");
-//        } else {
-//            NSLog(@"Nope. No money...");
-//        }
-//    }];
-
 }
 
 - (IBAction)recordButtonPressed:(id)sender {
