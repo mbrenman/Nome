@@ -50,7 +50,7 @@
 {
     PFQuery *query = [PFQuery queryWithClassName:@"projectObject"];
     NSString *username = [[PFUser currentUser] username];
-    NSLog(username);
+//    NSLog(username);
     [query whereKey:@"collaborators" equalTo:username];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         self.projects = [[NSMutableArray alloc] initWithArray:objects];

@@ -486,8 +486,11 @@ const double SECONDS_PER_MIN = 60.0;
 (AVAudioPlayer *)player successfully:(BOOL)flag
 {
     NSURL *calvUrl = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
-    //Doesn't stop it changing on clav
-    if ([[player url] filePathURL] != [calvUrl filePathURL]){
+
+    NSString *claveURLString = [[calvUrl filePathURL] description];
+    NSString *otherURLString = [[[player url] filePathURL] description];
+
+    if (![claveURLString isEqualToString:otherURLString]){
         NSLog(@"chagned");
         _recordButton.enabled = YES;
         _stopButton.enabled = NO;
