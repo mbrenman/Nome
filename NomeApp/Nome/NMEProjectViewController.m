@@ -12,7 +12,6 @@ const double SECONDS_PER_MIN = 60.0;
 #import "NMEProjectTableViewCell.h"
 #import "NMEAppDelegate.h"
 #import "NMEDataManager.h"
-#import <Venmo-iOS-SDK/Venmo.h>
 
 @interface NMEProjectViewController () 
 
@@ -57,26 +56,6 @@ const double SECONDS_PER_MIN = 60.0;
     av.alertViewStyle = UIAlertViewStylePlainTextInput;
 //    [av textFieldAtIndex:0].delegate = self;
     [av show];
-}
-
-
-- (IBAction)donatePresed:(id)sender {
-//    NSString *recipient = self.project[@"venmo"];
-    NSString *recipient = @"Julian-Locke";
-    
-    NSString *username = [[PFUser currentUser] username];
-    NSString *note = [NSString stringWithFormat:@"%@ sent you some money for your awesome music!", username];
-    
-    NSUInteger amount = 1;
-    
-    [[Venmo sharedInstance] sendPaymentTo:recipient amount:amount note:note completionHandler:^(VENTransaction *transaction, BOOL success, NSError *error) {
-        if (success) {
-            NSLog(@"Yay money!");
-        } else {
-            NSLog(@"Nope. No money...");
-        }
-    }];
-
 }
 
 - (IBAction)recordButtonPressed:(id)sender {
@@ -161,7 +140,7 @@ const double SECONDS_PER_MIN = 60.0;
     _playButton.enabled = NO;
     _recordButton.enabled = NO;
     _loopButton.enabled = NO;
-
+    
     //Create metronome
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
     AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
@@ -174,6 +153,39 @@ const double SECONDS_PER_MIN = 60.0;
     [self playSoundsAndLoop:loop atTime:now];
 }
 
+/*
+ * This function allows the audio to always play through the speakers, even
+ * when recording, and it comes from this Stack Overflow link:
+ *
+ * http://stackoverflow.com/questions/18807157/how-do-i-route-audio-to-speaker-without-using-audiosessionsetproperty/18808124#18808124
+ */
+ - (void)setToPlayThroughSpeakers
+{
+    //get your app's audioSession singleton object
+    AVAudioSession* session = [AVAudioSession sharedInstance];
+    
+    //error handling
+    BOOL success;
+    NSError* error;
+    
+    //set the audioSession category.
+    //Needs to be Record or PlayAndRecord to use audioRouteOverride:
+    
+    success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
+                             error:&error];
+    
+    if (!success)  NSLog(@"AVAudioSession error setting category:%@",error);
+    
+    //set the audioSession override
+    success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+                                         error:&error];
+    if (!success)  NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+    
+    //activate the audio session
+    success = [session setActive:YES error:&error];
+    if (!success) NSLog(@"AVAudioSession error activating: %@",error);
+    else NSLog(@"audioSession active");
+}
 
 - (void)startRecorder
 {
@@ -333,6 +345,8 @@ const double SECONDS_PER_MIN = 60.0;
     // Do any additional setup after loading the view.
     self.projectNameLabel = self.project[@"name"];
 
+    [self setToPlayThroughSpeakers];
+    
     _playButton.enabled = NO;
     _stopButton.enabled = NO;
     _recordButton.enabled = NO;

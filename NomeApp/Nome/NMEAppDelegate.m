@@ -9,7 +9,6 @@
 #import "NMEAppDelegate.h"
 #import "NMESecrets.h"
 #import <Parse/Parse.h>
-#import <Venmo-iOS-SDK/Venmo.h>
 
 @interface NMEAppDelegate ()
 
@@ -33,20 +32,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    [Venmo startWithAppId:venmoID secret:venmoKey name:@"Nome"];
-
-    if (![Venmo isVenmoAppInstalled]) {
-        [[Venmo sharedInstance] setDefaultTransactionMethod:VENTransactionMethodAPI];
-    }
-    else {
-        [[Venmo sharedInstance] setDefaultTransactionMethod:VENTransactionMethodAppSwitch];
-    }
-    
-    [[Venmo sharedInstance] requestPermissions:@[VENPermissionMakePayments,VENPermissionAccessProfile] withCompletionHandler:^(BOOL success, NSError *error) {
-        //
-    }];
-
     //Setting up Parse
     [Parse setApplicationId: parseAppID
                   clientKey: parseClientKey];
@@ -58,9 +43,9 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    if ([[Venmo sharedInstance] handleOpenURL:url]) {
-        return YES;
-    }
+//    if ([[Venmo sharedInstance] handleOpenURL:url]) {
+//        return YES;
+//    }
     // You can add your app-specific url handling code here if needed
     return NO;
 }
