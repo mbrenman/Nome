@@ -477,7 +477,7 @@ const double SECONDS_PER_MIN = 60.0;
     cell.loopNameLabel.textColor = [UIColor colorWithWhite:.35 alpha:1.];
     
     cell.backgroundColor = [UIColor colorWithWhite:.7 alpha:1.];
-        
+    
 #warning set volume from parse data
     cell.volumeSlider.maximumValue = 1.f;
     cell.volumeSlider.minimumValue = 0.f;
@@ -501,6 +501,31 @@ const double SECONDS_PER_MIN = 60.0;
 
     return [loops count];
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.currentState == defaultState) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) { 
+        NSInteger row = indexPath.row;
+        [self.loopObjects removeObjectAtIndex:row];
+        [self.rawSoundData removeObjectAtIndex:row];
+
+        NSLog(@"%@",[self.project valueForKey:@"loops"] );
+        
+        self.project[@"loops"] = self.loopObjects;
+        [self.project saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                [self.tableView reloadData];
+            }
+        }];
+    }
+}
+
 
 //- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 //    self.clickedObject = [self.project objectAtIndex:indexPath.row];
@@ -577,22 +602,29 @@ const double SECONDS_PER_MIN = 60.0;
         
         PFObject *loopDataObject = [self createLoopObjectWithData:data];
         
-        //Redownload loops to avoid overwriting friends data
+        //Redownload loops and project to avoid overwriting friends data
 
-        NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
-        NSString *username = [[PFUser currentUser] username];
-        [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
-        
-        _project[@"loops"] = loops;
-        [_project saveInBackground];
-        [loopDataObject saveInBackground];
-        
-        //hold users from leaving until we sync data?
-        
-        //Reload table to see new tracks
-        [self.tableView reloadData];
-        [self.rawSoundData addObject:data];
-        
+        [self.project fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            self.project = object;
+            
+            NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
+            NSString *username = [[PFUser currentUser] username];
+            
+            [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
+            
+            self.loopObjects = loops;
+            self.project[@"loops"] = self.loopObjects;
+            
+            NSLog(@"loop array length %@", _project[@"loops"]);
+
+            [self.project saveInBackground];
+            [loopDataObject saveInBackground];
+            
+            //Reload table to see new tracks
+            [self.tableView reloadData];
+            [self.rawSoundData addObject:data];
+        }];
+         
         _audioRecorder = nil;
         self.currentState = defaultState;
     }
