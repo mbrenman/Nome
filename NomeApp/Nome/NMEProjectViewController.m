@@ -6,6 +6,13 @@
 //  Copyright (c) 2014 Julian Locke. All rights reserved.
 //
 
+typedef enum : NSUInteger {
+    playingState,
+    loopingPlayState,
+    recordingState,
+    defaultState,
+} state;
+
 const double SECONDS_PER_MIN = 60.0;
 
 #import "NMEProjectViewController.h"
@@ -46,23 +53,39 @@ const double SECONDS_PER_MIN = 60.0;
 @property (nonatomic, strong) NSMutableArray *loopObjects;
 @property (nonatomic, strong) NSMutableArray *rawSoundData;
 
+//State
+@property (nonatomic) state currentState;
+
 @end
 
 @implementation NMEProjectViewController
 
-
-- (IBAction)addCollaboratorClick:(id)sender {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Title" message:@"Who's joining the team?" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Keep", nil];
-    av.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    [av textFieldAtIndex:0].delegate = self;
-    [av show];
+- (void)setCurrentState:(state)currentState{
+    _currentState = currentState;
+    switch (currentState) {
+        case playingState:
+            [self enterPlayingState];
+            break;
+        case loopingPlayState:
+            [self enterLoopingState];
+            break;
+        case recordingState:
+            [self enterRecordingState];
+            break;
+        case defaultState:
+            [self enterDefaultState];
+            break;
+        default:
+            break;
+    }
 }
 
-- (IBAction)recordButtonPressed:(id)sender {
+- (void)enterRecordingState{
     _playButton.enabled = NO;
     _stopButton.enabled = NO;
     _recordButton.enabled  = NO;
     _loopButton.enabled  = NO;
+    
     if (!_audioRecorder){
         //Remake the recorder for a different file url
         _audioRecorder = [self newAudioRecorderWithFileName:[[NSString stringWithFormat:@"%d", _count++] stringByAppendingString:@".caf"]];
@@ -83,18 +106,52 @@ const double SECONDS_PER_MIN = 60.0;
         now = [self createMetronome:now];
         
         //Play and Record
-        [self playSoundsAndLoop:false atTime:now];
+        for (AVAudioPlayer *player in _playerArray){
+            [player playAtTime: now];
+        }
         [_audioRecorder recordAtTime:now forDuration:self.recordingDuration];
     }
 }
-- (IBAction)playButtonPressed:(id)sender {
+
+- (void)enterPlayingState{
     _stopButton.enabled = YES;
     _playButton.enabled = NO;
     _recordButton.enabled = NO;
     _loopButton.enabled = NO;
-    [self playButtonTouch:false];
+    
+    //Create metronome
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
+    AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
+    [player prepareToPlay];
+    NSTimeInterval now = [player deviceCurrentTime];
+    [self prepareForPlay];
+
+    now = [self createMetronome:now];
+
+    for (AVAudioPlayer *player in _playerArray){
+        [player playAtTime: now];
+    }
 }
-- (IBAction)pressedStopButton:(id)sender {
+
+- (void)enterLoopingState{
+    _stopButton.enabled = YES;
+    _playButton.enabled = NO;
+    _recordButton.enabled = NO;
+    _loopButton.enabled = NO;
+    
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
+    AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
+    NSTimeInterval now = [player deviceCurrentTime];
+
+    [self prepareForPlay];
+    
+    for (AVAudioPlayer *player in _playerArray){
+        [player setNumberOfLoops:-1];
+        [player playAtTime: now];
+    }
+}
+
+- (void)enterDefaultState{
     _stopButton.enabled = NO;
     _playButton.enabled = YES;
     _recordButton.enabled = YES;
@@ -106,23 +163,36 @@ const double SECONDS_PER_MIN = 60.0;
         }
     }
 }
+
+- (IBAction)recordButtonPressed:(id)sender {
+    self.currentState = recordingState;
+}
+- (IBAction)playButtonPressed:(id)sender {
+    self.currentState = playingState;
+}
+- (IBAction)pressedStopButton:(id)sender {
+    self.currentState = defaultState;
+}
 - (IBAction)pressedLoopButton:(id)sender {
-    [self playButtonTouch:true];
+    self.currentState = loopingPlayState;
+}
+
+- (IBAction)addCollaboratorClick:(id)sender {
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Title" message:@"Who's joining the team?" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Keep", nil];
+    av.alertViewStyle = UIAlertViewStylePlainTextInput;
+    //    [av textFieldAtIndex:0].delegate = self;
+    [av show];
 }
 
 - (NSTimeInterval)createMetronome:(NSTimeInterval) now
 {
     double beatLen = SECONDS_PER_MIN/((double)self.bpm);
-    if (!self.metronomeArray){
-        _metronomeArray = [[NSMutableArray alloc] init];
-    }
     [self.metronomeArray removeAllObjects];
     
     for (int i=0; i<=(self.numBeats + 5); i++) {
         
         NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
         AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
-
         
         NSLog(@"claveeee");
         
@@ -134,24 +204,38 @@ const double SECONDS_PER_MIN = 60.0;
     return now + 5*beatLen;
 }
 
-- (void)playButtonTouch:(BOOL) loop
+//- (void)playSoundsAndLoop:(BOOL) loop atTime:(NSTimeInterval) now
+//{
+//    if ([_playerArray count] > 0){
+//        //        NSTimeInterval shortStartDelay = 0.05;            // seconds
+//        //        NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
+//        
+//        for (AVAudioPlayer *player in _playerArray){
+//            if (loop){
+//                [player setNumberOfLoops:-1];
+//            }
+//            [player playAtTime: now];
+//            
+//        }
+//    }
+//}
+
+- (void)prepareForPlay
 {
-    _stopButton.enabled = YES;
-    _playButton.enabled = NO;
-    _recordButton.enabled = NO;
-    _loopButton.enabled = NO;
+    //Empty the player array to not double everything
+    [_playerArray removeAllObjects];
     
-    //Create metronome
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
-    AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
-    [player prepareToPlay];
-    NSTimeInterval now = [player deviceCurrentTime];
-        [self prepareForPlay];
-    if (!loop) {
-        now = [self createMetronome:now];
+    for (NSData *data in self.rawSoundData){
+        AVAudioPlayer *player = [self newAudioPlayerWithData:data];
+        
+        //AVAudioPlayer *player = [self newAudioPlayerWithURL:url];
+        [player prepareToPlay];
+        NSLog(@"adding5");
+        [_playerArray addObject:player];
+        NSLog(@"finadding5");
     }
-    [self playSoundsAndLoop:loop atTime:now];
 }
+
 
 /*
  * This function allows the audio to always play through the speakers, even
@@ -185,55 +269,6 @@ const double SECONDS_PER_MIN = 60.0;
     success = [session setActive:YES error:&error];
     if (!success) NSLog(@"AVAudioSession error activating: %@",error);
     else NSLog(@"audioSession active");
-}
-
-- (void)startRecorder
-{
-    [_audioRecorder recordForDuration:_recordingDuration];
-}
-
-- (IBAction)stopRecordingAudio:(id)sender {
-//    _stopButton.enabled = NO;
-//    _playButton.enabled = YES;
-//    _recordButton.enabled = YES;
-//    
-//    for (AVAudioPlayer *player in _playerArray){
-//        if (player.playing){
-//            [player stop];
-//        }
-//    }
-}
-
-- (void)playSoundsAndLoop:(BOOL) loop atTime:(NSTimeInterval) now
-{
-    if ([_playerArray count] > 0){
-//        NSTimeInterval shortStartDelay = 0.05;            // seconds
-//        NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
-        
-        for (AVAudioPlayer *player in _playerArray){
-            if (loop){
-                [player setNumberOfLoops:-1];
-            }
-            [player playAtTime: now];
-            
-        }
-    }
-}
-
-- (void)prepareForPlay
-{
-    //Empty the player array to not double everything
-    [_playerArray removeAllObjects];
-
-    for (NSData *data in self.rawSoundData){
-        AVAudioPlayer *player = [self newAudioPlayerWithData:data];
-        
-        //AVAudioPlayer *player = [self newAudioPlayerWithURL:url];
-        [player prepareToPlay];
-        NSLog(@"adding5");
-        [_playerArray addObject:player];
-        NSLog(@"finadding5");
-    }
 }
 
 - (NSURL *)NSURLfrom:(NSString *)nsstring
@@ -397,6 +432,8 @@ const double SECONDS_PER_MIN = 60.0;
 //        NSLog([NSString stringWithFormat:@"%@", objects]);
         [self.tableView reloadData];
         [self loadFiles];
+        
+        self.currentState = defaultState;
     }];
 }
 
@@ -492,10 +529,7 @@ const double SECONDS_PER_MIN = 60.0;
 
     if (![claveURLString isEqualToString:otherURLString]){
         NSLog(@"chagned");
-        _recordButton.enabled = YES;
-        _stopButton.enabled = NO;
-        _playButton.enabled = YES;
-        _loopButton.enabled = YES;
+        self.currentState = defaultState;
     }
 }
 
@@ -515,7 +549,6 @@ const double SECONDS_PER_MIN = 60.0;
     [_urlArray addObject:url];
     NSLog(@"finadding3");
 
-    [self stopRecordingAudio:nil];
     [self showAlert];
 }
 
@@ -533,7 +566,7 @@ const double SECONDS_PER_MIN = 60.0;
         NSLog([[alertView textFieldAtIndex:0] text]);
         NSString *loopTitle = [[alertView textFieldAtIndex:0] text];
         NSString *loopLocalFile = [_audioRecorder.url absoluteString];
-        NSLog(loopLocalFile);
+//        NSLog(loopLocalFile);
         
         NSURL *url = [self NSURLfrom:loopLocalFile];
         
@@ -582,6 +615,12 @@ const double SECONDS_PER_MIN = 60.0;
     return loopObject;
 }
 
+- (NSMutableArray *)metronomeArray{
+    if (!_metronomeArray) {
+        _metronomeArray = [[NSMutableArray alloc] init];
+    }
+    return _metronomeArray;
+}
 
 
 @end
