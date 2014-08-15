@@ -15,7 +15,7 @@
 @interface NMEProjectsTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray *projects;
-@property (strong, nonatomic) NMEDataManager *dataManager;
+//@property (strong, nonatomic) NMEDataManager *dataManager;
 @property (strong, nonatomic) PFObject *clickedObject;
 
 @end

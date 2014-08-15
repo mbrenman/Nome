@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (readonly, strong, nonatomic) NMEDataManager *dataManager;
+//@property (readonly, strong, nonatomic) NMEDataManager *dataManager;
 
 +(instancetype)delegate;
 

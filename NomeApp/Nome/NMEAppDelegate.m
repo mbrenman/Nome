@@ -12,7 +12,7 @@
 
 @interface NMEAppDelegate ()
 
-@property (strong, nonatomic) NMEDataManager *dataManager;
+//@property (strong, nonatomic) NMEDataManager *dataManager;
 
 @end
 
@@ -22,12 +22,12 @@
     return (NMEAppDelegate *)([UIApplication sharedApplication].delegate);
 }
 
-- (NMEDataManager *)dataManager{
-    if (!_dataManager) {
-        _dataManager = [[NMEDataManager alloc] init];
-    }
-    return _dataManager;
-}
+//- (NMEDataManager *)dataManager{
+//    if (!_dataManager) {
+//        _dataManager = [[NMEDataManager alloc] init];
+//    }
+//    return _dataManager;
+//}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
