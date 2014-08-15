@@ -11,5 +11,6 @@
 @interface NMEProjectTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *loopNameLabel;
+@property (strong, nonatomic) IBOutlet UISlider *volumeSlider;
 
 @end

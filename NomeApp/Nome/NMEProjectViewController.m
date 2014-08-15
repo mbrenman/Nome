@@ -204,32 +204,27 @@ const double SECONDS_PER_MIN = 60.0;
     return now + 5*beatLen;
 }
 
-//- (void)playSoundsAndLoop:(BOOL) loop atTime:(NSTimeInterval) now
-//{
-//    if ([_playerArray count] > 0){
-//        //        NSTimeInterval shortStartDelay = 0.05;            // seconds
-//        //        NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
-//        
-//        for (AVAudioPlayer *player in _playerArray){
-//            if (loop){
-//                [player setNumberOfLoops:-1];
-//            }
-//            [player playAtTime: now];
-//            
-//        }
-//    }
-//}
-
 - (void)prepareForPlay
 {
     //Empty the player array to not double everything
     [_playerArray removeAllObjects];
     
-    for (NSData *data in self.rawSoundData){
-        AVAudioPlayer *player = [self newAudioPlayerWithData:data];
+//    for (NSData *data in self.rawSoundData){
+    
+    for (int i = 0; i < self.rawSoundData.count; i++) {
+        NSData *data = [self.rawSoundData objectAtIndex:i];
         
-        //AVAudioPlayer *player = [self newAudioPlayerWithURL:url];
+
+        AVAudioPlayer *player = [self newAudioPlayerWithData:data];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        
+        NMEProjectTableViewCell *cell = (NMEProjectTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        
+        player.volume = cell.volumeSlider.value;
+        
+//        player.volume = ;
         [player prepareToPlay];
+        
         NSLog(@"adding5");
         [_playerArray addObject:player];
         NSLog(@"finadding5");
@@ -336,8 +331,7 @@ const double SECONDS_PER_MIN = 60.0;
 - (AVAudioPlayer *)newAudioPlayerWithURL: (NSURL *)url
 {
     NSError *error;
-    
-    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc]
+        AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc]
                                   initWithContentsOfURL:url
                                   error:&error];
     
@@ -352,7 +346,6 @@ const double SECONDS_PER_MIN = 60.0;
 - (AVAudioPlayer *)newAudioPlayerWithData:(NSData *)data
 {
     NSError *error;
-    
     AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc]
                                   initWithData:data
                                   error:&error];
@@ -387,12 +380,14 @@ const double SECONDS_PER_MIN = 60.0;
     _recordButton.enabled = NO;
     _loopButton.enabled = NO;
     
+    
+    
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
     [self.tableView reloadData];
     
-    self.donateButton.font = [UIFont fontWithName:@"Avenir-Light" size:16];
-    [self.donateButton setTitleColor:[UIColor colorWithHue:.32 saturation:.3 brightness:1. alpha:1.] forState:UIControlStateNormal];
+//    self.donateButton.font = [UIFont fontWithName:@"Avenir-Light" size:16];
+//    [self.donateButton setTitleColor:[UIColor colorWithHue:.32 saturation:.3 brightness:1. alpha:1.] forState:UIControlStateNormal];
     
     [self getAudioFromParse];
     
@@ -413,10 +408,10 @@ const double SECONDS_PER_MIN = 60.0;
     NSMutableArray *objectIDs = [[NSMutableArray alloc] init];
     for (PFObject *object in loopDictionaries) {
         PFObject *objectPointer = object[@"id"];
-        NSLog(@"adding1");
-        NSLog([object description]);
-        NSLog([objectPointer objectId]);
-        NSLog(@"continuing");
+//        NSLog(@"adding1");
+//        NSLog([object description]);
+//        NSLog([objectPointer objectId]);
+//        NSLog(@"continuing");
         if ([objectPointer objectId]){
             [objectIDs addObject:[objectPointer objectId]];
         } else {
@@ -474,7 +469,6 @@ const double SECONDS_PER_MIN = 60.0;
     
     PFObject *currentProject = self.project;
     
-    //    cell.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
     NSDictionary *loop = [currentProject[@"loops"] objectAtIndex:indexPath.row];
     
     cell.loopNameLabel.text = [loop objectForKey:@"name"];
@@ -483,6 +477,12 @@ const double SECONDS_PER_MIN = 60.0;
     cell.loopNameLabel.textColor = [UIColor colorWithWhite:.35 alpha:1.];
     
     cell.backgroundColor = [UIColor colorWithWhite:.7 alpha:1.];
+        
+#warning set volume from parse data
+    cell.volumeSlider.maximumValue = 1.f;
+    cell.volumeSlider.minimumValue = 0.f;
+    cell.volumeSlider.backgroundColor = [UIColor colorWithWhite:.3 alpha:1.];
+    
     return cell;
 }
 
@@ -497,7 +497,7 @@ const double SECONDS_PER_MIN = 60.0;
 {
     // Return the number of rows in the section.'
     NSMutableArray *loops = self.project[@"loops"];
-    NSLog(@"COUNT! %u",[loops count]);
+//    NSLog(@"COUNT! %u",[loops count]);
 
     return [loops count];
 }
@@ -528,7 +528,6 @@ const double SECONDS_PER_MIN = 60.0;
     NSString *otherURLString = [[[player url] filePathURL] description];
 
     if (![claveURLString isEqualToString:otherURLString]){
-        NSLog(@"chagned");
         self.currentState = defaultState;
     }
 }
@@ -554,7 +553,12 @@ const double SECONDS_PER_MIN = 60.0;
 
 - (void)showAlert
 {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Title" message:@"Please name your loop!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Keep", nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Title"
+                                                 message:@"Please name your loop!"
+                                                delegate:self
+                                       cancelButtonTitle:@"Cancel"
+                                       otherButtonTitles:@"Keep", nil];
+    
     av.alertViewStyle = UIAlertViewStylePlainTextInput;
     [av textFieldAtIndex:0].delegate = self;
     [av show];
@@ -563,11 +567,8 @@ const double SECONDS_PER_MIN = 60.0;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1){
-        NSLog([[alertView textFieldAtIndex:0] text]);
         NSString *loopTitle = [[alertView textFieldAtIndex:0] text];
         NSString *loopLocalFile = [_audioRecorder.url absoluteString];
-//        NSLog(loopLocalFile);
-        
         NSURL *url = [self NSURLfrom:loopLocalFile];
         
         //Load from Data
@@ -575,16 +576,13 @@ const double SECONDS_PER_MIN = 60.0;
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
         
         PFObject *loopDataObject = [self createLoopObjectWithData:data];
-        NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
-        NSString *username = [[PFUser currentUser] username];
-        NSLog(@"adding4");
-        [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
-        NSLog(@"finadding4");
-
-        //Add to loopObjects and rawSound
-//        [self.loopObjects]
         
         //Redownload loops to avoid overwriting friends data
+
+        NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
+        NSString *username = [[PFUser currentUser] username];
+        [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
+        
         _project[@"loops"] = loops;
         [_project saveInBackground];
         [loopDataObject saveInBackground];
@@ -596,6 +594,7 @@ const double SECONDS_PER_MIN = 60.0;
         [self.rawSoundData addObject:data];
         
         _audioRecorder = nil;
+        self.currentState = defaultState;
     }
 }
 
@@ -622,5 +621,21 @@ const double SECONDS_PER_MIN = 60.0;
     return _metronomeArray;
 }
 
+
+//- (void)playSoundsAndLoop:(BOOL) loop atTime:(NSTimeInterval) now
+//{
+//    if ([_playerArray count] > 0){
+//        //        NSTimeInterval shortStartDelay = 0.05;            // seconds
+//        //        NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
+//
+//        for (AVAudioPlayer *player in _playerArray){
+//            if (loop){
+//                [player setNumberOfLoops:-1];
+//            }
+//            [player playAtTime: now];
+//
+//        }
+//    }
+//}
 
 @end
