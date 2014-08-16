@@ -159,7 +159,15 @@ const double SECONDS_PER_MIN = 60.0;
     _recordButton.enabled = YES;
     _loopButton.enabled  = YES;
     
-    for (AVAudioPlayer *player in _playerArray){
+    //Stop all music from playing
+    for (AVAudioPlayer *player in self.playerArray){
+        if (player.playing){
+            [player stop];
+        }
+    }
+    
+    //Stop all metronomes
+    for (AVAudioPlayer *player in self.metronomeArray){
         if (player.playing){
             [player stop];
         }
