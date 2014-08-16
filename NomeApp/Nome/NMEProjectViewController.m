@@ -31,7 +31,6 @@ const double SECONDS_PER_MIN = 60.0;
 @property (strong, nonatomic) IBOutlet UILabel *projectNameLabel;
 
 @property (strong, nonatomic) IBOutlet UITableView  *tableView;
-@property (strong, nonatomic) IBOutlet UIButton *donateButton;
 
 //Player information
 @property (strong, nonatomic) AVAudioRecorder *audioRecorder;
@@ -73,6 +72,9 @@ const double SECONDS_PER_MIN = 60.0;
             [self enterRecordingState];
             break;
         case defaultState:
+            //Can we just make this the default case? Or does this function
+            //randomly get called so that we need to code in a specific
+            //name for when we actually want to switch?
             [self enterDefaultState];
             break;
         default:
