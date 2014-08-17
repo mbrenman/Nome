@@ -75,6 +75,9 @@ const double SECONDS_PER_MIN = 60.0;
             //Can we just make this the default case? Or does this function
             //randomly get called so that we need to code in a specific
             //name for when we actually want to switch?
+            //
+            //I think we should keep it this way, it self-documents and leaves
+            //our options open for things like using a state stack later on
             [self enterDefaultState];
             break;
         default:
@@ -232,7 +235,6 @@ const double SECONDS_PER_MIN = 60.0;
         
         player.volume = cell.volumeSlider.value;
         
-//        player.volume = ;
         [player prepareToPlay];
         
         NSLog(@"adding5");
@@ -240,6 +242,11 @@ const double SECONDS_PER_MIN = 60.0;
         NSLog(@"finadding5");
     }
 }
+- (IBAction)volumeValueChanged:(UISlider *)sender {
+    [[self.playerArray objectAtIndex:sender.tag] setVolume:sender.value];
+}
+
+
 
 
 /*
@@ -492,6 +499,7 @@ const double SECONDS_PER_MIN = 60.0;
     cell.volumeSlider.maximumValue = 1.f;
     cell.volumeSlider.minimumValue = 0.f;
     cell.volumeSlider.backgroundColor = [UIColor colorWithWhite:.3 alpha:1.];
+    cell.volumeSlider.tag = indexPath.row;
     
     return cell;
 }
