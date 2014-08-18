@@ -222,11 +222,7 @@ const double SECONDS_PER_MIN = 60.0;
     
     for (int i = 0; i < self.rawSoundData.count; i++) {
         NSData *data = [self.rawSoundData objectAtIndex:i];
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 60ecbaf0206480a3879b6247dcfaa69212e0a0ec
         AVAudioPlayer *player = [self newAudioPlayerWithData:data];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         
