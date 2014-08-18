@@ -9,8 +9,11 @@
 #import "NMEDiscoveryTableViewController.h"
 #import "NMEAppDelegate.h"
 #import "NMEDataManager.h"
+#import "NMEDiscoverTableCell.h"
 
 @interface NMEDiscoveryTableViewController ()
+
+@property (strong, nonatomic) NSMutableArray *projects;
 
 @end
 
@@ -38,6 +41,23 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"View will appear");
+    [self getProjectNames];
+}
+
+- (void)getProjectNames
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"projectObject"];
+    NSLog(@"about to run query");
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        NSLog(@"found things");
+        self.projects = [[NSMutableArray alloc] initWithArray:objects];
+        [self.tableView reloadData];
+    }];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -50,14 +70,14 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.projects.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,16 +85,36 @@
 #warning WhichProject?
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    NMEDiscoverTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"discoverTableCell"];
     
+    if (!cell) {
+        cell = [[NMEDiscoverTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"discoverTableCell"];
+    }
+    
+    PFObject *currentProject = [self.projects objectAtIndex:indexPath.row];
+    
+    NSLog([NSString stringWithFormat:@"%@", currentProject]);
+    
+    cell.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
+    
+    
+    
+    cell.secondaryLabel.text = [NSString stringWithFormat:@"%u BPM", [[currentProject[@"bpm"] description] intValue]];
+    cell.secondaryLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
+    cell.secondaryLabel.font = [UIFont fontWithName:@"Avenir-Light" size:18];
+    
+    cell.projectNameLabel.text = currentProject[@"projectName"];
+    cell.projectNameLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
+    cell.projectNameLabel.font = [UIFont fontWithName:@"Avenir" size:28];
+    //    cell.projectNameLabel.textColor = [UIColor colorWithHue:.03 saturation:.64 brightness:.99 alpha:1.];
+    //    cell.projectNameLabel.textColor = [UIColor colorWithHue:.49 saturation:.22 brightness:.95 alpha:1.];
+    //    cell.projectNameLabel.textColor = [UIColor colorWithHue:.03 saturation:.64 brightness:.99 alpha:1.];
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

@@ -204,8 +204,6 @@ const double SECONDS_PER_MIN = 60.0;
         NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
         AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
         
-        NSLog(@"claveeee");
-        
         [player prepareToPlay];
         
         [self.metronomeArray addObject:player];
@@ -219,11 +217,8 @@ const double SECONDS_PER_MIN = 60.0;
     //Empty the player array to not double everything
     [_playerArray removeAllObjects];
     
-//    for (NSData *data in self.rawSoundData){
-    
     for (int i = 0; i < self.rawSoundData.count; i++) {
         NSData *data = [self.rawSoundData objectAtIndex:i];
-        
 
         AVAudioPlayer *player = [self newAudioPlayerWithData:data];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
@@ -232,7 +227,6 @@ const double SECONDS_PER_MIN = 60.0;
         
         player.volume = cell.volumeSlider.value;
         
-//        player.volume = ;
         [player prepareToPlay];
         
         NSLog(@"adding5");
