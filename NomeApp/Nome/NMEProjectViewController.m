@@ -75,6 +75,9 @@ const double SECONDS_PER_MIN = 60.0;
             //Can we just make this the default case? Or does this function
             //randomly get called so that we need to code in a specific
             //name for when we actually want to switch?
+            //
+            //I think we should keep it this way, it self-documents and leaves
+            //our options open for things like using a state stack later on
             [self enterDefaultState];
             break;
         default:
@@ -219,7 +222,11 @@ const double SECONDS_PER_MIN = 60.0;
     
     for (int i = 0; i < self.rawSoundData.count; i++) {
         NSData *data = [self.rawSoundData objectAtIndex:i];
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 60ecbaf0206480a3879b6247dcfaa69212e0a0ec
         AVAudioPlayer *player = [self newAudioPlayerWithData:data];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         
@@ -234,7 +241,9 @@ const double SECONDS_PER_MIN = 60.0;
         NSLog(@"finadding5");
     }
 }
-
+- (IBAction)volumeValueChanged:(UISlider *)sender {
+    [[self.playerArray objectAtIndex:sender.tag] setVolume:sender.value];
+}
 
 /*
  * This function allows the audio to always play through the speakers, even
@@ -409,31 +418,30 @@ const double SECONDS_PER_MIN = 60.0;
 - (void)getAudioFromParse
 {
     NSArray *loopDictionaries = self.project[@"loops"];
-    NSMutableArray *objectIDs = [[NSMutableArray alloc] init];
-    for (PFObject *object in loopDictionaries) {
-        PFObject *objectPointer = object[@"id"];
-//        NSLog(@"adding1");
-//        NSLog([object description]);
-//        NSLog([objectPointer objectId]);
-//        NSLog(@"continuing");
-        if ([objectPointer objectId]){
-            [objectIDs addObject:[objectPointer objectId]];
-        } else {
-            NSLog(@"SKIPPED EMPTY");
-        }
-        NSLog(@"finadding1");
+    
+    self.loopObjects = [[NSMutableArray alloc] init];
+   
+    for (PFObject* object in loopDictionaries) {
+        [self.loopObjects addObject:@" "];
     }
-    PFQuery *query = [PFQuery queryWithClassName:@"loopObject"];
-    [query whereKey:@"objectId" containedIn:objectIDs];
-//    [query includeKey:@"file"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        _loopObjects = [[NSMutableArray alloc] initWithArray: objects];
-//        NSLog([NSString stringWithFormat:@"%@", objects]);
-        [self.tableView reloadData];
-        [self loadFiles];
+    
+    for (int i = 0; i < self.loopObjects.count; i++) {
+        PFObject *object = [loopDictionaries objectAtIndex:i];
+        PFObject *objectPointer = object[@"id"];
         
-        self.currentState = defaultState;
-    }];
+        if ([objectPointer objectId]){
+            PFQuery *query = [PFQuery queryWithClassName:@"loopObject"];
+            [query whereKey:@"objectId" equalTo:[objectPointer objectId]];
+            [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                [self.loopObjects setObject:object atIndexedSubscript:i];
+            }];
+            [self.tableView reloadData];
+            NSLog(@"got shit");
+        }
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self loadFiles];
+    });
 }
 
 - (void)loadFiles{
@@ -486,6 +494,7 @@ const double SECONDS_PER_MIN = 60.0;
     cell.volumeSlider.maximumValue = 1.f;
     cell.volumeSlider.minimumValue = 0.f;
     cell.volumeSlider.backgroundColor = [UIColor colorWithWhite:.3 alpha:1.];
+    cell.volumeSlider.tag = indexPath.row;
     
     return cell;
 }
