@@ -16,6 +16,8 @@
 		AA494DBE19977A510078D70F /* PlayIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA494DBA19977A510078D70F /* PlayIcon.png */; };
 		AA494DBF19977A510078D70F /* RecordIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA494DBB19977A510078D70F /* RecordIcon.png */; };
 		AA494DC019977A510078D70F /* StopIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AA494DBC19977A510078D70F /* StopIcon.png */; };
+		B91C4E3719A2959E0081B0D7 /* NMESettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B91C4E3619A2959E0081B0D7 /* NMESettingsViewController.m */; };
+		B91C4E3A19A2975C0081B0D7 /* More@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B91C4E3919A2975C0081B0D7 /* More@2x.png */; };
 		B9859DC919968D13000984E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DC819968D13000984E5 /* Foundation.framework */; };
 		B9859DCB19968D13000984E5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DCA19968D13000984E5 /* CoreGraphics.framework */; };
 		B9859DCD19968D13000984E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DCC19968D13000984E5 /* UIKit.framework */; };
@@ -74,6 +76,9 @@
 		AA494DBA19977A510078D70F /* PlayIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayIcon.png; sourceTree = "<group>"; };
 		AA494DBB19977A510078D70F /* RecordIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RecordIcon.png; sourceTree = "<group>"; };
 		AA494DBC19977A510078D70F /* StopIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StopIcon.png; sourceTree = "<group>"; };
+		B91C4E3519A2959E0081B0D7 /* NMESettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMESettingsViewController.h; sourceTree = "<group>"; };
+		B91C4E3619A2959E0081B0D7 /* NMESettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMESettingsViewController.m; sourceTree = "<group>"; };
+		B91C4E3919A2975C0081B0D7 /* More@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "More@2x.png"; sourceTree = "<group>"; };
 		B9859DC519968D13000984E5 /* Nome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9859DC819968D13000984E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B9859DCA19968D13000984E5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -171,6 +176,15 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
+		B91C4E3819A295A50081B0D7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B91C4E3519A2959E0081B0D7 /* NMESettingsViewController.h */,
+				B91C4E3619A2959E0081B0D7 /* NMESettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		B9859DBC19968D13000984E5 = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +245,7 @@
 		B9859DCF19968D13000984E5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B91C4E3919A2975C0081B0D7 /* More@2x.png */,
 				B9C767A919979FB0006627A1 /* Search@2x.png */,
 				B9C767A719979F9F006627A1 /* Top_Charts@2x.png */,
 				AA494DB819977A510078D70F /* Icons */,
@@ -277,6 +292,7 @@
 			children = (
 				B9859DDD19968D13000984E5 /* NMELoginViewController.h */,
 				B9859DDE19968D13000984E5 /* NMELoginViewController.m */,
+				B91C4E3819A295A50081B0D7 /* Settings */,
 				B9859E1319969AC2000984E5 /* Project */,
 				B9859E0919969751000984E5 /* Projects Table */,
 				B9859E0A19969769000984E5 /* Discovery Table */,
@@ -415,6 +431,7 @@
 				B9859DE119968D13000984E5 /* Images.xcassets in Resources */,
 				B9C767A819979F9F006627A1 /* Top_Charts@2x.png in Resources */,
 				B9859DD319968D13000984E5 /* InfoPlist.strings in Resources */,
+				B91C4E3A19A2975C0081B0D7 /* More@2x.png in Resources */,
 				AA494DC019977A510078D70F /* StopIcon.png in Resources */,
 				B9859DDC19968D13000984E5 /* Main.storyboard in Resources */,
 			);
@@ -475,6 +492,7 @@
 				B9859DDF19968D13000984E5 /* NMELoginViewController.m in Sources */,
 				B9859E301996BDD3000984E5 /* NMEProjectsTableCell.m in Sources */,
 				B9859E331996C68C000984E5 /* NMEProjectTableViewCell.m in Sources */,
+				B91C4E3719A2959E0081B0D7 /* NMESettingsViewController.m in Sources */,
 				B9859E08199696B9000984E5 /* NMEDiscoveryTableViewController.m in Sources */,
 				B9C767AD1997CA41006627A1 /* NMEDiscoverTableCell.m in Sources */,
 				B9859E05199692BD000984E5 /* NMEProjectsTableViewController.m in Sources */,
