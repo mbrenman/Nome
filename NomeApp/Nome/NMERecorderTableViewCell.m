@@ -1,4 +1,4 @@
-//
+ //
 //  NMEProjectTableViewCell.m
 //  Nome
 //
@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Julian Locke. All rights reserved.
 //
 
-#import "NMEProjectTableViewCell.h"
+#import "NMERecorderTableViewCell.h"
 
-@implementation NMEProjectTableViewCell
+@implementation NMERecorderTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

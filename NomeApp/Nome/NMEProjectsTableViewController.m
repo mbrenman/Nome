@@ -10,7 +10,7 @@
 #import "NMEProjectsTableCell.h"
 #import "NMEAppDelegate.h"
 #import "NMEDataManager.h"
-#import "NMEProjectViewController.h"
+#import "NMERecorderViewController.h"
 
 @interface NMEProjectsTableViewController ()
 
@@ -120,7 +120,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    if ([[segue destinationViewController] isKindOfClass:[NMEProjectViewController class]]) {
+    if ([[segue destinationViewController] isKindOfClass:[NMERecorderViewController class]]) {
         [segue.destinationViewController setProject:self.clickedObject];
     }
 }

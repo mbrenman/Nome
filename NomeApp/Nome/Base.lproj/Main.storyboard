@@ -338,10 +338,10 @@
             </objects>
             <point key="canvasLocation" x="348" y="906"/>
         </scene>
-        <!--Project View Controller-->
+        <!--Recorder View Controller-->
         <scene sceneID="6K2-Tx-EHv">
             <objects>
-                <viewController id="ZoF-h7-KcO" customClass="NMEProjectViewController" sceneMemberID="viewController">
+                <viewController id="ZoF-h7-KcO" customClass="NMERecorderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0sK-rG-vLB"/>
                         <viewControllerLayoutGuide type="bottom" id="dXm-Xl-dTx"/>
@@ -355,7 +355,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="projectTableCell" rowHeight="51" id="eUq-ZZ-S4v" customClass="NMEProjectTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="recorderTableCell" rowHeight="51" id="eUq-ZZ-S4v" customClass="NMERecorderTableViewCell">
                                         <rect key="frame" x="0.0" y="86" width="320" height="51"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eUq-ZZ-S4v" id="tBd-1x-b7j">
@@ -456,7 +456,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jV-Q8-wve" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="868" y="2296"/>
+            <point key="canvasLocation" x="868" y="2286"/>
         </scene>
         <!--Navigation Controller - Settings-->
         <scene sceneID="EiR-fI-0mF">

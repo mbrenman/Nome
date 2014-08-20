@@ -15,12 +15,12 @@ typedef enum : NSUInteger {
 
 const double SECONDS_PER_MIN = 60.0;
 
-#import "NMEProjectViewController.h"
-#import "NMEProjectTableViewCell.h"
+#import "NMERecorderViewController.h"
+#import "NMERecorderTableViewCell.h"
 #import "NMEAppDelegate.h"
 #import "NMEDataManager.h"
 
-@interface NMEProjectViewController () 
+@interface NMERecorderViewController ()
 
 //Control Button links
 @property (strong, nonatomic) IBOutlet UIButton *recordButton;
@@ -57,7 +57,7 @@ const double SECONDS_PER_MIN = 60.0;
 
 @end
 
-@implementation NMEProjectViewController
+@implementation NMERecorderViewController
 
 - (void)setCurrentState:(state)currentState{
     _currentState = currentState;
@@ -72,12 +72,6 @@ const double SECONDS_PER_MIN = 60.0;
             [self enterRecordingState];
             break;
         case defaultState:
-            //Can we just make this the default case? Or does this function
-            //randomly get called so that we need to code in a specific
-            //name for when we actually want to switch?
-            //
-            //I think we should keep it this way, it self-documents and leaves
-            //our options open for things like using a state stack later on
             [self enterDefaultState];
             break;
         default:
@@ -208,6 +202,7 @@ const double SECONDS_PER_MIN = 60.0;
         AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
         
         [player prepareToPlay];
+        [player setVolume:.5f];
         
         [self.metronomeArray addObject:player];
         [player playAtTime:now + (i * beatLen)];
@@ -226,7 +221,7 @@ const double SECONDS_PER_MIN = 60.0;
         AVAudioPlayer *player = [self newAudioPlayerWithData:data];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         
-        NMEProjectTableViewCell *cell = (NMEProjectTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        NMERecorderTableViewCell *cell = (NMERecorderTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         
         player.volume = cell.volumeSlider.value;
         
@@ -359,6 +354,9 @@ const double SECONDS_PER_MIN = 60.0;
                                   initWithData:data
                                   error:&error];
     
+    NSLog(@"DATA:%@",data);
+    
+    
     audioPlayer.delegate = self;
     
     if (error)
@@ -469,10 +467,10 @@ const double SECONDS_PER_MIN = 60.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NMEProjectTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"projectTableCell"];
+    NMERecorderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"recorderTableCell"];
     
     if (!cell) {
-        cell = [[NMEProjectTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"projectTableCell"];
+        cell = [[NMERecorderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"projectTableCell"];
     }
     
     PFObject *currentProject = self.project;

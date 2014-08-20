@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NMEProjectTableViewCell : UITableViewCell
+@interface NMERecorderTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *loopNameLabel;
 @property (strong, nonatomic) IBOutlet UISlider *volumeSlider;
