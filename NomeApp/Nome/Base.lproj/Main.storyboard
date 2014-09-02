@@ -173,41 +173,18 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Collaborators" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0ZR-IE-0zX">
-                                <rect key="frame" x="21" y="113" width="165" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="BPM" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rpT-Yl-JPp">
                                 <rect key="frame" x="20" y="228" width="136" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="63d-ff-x15">
-                                <rect key="frame" x="21" y="151" width="165" height="69"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Total Beats" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cCK-nY-Xmd">
                                 <rect key="frame" x="21" y="266" width="135" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfg-va-Lul">
-                                <rect key="frame" x="194" y="112" width="60" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="addCollaboratorButtonPressed:" destination="c1M-oK-rc2" eventType="touchUpInside" id="bMn-9a-Gwl"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -229,9 +206,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="bpmTextField" destination="rpT-Yl-JPp" id="UN0-fM-6NV"/>
-                        <outlet property="colabAdd" destination="qfg-va-Lul" id="cPT-gf-hmZ"/>
-                        <outlet property="collaboratorsLabel" destination="63d-ff-x15" id="mtb-x7-uer"/>
-                        <outlet property="collaboratorsTextField" destination="0ZR-IE-0zX" id="DlM-gY-k2s"/>
                         <outlet property="projectNameTextField" destination="de2-T6-geX" id="VnF-lh-WlR"/>
                         <outlet property="totalBeatsTextField" destination="cCK-nY-Xmd" id="q1C-NP-byp"/>
                     </connections>
