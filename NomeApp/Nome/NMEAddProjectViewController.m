@@ -25,10 +25,7 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) IBOutlet UILabel *collaboratorsLabel;
 @property (strong, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (strong, nonatomic) IBOutlet UITextField *totalBeatsTextField;
-@property (strong, nonatomic) IBOutlet UIButton *finalButton;
-
 @property (strong, nonatomic) UITapGestureRecognizer* tapRecognizer;
-
 @property (strong, nonatomic) NSMutableArray *collaboratorsArray;
 
 @end
@@ -166,14 +163,6 @@ typedef enum : NSUInteger {
     self.collaboratorsLabel.numberOfLines = 0;
     self.collaboratorsLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
 
-//    self.tagsLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//    self.tagsLabel.numberOfLines = 0;
-//    self.tagsLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
-//
-//    
-    self.finalButton.backgroundColor = [UIColor colorWithHue:.03 saturation:.64 brightness:1. alpha:1.];
-    self.finalButton.font = [UIFont fontWithName:@"Avenir" size:38];
-    
     self.view.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
     self.colabAdd.font = [UIFont fontWithName:@"Avenir" size:14];
 
