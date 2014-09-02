@@ -198,8 +198,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="finalProjectTapped:" destination="c1M-oK-rc2" eventType="touchUpInside" id="9o5-WX-USO"/>
-                                    <action selector="pushToParse:" destination="c1M-oK-rc2" eventType="touchUpInside" id="A1y-H9-Zmz"/>
+                                    <action selector="finalProjectTapped:" destination="c1M-oK-rc2" eventType="touchUpInside" id="CcX-Tt-hU9"/>
                                 </connections>
                             </button>
                         </barButtonItem>

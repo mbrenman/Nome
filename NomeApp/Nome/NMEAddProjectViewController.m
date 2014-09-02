@@ -63,11 +63,6 @@ typedef enum : NSUInteger {
 //    [self tapped];
 //}
 
-- (IBAction)pushToParse:(id)sender {
-    [self finalProjectTapped:nil];
-}
-
-
 - (IBAction)finalProjectTapped:(id)sender {
     NSLog(@"FINALIZE");
     NSString *projectName = self.projectNameTextField.text;
@@ -78,6 +73,8 @@ typedef enum : NSUInteger {
     if ([projectName isEqualToString:@""] ||
         [bpm isEqualToString:@""] ||
          [totalBeats isEqualToString:@""]) {
+        
+        //Also we need to make sure that the bpm and totalbeats are integers
         UIAlertView *badInfo = [[UIAlertView alloc]
                                 initWithTitle:@"Bad info"
                                 message:@"Please make sure to fill all the fields!"
