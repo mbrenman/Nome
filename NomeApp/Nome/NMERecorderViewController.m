@@ -387,15 +387,10 @@ const double SECONDS_PER_MIN = 60.0;
     _recordButton.enabled = NO;
     _loopButton.enabled = NO;
     
-    
-    
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
     [self.tableView reloadData];
-    
-//    self.donateButton.font = [UIFont fontWithName:@"Avenir-Light" size:16];
-//    [self.donateButton setTitleColor:[UIColor colorWithHue:.32 saturation:.3 brightness:1. alpha:1.] forState:UIControlStateNormal];
-    
+
     [self getAudioFromParse];
     
     _count = 1; //For initial .caf file

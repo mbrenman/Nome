@@ -630,12 +630,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nome/Nome-Prefix.pch";
 				INFOPLIST_FILE = "Nome/Nome-Info.plist";
-				OTHER_LDFLAGS = (
-					"-force_load",
-					"$(BUILT_PRODUCTS_DIR)/libPods-Venmo-iOS-SDK.a",
-					"-force_load",
-					"$(BUILT_PRODUCTS_DIR)/libPods-VENCore.a",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -654,11 +649,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nome/Nome-Prefix.pch";
 				INFOPLIST_FILE = "Nome/Nome-Info.plist";
-				OTHER_LDFLAGS = (
-					"-force_load",
-					"$(BUILT_PRODUCTS_DIR)/libPods-Venmo-iOS-SDK.a",
-					"$(BUILT_PRODUCTS_DIR)/libPods-VENCore.a",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
