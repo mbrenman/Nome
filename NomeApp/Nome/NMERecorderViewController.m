@@ -354,9 +354,6 @@ const double SECONDS_PER_MIN = 60.0;
                                   initWithData:data
                                   error:&error];
     
-    NSLog(@"DATA:%@",data);
-    
-    
     audioPlayer.delegate = self;
     
     if (error)

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NMEAddProjectViewController : UIViewController
+@interface NMEAddProjectViewController : UITableViewController
 
 @end

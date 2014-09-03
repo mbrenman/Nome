@@ -19,40 +19,33 @@ typedef enum : NSUInteger {
 
 @interface NMEAddProjectViewController () <UITextFieldDelegate>
 
-@property (strong, nonatomic) IBOutlet UIButton *colabAdd;
 @property (strong, nonatomic) IBOutlet UITextField *projectNameTextField;
-@property (strong, nonatomic) IBOutlet UITextField *collaboratorsTextField;
-@property (strong, nonatomic) IBOutlet UILabel *collaboratorsLabel;
 @property (strong, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (strong, nonatomic) IBOutlet UITextField *totalBeatsTextField;
-@property (strong, nonatomic) IBOutlet UIButton *finalButton;
-
 @property (strong, nonatomic) UITapGestureRecognizer* tapRecognizer;
-
-@property (strong, nonatomic) NSMutableArray *collaboratorsArray;
 
 @end
 
 @implementation NMEAddProjectViewController
-- (IBAction)addCollaboratorButtonPressed:(id)sender {
-
-    NSString *toAdd =self.collaboratorsTextField.text;
-    if (![toAdd isEqualToString:@""]) {
-        [self.collaboratorsArray addObject:toAdd];
-    }
-    
-    
-    
-    NSString *total = [[NSString alloc]init];
-    for (NSString *string in self.collaboratorsArray) {
-        total = [total stringByAppendingString:string];
-        total = [total stringByAppendingString:@" "];
-    }
-    self.collaboratorsLabel.text = total;
-    self.collaboratorsTextField.text = @"";
-
-    [self tapped];
-}
+//- (IBAction)addCollaboratorButtonPressed:(id)sender {
+//
+//    NSString *toAdd =self.collaboratorsTextField.text;
+//    if (![toAdd isEqualToString:@""]) {
+//        [self.collaboratorsArray addObject:toAdd];
+//    }
+//    
+//    
+//    
+//    NSString *total = [[NSString alloc]init];
+//    for (NSString *string in self.collaboratorsArray) {
+//        total = [total stringByAppendingString:string];
+//        total = [total stringByAppendingString:@" "];
+//    }
+//    self.collaboratorsLabel.text = total;
+//    self.collaboratorsTextField.text = @"";
+//
+//    [self tapped];
+//}
 //- (IBAction)addTagPressed:(id)sender {
 //    NSString *toAdd =self.tagsTextField.text;
 //    if (![toAdd isEqualToString:@""]) {
@@ -70,24 +63,18 @@ typedef enum : NSUInteger {
 //    [self tapped];
 //}
 
-- (IBAction)pushToParse:(id)sender {
-    [self finalProjectTapped:nil];
-}
-
-
 - (IBAction)finalProjectTapped:(id)sender {
     NSLog(@"FINALIZE");
     NSString *projectName = self.projectNameTextField.text;
-    NSArray *collaborators = self.collaboratorsArray;
     NSString *bpm = self.bpmTextField.text;
     NSString *totalBeats = self.totalBeatsTextField.text;
-//    NSArray *tags = self.tagsArray;
     NSArray* loops = [[NSArray alloc] init];
     
     if ([projectName isEqualToString:@""] ||
-        (collaborators.count < 1) ||
         [bpm isEqualToString:@""] ||
          [totalBeats isEqualToString:@""]) {
+        
+        //Also we need to make sure that the bpm and totalbeats are integers
         UIAlertView *badInfo = [[UIAlertView alloc]
                                 initWithTitle:@"Bad info"
                                 message:@"Please make sure to fill all the fields!"
@@ -98,7 +85,7 @@ typedef enum : NSUInteger {
     } else {
         PFObject *projectObject = [[PFObject alloc] initWithClassName:@"projectObject"];
         projectObject[@"projectName"] = projectName;
-        projectObject[@"collaborators"] = collaborators;
+        projectObject[@"collaborators"] = @[[[PFUser currentUser] username]];
         projectObject[@"bpm"] = @([bpm integerValue]);
         projectObject[@"totalBeats"] = @([totalBeats integerValue]);
         projectObject[@"loops"] = loops;
@@ -141,8 +128,6 @@ typedef enum : NSUInteger {
 {
     [super viewDidLoad];
     
-    self.collaboratorsArray = [[NSMutableArray alloc] init];
-    
     self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
     [self.view addGestureRecognizer:self.tapRecognizer];
     self.tapRecognizer.enabled = NO;
@@ -150,32 +135,13 @@ typedef enum : NSUInteger {
     [self.projectNameTextField setDelegate:self];
     [self.projectNameTextField setTag:projectName];
     
-    [self.collaboratorsTextField setDelegate:self];
-    [self.collaboratorsTextField setTag:collaborators];
-    
     [self.bpmTextField setDelegate:self];
     [self.bpmTextField setTag:bpm];
     
     [self.totalBeatsTextField setDelegate:self];
     [self.totalBeatsTextField setTag:totalBeats];
     
-    [self.collaboratorsLabel setText:@""];
-//    [self.tagsLabel setText:@""];
-    
-    self.collaboratorsLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.collaboratorsLabel.numberOfLines = 0;
-    self.collaboratorsLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
-
-//    self.tagsLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//    self.tagsLabel.numberOfLines = 0;
-//    self.tagsLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
-//
-//    
-    self.finalButton.backgroundColor = [UIColor colorWithHue:.03 saturation:.64 brightness:1. alpha:1.];
-    self.finalButton.font = [UIFont fontWithName:@"Avenir" size:38];
-    
     self.view.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
-    self.colabAdd.font = [UIFont fontWithName:@"Avenir" size:14];
 
     // Do any additional setup after loading the view.
 }
