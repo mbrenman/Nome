@@ -17,12 +17,13 @@ typedef enum : NSUInteger {
 #import "NMEAddProjectViewController.h"
 #import "Parse/Parse.h"
 
-@interface NMEAddProjectViewController () <UITextFieldDelegate>
+@interface NMEAddProjectViewController () <UITextFieldDelegate,UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *projectNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (strong, nonatomic) IBOutlet UITextField *totalBeatsTextField;
 @property (strong, nonatomic) UITapGestureRecognizer* tapRecognizer;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
@@ -150,6 +151,12 @@ typedef enum : NSUInteger {
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 /*

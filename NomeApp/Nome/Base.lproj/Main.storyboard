@@ -166,7 +166,7 @@
                         <sections>
                             <tableViewSection headerTitle="Project Name" id="IPC-Bd-cfA">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="45" id="m6K-Ao-lhK">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="45" id="m6K-Ao-lhK">
                                         <rect key="frame" x="0.0" y="99" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m6K-Ao-lhK" id="FQZ-wP-QcY">
@@ -187,7 +187,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Beats Per Minute" id="1XN-ay-63a">
                                 <cells>
-                                    <tableViewCell opaque="NO" alpha="0.0" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Nnc-YK-WZ7">
+                                    <tableViewCell opaque="NO" alpha="0.0" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Nnc-YK-WZ7">
                                         <rect key="frame" x="0.0" y="192" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nnc-YK-WZ7" id="Pzg-Q3-T9S">
@@ -208,7 +208,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Total Beats" id="5j4-nC-PfY">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="tWm-TL-zZV">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="tWm-TL-zZV">
                                         <rect key="frame" x="0.0" y="284" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tWm-TL-zZV" id="84s-sJ-eZQ">
@@ -251,6 +251,7 @@
                     <connections>
                         <outlet property="bpmTextField" destination="WXk-Zh-WXL" id="P3Y-yc-bOr"/>
                         <outlet property="projectNameTextField" destination="de2-T6-geX" id="wVv-Mn-us2"/>
+                        <outlet property="tableView" destination="6xD-as-Ilp" id="yrb-29-ffo"/>
                         <outlet property="totalBeatsTextField" destination="n2O-Tg-9c4" id="5T3-IR-RkK"/>
                     </connections>
                 </tableViewController>
