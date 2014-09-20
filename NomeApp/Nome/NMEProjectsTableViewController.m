@@ -50,7 +50,12 @@
     NSString *username = [[PFUser currentUser] username];
     [query whereKey:@"collaborators" equalTo:username];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        self.projects = [[NSMutableArray alloc] initWithArray:objects];
+        NSMutableArray *unsorted = [[NSMutableArray alloc] initWithArray:objects];
+        
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"projectName" ascending:YES];
+        
+        self.projects = [[unsorted sortedArrayUsingDescriptors:@[sortDescriptor]] mutableCopy];
+        
         [self.tableView reloadData];
     }];
 }
