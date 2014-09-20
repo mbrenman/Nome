@@ -185,7 +185,7 @@ const double SECONDS_PER_MIN = 60.0;
 }
 
 - (IBAction)addCollaboratorClick:(id)sender {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Title" message:@"Who's joining the team?" delegate:nil cancelButtonTitle:@"Cancel" otherButtonTitles:@"Keep", nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"New Bandmate" message:@"Who's joining the team?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
     av.alertViewStyle = UIAlertViewStylePlainTextInput;
     //    [av textFieldAtIndex:0].delegate = self;
     [av show];
@@ -590,42 +590,52 @@ const double SECONDS_PER_MIN = 60.0;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1){
-        NSString *loopTitle = [[alertView textFieldAtIndex:0] text];
-        NSString *loopLocalFile = [_audioRecorder.url absoluteString];
-        NSURL *url = [self NSURLfrom:loopLocalFile];
+    if ([[alertView title]  isEqual: @"New Bandmate"]){
+        //Add username to
+        if (buttonIndex == 0){
+            NSLog(@"no new bandmate");
+            
+        } else {
+            NSLog(@"addddd");
+        }
+    } else {
+        if (buttonIndex == 1){
+            NSString *loopTitle = [[alertView textFieldAtIndex:0] text];
+            NSString *loopLocalFile = [_audioRecorder.url absoluteString];
+            NSURL *url = [self NSURLfrom:loopLocalFile];
         
-        //Load from Data
-        NSString *path = [url path];
-        NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+            //Load from Data
+            NSString *path = [url path];
+            NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
         
-        PFObject *loopDataObject = [self createLoopObjectWithData:data];
+            PFObject *loopDataObject = [self createLoopObjectWithData:data];
         
-        //Redownload loops and project to avoid overwriting friends data
+            //Redownload loops and project to avoid overwriting friends data
 
-        [self.project fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            self.project = object;
+            [self.project fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                self.project = object;
             
-            NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
-            NSString *username = [[PFUser currentUser] username];
+                NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
+                NSString *username = [[PFUser currentUser] username];
             
-            [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
+                [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
             
-            self.loopObjects = loops;
-            self.project[@"loops"] = self.loopObjects;
+                self.loopObjects = loops;
+                self.project[@"loops"] = self.loopObjects;
             
-            NSLog(@"loop array length %@", _project[@"loops"]);
+                NSLog(@"loop array length %@", _project[@"loops"]);
 
-            [self.project saveInBackground];
-            [loopDataObject saveInBackground];
+                [self.project saveInBackground];
+                [loopDataObject saveInBackground];
             
-            //Reload table to see new tracks
-            [self.tableView reloadData];
-            [self.rawSoundData addObject:data];
-        }];
+                //Reload table to see new tracks
+                [self.tableView reloadData];
+                [self.rawSoundData addObject:data];
+            }];
          
-        _audioRecorder = nil;
-        self.currentState = defaultState;
+            _audioRecorder = nil;
+            self.currentState = defaultState;
+        }
     }
 }
 

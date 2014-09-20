@@ -32,7 +32,6 @@
 		B9859DEA19968D13000984E5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859DCC19968D13000984E5 /* UIKit.framework */; };
 		B9859DF219968D13000984E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B9859DF019968D13000984E5 /* InfoPlist.strings */; };
 		B9859DF419968D13000984E5 /* NomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859DF319968D13000984E5 /* NomeTests.m */; };
-		B9859E0119969286000984E5 /* NMEDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E0019969286000984E5 /* NMEDataManager.m */; };
 		B9859E05199692BD000984E5 /* NMEProjectsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E04199692BD000984E5 /* NMEProjectsTableViewController.m */; };
 		B9859E08199696B9000984E5 /* NMEDiscoveryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E07199696B9000984E5 /* NMEDiscoveryTableViewController.m */; };
 		B9859E0E199697B4000984E5 /* NMEAddProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E0D199697B4000984E5 /* NMEAddProjectViewController.m */; };
@@ -98,8 +97,6 @@
 		B9859DEF19968D13000984E5 /* NomeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NomeTests-Info.plist"; sourceTree = "<group>"; };
 		B9859DF119968D13000984E5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B9859DF319968D13000984E5 /* NomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomeTests.m; sourceTree = "<group>"; };
-		B9859DFF19969286000984E5 /* NMEDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEDataManager.h; sourceTree = "<group>"; };
-		B9859E0019969286000984E5 /* NMEDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEDataManager.m; sourceTree = "<group>"; };
 		B9859E03199692BD000984E5 /* NMEProjectsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEProjectsTableViewController.h; sourceTree = "<group>"; };
 		B9859E04199692BD000984E5 /* NMEProjectsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEProjectsTableViewController.m; sourceTree = "<group>"; };
 		B9859E06199696B9000984E5 /* NMEDiscoveryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEDiscoveryTableViewController.h; sourceTree = "<group>"; };
@@ -234,7 +231,6 @@
 			children = (
 				B9859DFD19968D2C000984E5 /* App Delegate */,
 				B9859DDA19968D13000984E5 /* Main.storyboard */,
-				B9859E021996928C000984E5 /* Data Manager */,
 				B9859DFE19968E40000984E5 /* UI */,
 				B9859DE019968D13000984E5 /* Images.xcassets */,
 				B9859DCF19968D13000984E5 /* Supporting Files */,
@@ -298,15 +294,6 @@
 				B9859E0A19969769000984E5 /* Discovery Table */,
 			);
 			name = UI;
-			sourceTree = "<group>";
-		};
-		B9859E021996928C000984E5 /* Data Manager */ = {
-			isa = PBXGroup;
-			children = (
-				B9859DFF19969286000984E5 /* NMEDataManager.h */,
-				B9859E0019969286000984E5 /* NMEDataManager.m */,
-			);
-			name = "Data Manager";
 			sourceTree = "<group>";
 		};
 		B9859E0919969751000984E5 /* Projects Table */ = {
@@ -486,7 +473,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9859E0E199697B4000984E5 /* NMEAddProjectViewController.m in Sources */,
-				B9859E0119969286000984E5 /* NMEDataManager.m in Sources */,
 				B9859DD519968D13000984E5 /* main.m in Sources */,
 				B9859E1219969ABA000984E5 /* NMERecorderViewController.m in Sources */,
 				B9859DDF19968D13000984E5 /* NMELoginViewController.m in Sources */,
