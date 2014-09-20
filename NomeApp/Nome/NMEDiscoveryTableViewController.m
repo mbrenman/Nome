@@ -8,7 +8,6 @@
 
 #import "NMEDiscoveryTableViewController.h"
 #import "NMEAppDelegate.h"
-#import "NMEDataManager.h"
 #import "NMEDiscoverTableCell.h"
 
 @interface NMEDiscoveryTableViewController ()

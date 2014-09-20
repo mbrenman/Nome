@@ -18,7 +18,6 @@ const double SECONDS_PER_MIN = 60.0;
 #import "NMERecorderViewController.h"
 #import "NMERecorderTableViewCell.h"
 #import "NMEAppDelegate.h"
-#import "NMEDataManager.h"
 
 @interface NMERecorderViewController ()
 
@@ -594,9 +593,19 @@ const double SECONDS_PER_MIN = 60.0;
         //Add username to
         if (buttonIndex == 0){
             NSLog(@"no new bandmate");
-            
         } else {
-            NSLog(@"addddd");
+            NSString *bandmate = [[alertView textFieldAtIndex:0] text];
+            if (bandmate.length > 0){
+                NSMutableArray *collabs = _project[@"collaborators"];
+                if (![collabs containsObject:bandmate]){
+                    [collabs addObject:bandmate];
+                    [_project saveInBackground];
+                } else {
+                    NSLog(@"Bandmate already in project");
+                }
+            } else {
+                NSLog(@"empty bandmate");
+            }
         }
     } else {
         if (buttonIndex == 1){

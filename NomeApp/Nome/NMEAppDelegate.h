@@ -8,7 +8,6 @@
 
 
 #import <UIKit/UIKit.h>
-#import "NMEDataManager.h"
 
 @interface NMEAppDelegate : UIResponder <UIApplicationDelegate>
 

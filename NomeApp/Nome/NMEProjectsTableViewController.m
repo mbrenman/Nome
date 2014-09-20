@@ -9,7 +9,6 @@
 #import "NMEProjectsTableViewController.h"
 #import "NMEProjectsTableCell.h"
 #import "NMEAppDelegate.h"
-#import "NMEDataManager.h"
 #import "NMERecorderViewController.h"
 
 @interface NMEProjectsTableViewController ()
