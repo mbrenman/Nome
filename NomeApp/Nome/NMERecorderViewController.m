@@ -201,7 +201,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     double beatLen = SECONDS_PER_MIN/((double)self.bpm);
     [self.metronomeArray removeAllObjects];
     
-    for (int i=0; i<=(self.numBeats + 5); i++) {
+    for (int i=0; i<=(self.numBeats + 4); i++) {
         
         NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
         AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
@@ -210,7 +210,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
         [player setVolume:.5f];
         
         [self.metronomeArray addObject:player];
-        [player playAtTime:now + (i * beatLen)];
+        [player playAtTime:now + ((i + 1) * beatLen)];
     }
     return now + 5*beatLen;
 }
