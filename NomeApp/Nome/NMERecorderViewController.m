@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Julian Locke. All rights reserved.
 //
 
+
 typedef enum : NSUInteger {
     playingState,
     loopingPlayState,
@@ -14,12 +15,15 @@ typedef enum : NSUInteger {
 } state;
 
 const double SECONDS_PER_MIN = 60.0;
+const double INDICATOR_SIDE_LENGTH = 20;
 
 #import "NMERecorderViewController.h"
 #import "NMERecorderTableViewCell.h"
 #import "NMEAppDelegate.h"
 
 @interface NMERecorderViewController ()
+
+@property (strong, nonatomic) UIActivityIndicatorView *indicator;
 
 //Control Button links
 @property (strong, nonatomic) IBOutlet UIButton *recordButton;
@@ -373,6 +377,8 @@ const double SECONDS_PER_MIN = 60.0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self beginLoadingAnimation];
+    
     // Do any additional setup after loading the view.
     self.projectNameLabel = self.project[@"name"];
 
@@ -402,6 +408,8 @@ const double SECONDS_PER_MIN = 60.0;
 
 - (void)getAudioFromParse
 {
+    [self.project fetchIfNeeded];
+    
     NSArray *loopDictionaries = self.project[@"loops"];
     
     self.loopObjects = [[NSMutableArray alloc] init];
@@ -431,16 +439,24 @@ const double SECONDS_PER_MIN = 60.0;
 
 - (void)loadFiles{
     _rawSoundData = [[NSMutableArray alloc] init];
+    
     for (PFObject* object in self.loopObjects) {
-        [[object objectForKey:@"file"] getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            NSLog(@"adding2");
-            [self.rawSoundData addObject:data];
+        [self.rawSoundData addObject:[[object objectForKey:@"file"] getData]];
             NSLog(@"finadding2");
-        }];
     }
+    [self prepareForPlay];
+    
+    [self endLoadingAnimation];
+    
     _playButton.enabled = YES;
     _recordButton.enabled = YES;
     _loopButton.enabled = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.view bringSubviewToFront:self.indicator];
 }
 
 - (void)viewDidLayoutSubviews
@@ -482,6 +498,29 @@ const double SECONDS_PER_MIN = 60.0;
     cell.volumeSlider.tag = indexPath.row;
     
     return cell;
+}
+
+- (void)beginLoadingAnimation
+{
+    CGRect indicatorFrame = CGRectMake((self.view.frame.size.width - INDICATOR_SIDE_LENGTH)/2,
+                                       (self.view.frame.size.width - INDICATOR_SIDE_LENGTH)/2,
+                                       INDICATOR_SIDE_LENGTH,
+                                       INDICATOR_SIDE_LENGTH);
+    
+    self.indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:
+                      UIActivityIndicatorViewStyleWhiteLarge];
+    
+    self.indicator.frame = indicatorFrame;
+    
+    [self.view addSubview:self.indicator];
+    [self.indicator startAnimating];
+}
+
+- (void)endLoadingAnimation
+{
+    [self.indicator stopAnimating];
+    [self.indicator removeFromSuperview];
+    self.indicator = nil;
 }
 
 
