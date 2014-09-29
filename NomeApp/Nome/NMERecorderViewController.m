@@ -381,9 +381,8 @@ const double INDICATOR_SIDE_LENGTH = 20;
     [super viewDidLoad];
     [self beginLoadingAnimation];
     
-    // Do any additional setup after loading the view.
-    self.projectNameLabel = self.project[@"name"];
-
+    [self.navigationItem setTitle:self.project[@"projectName"]];
+    
     [self setToPlayThroughSpeakers];
     
     _playButton.enabled = NO;
