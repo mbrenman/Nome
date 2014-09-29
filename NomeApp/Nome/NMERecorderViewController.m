@@ -58,6 +58,8 @@ const double INDICATOR_SIDE_LENGTH = 20;
 //State
 @property (nonatomic) state currentState;
 
+@property (nonatomic,strong) UIView *blockerView;
+
 @end
 
 @implementation NMERecorderViewController
@@ -457,6 +459,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
 {
     [super viewDidAppear:animated];
     [self.view bringSubviewToFront:self.indicator];
+    [self.view bringSubviewToFront:self.blockerView];
 }
 
 - (void)viewDidLayoutSubviews
@@ -502,6 +505,12 @@ const double INDICATOR_SIDE_LENGTH = 20;
 
 - (void)beginLoadingAnimation
 {
+    CGRect fullscreen = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    
+    self.blockerView = [[UIView alloc] initWithFrame:fullscreen];
+    self.blockerView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:self.blockerView];
+    
     CGRect indicatorFrame = CGRectMake((self.view.frame.size.width - INDICATOR_SIDE_LENGTH)/2,
                                        (self.view.frame.size.width - INDICATOR_SIDE_LENGTH)/2,
                                        INDICATOR_SIDE_LENGTH,
@@ -518,6 +527,8 @@ const double INDICATOR_SIDE_LENGTH = 20;
 
 - (void)endLoadingAnimation
 {
+    [self.blockerView removeFromSuperview];
+    self.blockerView = nil;
     [self.indicator stopAnimating];
     [self.indicator removeFromSuperview];
     self.indicator = nil;
