@@ -381,6 +381,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     [super viewDidLoad];
     [self beginLoadingAnimation];
     
+    
     [self.navigationItem setTitle:self.project[@"projectName"]];
     
     [self setToPlayThroughSpeakers];
@@ -598,7 +599,9 @@ const double INDICATOR_SIDE_LENGTH = 20;
 
     NSString *claveURLString = [[calvUrl filePathURL] description];
     NSString *otherURLString = [[[player url] filePathURL] description];
-
+    
+    //claveHit ends with every beat, so only end when the actual recording ends
+    //TODO: If we don't have any loops, we never enter the default state again
     if (![claveURLString isEqualToString:otherURLString]){
         self.currentState = defaultState;
     }
