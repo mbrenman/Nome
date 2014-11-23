@@ -574,23 +574,6 @@ const double INDICATOR_SIDE_LENGTH = 20;
     }
 }
 
-
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    self.clickedObject = [self.project objectAtIndex:indexPath.row];
-//    [self performSegueWithIdentifier:@"projectsToProject" sender:self];
-//}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
- 
-*/
 #pragma mark - Audio Delegate Methods
 -(void)audioPlayerDidFinishPlaying:
 (AVAudioPlayer *)player successfully:(BOOL)flag
@@ -607,15 +590,13 @@ const double INDICATOR_SIDE_LENGTH = 20;
     }
 }
 
--(void)audioPlayerDecodeErrorDidOccur:
-(AVAudioPlayer *)player
+-(void)audioPlayerDecodeErrorDidOccur: (AVAudioPlayer *)player
                                 error:(NSError *)error
 {
     NSLog(@"Decode Error occurred");
 }
 
--(void)audioRecorderDidFinishRecording:
-(AVAudioRecorder *)recorder
+-(void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder
                           successfully:(BOOL)flag
 {
     NSString *url = [[NSString alloc] initWithString:[_audioRecorder.url absoluteString]];
@@ -722,22 +703,5 @@ const double INDICATOR_SIDE_LENGTH = 20;
     }
     return _metronomeArray;
 }
-
-
-//- (void)playSoundsAndLoop:(BOOL) loop atTime:(NSTimeInterval) now
-//{
-//    if ([_playerArray count] > 0){
-//        //        NSTimeInterval shortStartDelay = 0.05;            // seconds
-//        //        NSTimeInterval now = [[_playerArray firstObject] deviceCurrentTime];
-//
-//        for (AVAudioPlayer *player in _playerArray){
-//            if (loop){
-//                [player setNumberOfLoops:-1];
-//            }
-//            [player playAtTime: now];
-//
-//        }
-//    }
-//}
 
 @end
