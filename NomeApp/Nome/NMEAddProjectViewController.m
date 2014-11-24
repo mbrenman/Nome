@@ -56,7 +56,7 @@ typedef enum : NSUInteger {
         projectObject[@"projectName"] = projectName;
         projectObject[@"collaborators"] = @[[[PFUser currentUser] username]];
         projectObject[@"bpm"] = @([bpm integerValue]);
-        projectObject[@"totalBeats"] = @([totalBeats integerValue]);
+        projectObject[@"totalBeats"] = @([totalBeats integerValue] * [beatsPerMeasure integerValue]);
         projectObject[@"beatsPerMeasure"] = @([beatsPerMeasure integerValue]);
         projectObject[@"loops"] = loops;
         [projectObject saveInBackground];

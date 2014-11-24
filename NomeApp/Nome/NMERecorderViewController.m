@@ -690,8 +690,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
 }
 
 -(void)audioRecorderEncodeErrorDidOccur:
-(AVAudioRecorder *)recorder
-                                  error:(NSError *)error
+(AVAudioRecorder *)recorder error:(NSError *)error
 {
     NSLog(@"Encode Error occurred");
 }
