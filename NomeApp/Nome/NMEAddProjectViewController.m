@@ -22,58 +22,26 @@ typedef enum : NSUInteger {
 @property (strong, nonatomic) IBOutlet UITextField *projectNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *bpmTextField;
 @property (strong, nonatomic) IBOutlet UITextField *totalBeatsTextField;
+@property (strong, nonatomic) IBOutlet UITextField *beatsPerMeasureTextField;
 @property (strong, nonatomic) UITapGestureRecognizer* tapRecognizer;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
 @implementation NMEAddProjectViewController
-//- (IBAction)addCollaboratorButtonPressed:(id)sender {
-//
-//    NSString *toAdd =self.collaboratorsTextField.text;
-//    if (![toAdd isEqualToString:@""]) {
-//        [self.collaboratorsArray addObject:toAdd];
-//    }
-//    
-//    
-//    
-//    NSString *total = [[NSString alloc]init];
-//    for (NSString *string in self.collaboratorsArray) {
-//        total = [total stringByAppendingString:string];
-//        total = [total stringByAppendingString:@" "];
-//    }
-//    self.collaboratorsLabel.text = total;
-//    self.collaboratorsTextField.text = @"";
-//
-//    [self tapped];
-//}
-//- (IBAction)addTagPressed:(id)sender {
-//    NSString *toAdd =self.tagsTextField.text;
-//    if (![toAdd isEqualToString:@""]) {
-//        [self.tagsArray addObject:toAdd];
-//    }
-//    
-//    NSString *total = [[NSString alloc]init];
-//    for (NSString *string in self.tagsArray) {
-//        total = [total stringByAppendingString:string];
-//        total = [total stringByAppendingString:@" "];
-//    }
-//    self.tagsLabel.text = total;
-//    self.tagsTextField.text = @"";
-//    
-//    [self tapped];
-//}
 
 - (IBAction)finalProjectTapped:(id)sender {
     NSLog(@"FINALIZE");
     NSString *projectName = self.projectNameTextField.text;
     NSString *bpm = self.bpmTextField.text;
     NSString *totalBeats = self.totalBeatsTextField.text;
+    NSString *beatsPerMeasure = self.beatsPerMeasureTextField.text;
     NSArray* loops = [[NSArray alloc] init];
     
     if ([projectName isEqualToString:@""] ||
-        [bpm isEqualToString:@""] ||
-         [totalBeats isEqualToString:@""]) {
+        [bpm isEqualToString:@""]         ||
+        [totalBeats isEqualToString:@""]  ||
+        [totalBeats isEqualToString:@""])   {
         
         //Also we need to make sure that the bpm and totalbeats are integers
         UIAlertView *badInfo = [[UIAlertView alloc]
@@ -89,6 +57,7 @@ typedef enum : NSUInteger {
         projectObject[@"collaborators"] = @[[[PFUser currentUser] username]];
         projectObject[@"bpm"] = @([bpm integerValue]);
         projectObject[@"totalBeats"] = @([totalBeats integerValue]);
+        projectObject[@"beatsPerMeasure"] = @([beatsPerMeasure integerValue]);
         projectObject[@"loops"] = loops;
         [projectObject saveInBackground];
         
