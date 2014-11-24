@@ -156,10 +156,18 @@ const double INDICATOR_SIDE_LENGTH = 20;
 }
 
 - (void)enterDefaultState{
+    NSArray *loops = self.project[@"loops"];
+    
     _stopButton.enabled = NO;
-    _playButton.enabled = YES;
     _recordButton.enabled = YES;
-    _loopButton.enabled  = YES;
+    
+    if ([loops count] > 0){
+        _playButton.enabled = YES;
+        _loopButton.enabled  = YES;
+    } else {
+        _playButton.enabled = NO;
+        _loopButton.enabled  = NO;
+    }
     
     //Stop all music from playing
     for (AVAudioPlayer *player in self.playerArray){
@@ -381,7 +389,6 @@ const double INDICATOR_SIDE_LENGTH = 20;
     [super viewDidLoad];
     [self beginLoadingAnimation];
     
-    
     [self.navigationItem setTitle:self.project[@"projectName"]];
     
     [self setToPlayThroughSpeakers];
@@ -450,9 +457,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     
     [self endLoadingAnimation];
     
-    _playButton.enabled = YES;
-    _recordButton.enabled = YES;
-    _loopButton.enabled = YES;
+    self.currentState = defaultState;
 }
 
 - (void)viewDidAppear:(BOOL)animated
