@@ -161,7 +161,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     _stopButton.enabled = NO;
     _recordButton.enabled = YES;
     
-    if ([loops count] > 0){
+    if ([loops count] > 0 || [_urlArray count] > 0){
         _playButton.enabled = YES;
         _loopButton.enabled  = YES;
     } else {
@@ -209,7 +209,9 @@ const double INDICATOR_SIDE_LENGTH = 20;
     double beatLen = SECONDS_PER_MIN/((double)self.bpm);
     [self.metronomeArray removeAllObjects];
     
-    for (int i=0; i<=(self.numBeats + 4); i++) {
+    NSInteger beatsPerMeasure = [self.project[@"beatsPerMeasure"] intValue];
+    
+    for (int i=0; i<=(self.numBeats + beatsPerMeasure); i++) {
         
         NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
         AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
@@ -220,7 +222,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
         [self.metronomeArray addObject:player];
         [player playAtTime:now + ((i + 1) * beatLen)];
     }
-    return now + 5*beatLen;
+    return now + (beatsPerMeasure + 1)*beatLen;
 }
 
 - (void)prepareForPlay
