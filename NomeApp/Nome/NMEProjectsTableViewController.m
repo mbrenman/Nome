@@ -90,6 +90,11 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSString *myUsername = [[PFUser currentUser] valueForKey:@"username"];
         PFObject *projectObject = [self.projects objectAtIndex:indexPath.row];
+
+        [self.projects removeObject:projectObject];
+        
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        
         NSMutableArray *collaborators = projectObject[@"collaborators"];
         
         if (collaborators.count == 1) {
@@ -109,19 +114,12 @@
                 }
             }
             
-            [projectObject deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [self.projects removeObject:projectObject];
-                [self.tableView reloadData];
-                [self getProjectNames];
-            }];
+            [projectObject deleteInBackground];
             
          } else {
             for (NSString *collaborator in collaborators) {
                 if ([collaborator isEqualToString:myUsername]) {
                     [collaborators removeObject:collaborator];
-                    [projectObject saveInBackground];
-                    [self.projects removeObject:projectObject];
-                    [self.tableView reloadData];
                     break;
                 }
             }
@@ -149,10 +147,6 @@
     cell.projectNameLabel.text = currentProject[@"projectName"];
     cell.projectNameLabel.textColor = [UIColor colorWithWhite:.95 alpha:1.];
     cell.projectNameLabel.font = [UIFont fontWithName:@"Avenir" size:28];
-    
-//    cell.projectNameLabel.textColor = [UIColor colorWithHue:.03 saturation:.64 brightness:.99 alpha:1.];
-//    cell.projectNameLabel.textColor = [UIColor colorWithHue:.49 saturation:.22 brightness:.95 alpha:1.];
-//    cell.projectNameLabel.textColor = [UIColor colorWithHue:.03 saturation:.64 brightness:.99 alpha:1.];
     
     return cell;
 }

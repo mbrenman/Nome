@@ -571,14 +571,12 @@ const double INDICATOR_SIDE_LENGTH = 20;
         [self.loopObjects removeObjectAtIndex:row];
         [self.rawSoundData removeObjectAtIndex:row];
 
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        
         NSLog(@"%@",[self.project valueForKey:@"loops"] );
         
         self.project[@"loops"] = self.loopObjects;
-        [self.project saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                [self.tableView reloadData];
-            }
-        }];
+        [self.project saveInBackground];
     }
 }
 
