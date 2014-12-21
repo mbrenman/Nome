@@ -23,13 +23,11 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
 - (IBAction)addButtonPressed:(id)sender {
+    //Segue to New Project Screen (NMEAddProjectViewController)
     [self performSegueWithIdentifier:@"projectListToAddProject" sender:self];
 }
 
@@ -46,16 +44,24 @@
 
 - (void)getProjectNames
 {
+    //Find all projects
     PFQuery *query = [PFQuery queryWithClassName:@"projectObject"];
+    
+    //Current User's username
     NSString *username = [[PFUser currentUser] username];
+    
+    //Only find their projects
     [query whereKey:@"collaborators" equalTo:username];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
+        //Initially unsorted projects
         NSMutableArray *unsorted = [[NSMutableArray alloc] initWithArray:objects];
         
+        //Sort by project name
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"projectName" ascending:YES];
-        
         self.projects = [[unsorted sortedArrayUsingDescriptors:@[sortDescriptor]] mutableCopy];
         
+        //Refresh the table with the new data
         [self.tableView reloadData];
     }];
 }
@@ -81,48 +87,67 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Find which project was clicked and enter that project's detail page
     self.clickedObject = [self.projects objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"projectsToProject" sender:self];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    //Remove a project
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //Find username and project to delete
         NSString *myUsername = [[PFUser currentUser] valueForKey:@"username"];
         PFObject *projectObject = [self.projects objectAtIndex:indexPath.row];
 
+        //Remove project from local list
         [self.projects removeObject:projectObject];
         
+        //Animate deletion of the project
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         
+        //Find the collaborators on the project
         NSMutableArray *collaborators = projectObject[@"collaborators"];
         
+        //Fully delete the project if there will be nobody who can see it
+        //Otherwise just remove the current user
         if (collaborators.count == 1) {
             
             NSArray *loopDictionaries = projectObject[@"loops"];
             
+            //Delete all loops that the project has
             for (int i = 0; i < loopDictionaries.count; i++) {
                 PFObject *object = [loopDictionaries objectAtIndex:i];
                 PFObject *objectPointer = object[@"id"];
                 
+                //Make sure that it exists
                 if ([objectPointer objectId]){
+                    
+                    //Find every loop object in this project
                     PFQuery *query = [PFQuery queryWithClassName:@"loopObject"];
                     [query whereKey:@"objectId" equalTo:[objectPointer objectId]];
+                    
+                    //Delete the first one and repeat (This can almost definitely
+                    //be done way more elegantly and without a for loop)
                     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error) {
                         [object deleteInBackground];
                     }];
                 }
             }
             
+            //Delete the project container
             [projectObject deleteInBackground];
             
          } else {
             for (NSString *collaborator in collaborators) {
+                //Remove current user from list of users that own this project
                 if ([collaborator isEqualToString:myUsername]) {
                     [collaborators removeObject:collaborator];
                     break;
                 }
             }
+             
+            //Make sure the changes are reflected online
             [projectObject saveInBackground];
         }
     }
@@ -136,8 +161,10 @@
         cell = [[NMEProjectsTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"projectsTableCell"];
     }
     
+    //Sync each cell with a project
     PFObject *currentProject = [self.projects objectAtIndex:indexPath.row];
    
+    //Set information and color on the cell
     cell.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
     
     cell.secondaryLabel.text = [NSString stringWithFormat:@"%u BPM", [[currentProject[@"bpm"] description] intValue]];
@@ -160,6 +187,7 @@
     // Pass the selected object to the new view controller.
     
     if ([[segue destinationViewController] isKindOfClass:[NMERecorderViewController class]]) {
+        //Recorder needs to know which project to use
         [segue.destinationViewController setProject:self.clickedObject];
     }
 }
