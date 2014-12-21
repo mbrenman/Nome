@@ -31,13 +31,15 @@ typedef enum : NSUInteger {
 @implementation NMEAddProjectViewController
 
 - (IBAction)finalProjectTapped:(id)sender {
-    NSLog(@"FINALIZE");
+    
+    //Get all of the info that was typed in
     NSString *projectName = self.projectNameTextField.text;
     NSString *bpm = self.bpmTextField.text;
     NSString *totalBeats = self.totalBeatsTextField.text;
     NSString *beatsPerMeasure = self.beatsPerMeasureTextField.text;
     NSArray* loops = [[NSArray alloc] init];
     
+    //Check that user entered information for every field
     if ([projectName isEqualToString:@""] ||
         [bpm isEqualToString:@""]         ||
         [totalBeats isEqualToString:@""]  ||
@@ -52,15 +54,22 @@ typedef enum : NSUInteger {
                                 otherButtonTitles: nil];
         [badInfo show];
     } else {
+        
+        //Create a new project
         PFObject *projectObject = [[PFObject alloc] initWithClassName:@"projectObject"];
+        
+        //Set new project's information
         projectObject[@"projectName"] = projectName;
         projectObject[@"collaborators"] = @[[[PFUser currentUser] username]];
         projectObject[@"bpm"] = @([bpm integerValue]);
         projectObject[@"totalBeats"] = @([totalBeats integerValue] * [beatsPerMeasure integerValue]);
         projectObject[@"beatsPerMeasure"] = @([beatsPerMeasure integerValue]);
         projectObject[@"loops"] = loops;
+        
+        //Save the new project
         [projectObject saveInBackground];
         
+        //Go back to project listing page
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -68,20 +77,14 @@ typedef enum : NSUInteger {
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-//    self.inUseTextField = textField;
-    NSLog(@"began");
     self.tapRecognizer.enabled = YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    NSLog(@"ended");
     self.tapRecognizer.enabled = NO;
 }
 
@@ -98,10 +101,12 @@ typedef enum : NSUInteger {
 {
     [super viewDidLoad];
     
+    //To clear keyboard when tapping to close
     self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
     [self.view addGestureRecognizer:self.tapRecognizer];
     self.tapRecognizer.enabled = NO;
     
+    //Set up fields
     [self.projectNameTextField setDelegate:self];
     [self.projectNameTextField setTag:projectName];
     
@@ -112,8 +117,6 @@ typedef enum : NSUInteger {
     [self.totalBeatsTextField setTag:totalBeats];
     
     self.view.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
-
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,16 +130,5 @@ typedef enum : NSUInteger {
     [textField resignFirstResponder];
     return YES;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
