@@ -22,14 +22,6 @@
     return (NMEAppDelegate *)([UIApplication sharedApplication].delegate);
 }
 
-//- (NMEDataManager *)dataManager{
-//    if (!_dataManager) {
-//        _dataManager = [[NMEDataManager alloc] init];
-//    }
-//    return _dataManager;
-//}
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //Setting up Parse
@@ -43,10 +35,6 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-//    if ([[Venmo sharedInstance] handleOpenURL:url]) {
-//        return YES;
-//    }
-    // You can add your app-specific url handling code here if needed
     return NO;
 }
 							

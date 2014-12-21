@@ -58,12 +58,14 @@ const double INDICATOR_SIDE_LENGTH = 20;
 //State
 @property (nonatomic) state currentState;
 
+//For loading icon and blocking clicks
 @property (nonatomic,strong) UIView *blockerView;
 
 @end
 
 @implementation NMERecorderViewController
 
+//KVO for button fading
 - (void)setCurrentState:(state)currentState{
     _currentState = currentState;
     switch (currentState) {
@@ -90,12 +92,11 @@ const double INDICATOR_SIDE_LENGTH = 20;
     _recordButton.enabled  = NO;
     _loopButton.enabled  = NO;
     
-    if (!_audioRecorder){
+    if (!_audioRecorder) {
         //Remake the recorder for a different file url
         _audioRecorder = [self newAudioRecorderWithFileName:[[NSString stringWithFormat:@"%d", _count++] stringByAppendingString:@".caf"]];
     }
-    if (!_audioRecorder.recording)
-    {
+    if (!_audioRecorder.recording) {
         [_audioRecorder setDelegate:self];
         
         //Prepare to play and record
@@ -128,10 +129,12 @@ const double INDICATOR_SIDE_LENGTH = 20;
     AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
     [player prepareToPlay];
     NSTimeInterval now = [player deviceCurrentTime];
+    
     [self prepareForPlay];
 
     now = [self createMetronome:now];
 
+    //Play all loops
     for (AVAudioPlayer *player in _playerArray){
         [player playAtTime: now];
     }
@@ -143,12 +146,14 @@ const double INDICATOR_SIDE_LENGTH = 20;
     _recordButton.enabled = NO;
     _loopButton.enabled = NO;
     
+    //Create metronome
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
     AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
     NSTimeInterval now = [player deviceCurrentTime];
 
     [self prepareForPlay];
     
+    //Play all loops until stopped
     for (AVAudioPlayer *player in _playerArray){
         [player setNumberOfLoops:-1];
         [player playAtTime: now];
@@ -198,21 +203,28 @@ const double INDICATOR_SIDE_LENGTH = 20;
 }
 
 - (IBAction)addCollaboratorClick:(id)sender {
+    //Create popup to prompt username input
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"New Bandmate" message:@"Who's joining the team?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
     av.alertViewStyle = UIAlertViewStylePlainTextInput;
-    //    [av textFieldAtIndex:0].delegate = self;
+    
+    //Show the prompt
     [av show];
 }
 
 - (NSTimeInterval)createMetronome:(NSTimeInterval) now
 {
+    //Find length of each beat
     double beatLen = SECONDS_PER_MIN/((double)self.bpm);
+    
+    //Clear current metronomes
     [self.metronomeArray removeAllObjects];
     
     NSInteger beatsPerMeasure = [self.project[@"beatsPerMeasure"] intValue];
     
+    //Create lead-in clicks and a click for all beats
+    //TODO: rename beatsPerMeasure to totalBeats, since it is misleading now
     for (int i=0; i<=(self.numBeats + beatsPerMeasure); i++) {
-        
+        //Create click sound
         NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"claveHit" ofType:@"caf"]];
         AVAudioPlayer *player = [self newAudioPlayerWithURL: url];
         
@@ -220,8 +232,12 @@ const double INDICATOR_SIDE_LENGTH = 20;
         [player setVolume:.5f];
         
         [self.metronomeArray addObject:player];
+        
+        //Play when it should be played (calculated for each beat)
         [player playAtTime:now + ((i + 1) * beatLen)];
     }
+    
+    //Return time after the count in (when the loops start)
     return now + (beatsPerMeasure + 1)*beatLen;
 }
 
@@ -233,20 +249,22 @@ const double INDICATOR_SIDE_LENGTH = 20;
     for (int i = 0; i < self.rawSoundData.count; i++) {
         NSData *data = [self.rawSoundData objectAtIndex:i];
 
+        //Create audio players as needed
         AVAudioPlayer *player = [self newAudioPlayerWithData:data];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
         
         NMERecorderTableViewCell *cell = (NMERecorderTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         
+        //Set volume based on the associated slider
         player.volume = cell.volumeSlider.value;
         
         [player prepareToPlay];
         
-        NSLog(@"adding5");
+        //Add object to array of to-be-played objects
         [_playerArray addObject:player];
-        NSLog(@"finadding5");
     }
 }
+
 - (IBAction)volumeValueChanged:(UISlider *)sender {
     [[self.playerArray objectAtIndex:sender.tag] setVolume:sender.value];
 }
@@ -272,17 +290,24 @@ const double INDICATOR_SIDE_LENGTH = 20;
     success = [session setCategory:AVAudioSessionCategoryPlayAndRecord
                              error:&error];
     
-    if (!success)  NSLog(@"AVAudioSession error setting category:%@",error);
+    if (!success) {
+        NSLog(@"AVAudioSession error setting category:%@",error);
+    }
     
     //set the audioSession override
     success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
                                          error:&error];
-    if (!success)  NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+    if (!success) {
+        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+    }
     
     //activate the audio session
     success = [session setActive:YES error:&error];
-    if (!success) NSLog(@"AVAudioSession error activating: %@",error);
-    else NSLog(@"audioSession active");
+    if (!success) {
+        NSLog(@"AVAudioSession error activating: %@",error);
+    } else {
+        NSLog(@"audioSession active");
+    }
 }
 
 - (NSURL *)NSURLfrom:(NSString *)nsstring
@@ -338,8 +363,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
                                       settings:recordSettings
                                       error:&error];
     
-    if (error)
-    {
+    if (error) {
         NSLog(@"error: %@", [error localizedDescription]);
     } else {
         [audioRecorder prepareToRecord];
@@ -350,15 +374,16 @@ const double INDICATOR_SIDE_LENGTH = 20;
 - (AVAudioPlayer *)newAudioPlayerWithURL: (NSURL *)url
 {
     NSError *error;
-        AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc]
+    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc]
                                   initWithContentsOfURL:url
                                   error:&error];
     
     audioPlayer.delegate = self;
     
-    if (error)
+    if (error) {
         NSLog(@"Error: %@", [error localizedDescription]);
-    
+    }
+        
     return audioPlayer;
 }
 
@@ -371,8 +396,9 @@ const double INDICATOR_SIDE_LENGTH = 20;
     
     audioPlayer.delegate = self;
     
-    if (error)
+    if (error) {
         NSLog(@"Error: %@", [error localizedDescription]);
+    }
     
     return audioPlayer;
 }
@@ -380,21 +406,23 @@ const double INDICATOR_SIDE_LENGTH = 20;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Blocks any clicking until data is pulled from Parse
     [self beginLoadingAnimation];
     
     [self.navigationItem setTitle:self.project[@"projectName"]];
     
+    //Do we want this? Users with headphones should be able to use them
+    //Changing may mess up playing while recording
     [self setToPlayThroughSpeakers];
     
+    //Disable buttons initially
     _playButton.enabled = NO;
     _stopButton.enabled = NO;
     _recordButton.enabled = NO;
@@ -409,11 +437,10 @@ const double INDICATOR_SIDE_LENGTH = 20;
     _count = 1; //For initial .caf file
     _urlArray = [[NSMutableArray alloc] init];
     _playerArray = [[NSMutableArray alloc] init];
-    //Pull username and display it
     
-    NSLog(@"REC DURATION");
     [self setupRecordingDuration];
     
+    //Set up initial recorder
     _audioRecorder = [self newAudioRecorderWithFileName:@"0.caf"];
 }
 
@@ -424,7 +451,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     NSArray *loopDictionaries = self.project[@"loops"];
     
     self.loopObjects = [[NSMutableArray alloc] init];
-   
+    
     for (PFObject* object in loopDictionaries) {
         [self.loopObjects addObject:@" "];
     }
@@ -440,10 +467,11 @@ const double INDICATOR_SIDE_LENGTH = 20;
                 [self.loopObjects setObject:object atIndexedSubscript:i];
             }];
             [self.tableView reloadData];
-            NSLog(@"got shit");
         }
     }
     
+    //This should be able to be done more elegantly
+    //Don't rely un async calls to finish before this is called
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self loadFiles];
     });
@@ -454,7 +482,6 @@ const double INDICATOR_SIDE_LENGTH = 20;
     
     for (PFObject* object in self.loopObjects) {
         [self.rawSoundData addObject:[[object objectForKey:@"file"] getData]];
-            NSLog(@"finadding2");
     }
     [self prepareForPlay];
     
@@ -515,10 +542,12 @@ const double INDICATOR_SIDE_LENGTH = 20;
 {
     CGRect fullscreen = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
     
+    //Cover the screen with transparent screen (no clicks)
     self.blockerView = [[UIView alloc] initWithFrame:fullscreen];
     self.blockerView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.blockerView];
     
+    //Create loading icon
     CGRect indicatorFrame = CGRectMake((self.view.frame.size.width - INDICATOR_SIDE_LENGTH)/2,
                                        (self.view.frame.size.width - INDICATOR_SIDE_LENGTH)/2,
                                        INDICATOR_SIDE_LENGTH,
@@ -529,6 +558,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     
     self.indicator.frame = indicatorFrame;
     
+    //Add and start the loading icon
     [self.view addSubview:self.indicator];
     [self.indicator startAnimating];
 }
@@ -553,12 +583,11 @@ const double INDICATOR_SIDE_LENGTH = 20;
 {
     // Return the number of rows in the section.'
     NSMutableArray *loops = self.project[@"loops"];
-//    NSLog(@"COUNT! %u",[loops count]);
-
     return [loops count];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Don't allow users to delete or edit when recording or playing
     if (self.currentState == defaultState) {
         return YES;
     }
@@ -568,13 +597,17 @@ const double INDICATOR_SIDE_LENGTH = 20;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) { 
         NSInteger row = indexPath.row;
+        
+        //Delete files
         [self.loopObjects removeObjectAtIndex:row];
         [self.rawSoundData removeObjectAtIndex:row];
 
+        //Remove with animation (disallows double click)
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         
         NSLog(@"%@",[self.project valueForKey:@"loops"] );
         
+        //Remove on Parse as well
         self.project[@"loops"] = self.loopObjects;
         [self.project saveInBackground];
     }
@@ -590,6 +623,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     NSString *otherURLString = [[[player url] filePathURL] description];
     
     //claveHit ends with every beat, so only end when the actual recording ends
+#warning see TODO
     //TODO: If we don't have any loops, we never enter the default state again
     if (![claveURLString isEqualToString:otherURLString]){
         self.currentState = defaultState;
@@ -606,10 +640,10 @@ const double INDICATOR_SIDE_LENGTH = 20;
                           successfully:(BOOL)flag
 {
     NSString *url = [[NSString alloc] initWithString:[_audioRecorder.url absoluteString]];
-    NSLog(@"adding3");
+    //Save the object
     [_urlArray addObject:url];
-    NSLog(@"finadding3");
 
+    //Ask if user wants to keep it
     [self showAlert];
 }
 
@@ -629,25 +663,34 @@ const double INDICATOR_SIDE_LENGTH = 20;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if ([[alertView title]  isEqual: @"New Bandmate"]){
-        //Add username to
+        //Add username to project
         if (buttonIndex == 0){
+            //Clicked cancel
             NSLog(@"no new bandmate");
         } else {
+
             NSString *bandmate = [[alertView textFieldAtIndex:0] text];
+            
+            //Make sure the bandmate is not an empty string
             if (bandmate.length > 0){
+            
                 NSMutableArray *collabs = _project[@"collaborators"];
+                
+                //Only add the bandmate if they're not in the project
                 if (![collabs containsObject:bandmate]){
                     [collabs addObject:bandmate];
                     [_project saveInBackground];
                 } else {
                     NSLog(@"Bandmate already in project");
                 }
+                
             } else {
                 NSLog(@"empty bandmate");
             }
         }
     } else {
         if (buttonIndex == 1){
+            //User wants to save and name their loop
             NSString *loopTitle = [[alertView textFieldAtIndex:0] text];
             NSString *loopLocalFile = [_audioRecorder.url absoluteString];
             NSURL *url = [self NSURLfrom:loopLocalFile];
