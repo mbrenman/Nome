@@ -210,6 +210,18 @@ const double INDICATOR_SIDE_LENGTH = 20;
     [av show];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.project fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        self.project = object;
+        
+        NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
+        self.project[@"loops"] = loops;
+        
+        [self.project saveInBackground];
+    }];
+}
+
 - (NSTimeInterval)createMetronome:(NSTimeInterval) now
 {
     //Find length of each beat
@@ -266,6 +278,12 @@ const double INDICATOR_SIDE_LENGTH = 20;
 
 - (IBAction)volumeValueChanged:(UISlider *)sender {
     [[self.playerArray objectAtIndex:sender.tag] setVolume:sender.value];
+    
+    NSArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
+    NSMutableDictionary *loop = [loops objectAtIndex:sender.tag];
+    [loop setObject:@(sender.value) forKey:@"volume"];
+
+    self.project[@"loops"] = loops;
 }
 
 /*
@@ -416,7 +434,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     [self beginLoadingAnimation];
     
     [self.navigationItem setTitle:self.project[@"projectName"]];
-    
+
     //Do we want this? Users with headphones should be able to use them
     //Changing may mess up playing while recording
     [self setToPlayThroughSpeakers];
@@ -476,6 +494,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
     });
 }
 
+
 - (void)loadFiles{
     _rawSoundData = [[NSMutableArray alloc] init];
     
@@ -528,9 +547,11 @@ const double INDICATOR_SIDE_LENGTH = 20;
     
     cell.backgroundColor = [UIColor colorWithWhite:.7 alpha:1.];
     
-#warning set volume from parse data
+    float volume = [[loop objectForKey:@"volume"] floatValue];
+    
     cell.volumeSlider.maximumValue = 1.f;
     cell.volumeSlider.minimumValue = 0.f;
+    cell.volumeSlider.value = volume;
     cell.volumeSlider.backgroundColor = [UIColor colorWithWhite:.3 alpha:1.];
     cell.volumeSlider.tag = indexPath.row;
     
@@ -708,7 +729,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
                 NSMutableArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
                 NSString *username = [[PFUser currentUser] username];
             
-                [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject}];
+                [loops addObject:@{@"name" : loopTitle, @"creator" : username, @"id": loopDataObject, @"volume": @(.5f)}];
             
                 self.loopObjects = loops;
                 self.project[@"loops"] = self.loopObjects;
@@ -722,7 +743,7 @@ const double INDICATOR_SIDE_LENGTH = 20;
                 [self.tableView reloadData];
                 [self.rawSoundData addObject:data];
             }];
-         
+
             _audioRecorder = nil;
             self.currentState = defaultState;
         }
