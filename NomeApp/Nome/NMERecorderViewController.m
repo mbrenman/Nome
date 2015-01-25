@@ -276,14 +276,15 @@ const double INDICATOR_SIDE_LENGTH = 20;
     }
 }
 
-- (IBAction)volumeValueChanged:(UISlider *)sender {
-    [[self.playerArray objectAtIndex:sender.tag] setVolume:sender.value];
+- (IBAction)volumeValueChanged:(UISlider *)sender
+{    
+    NSMutableArray *loops = [[[NSMutableArray alloc] initWithArray:_project[@"loops"]] mutableCopy];
+    NSMutableDictionary *loop = [[loops objectAtIndex:sender.tag] mutableCopy];
     
-    NSArray *loops = [[NSMutableArray alloc] initWithArray:_project[@"loops"]];
-    NSMutableDictionary *loop = [loops objectAtIndex:sender.tag];
     [loop setObject:@(sender.value) forKey:@"volume"];
-
-    self.project[@"loops"] = loops;
+    [loops replaceObjectAtIndex:sender.tag withObject:loop];
+    
+    self.project[@"loops"] = [loops copy];
 }
 
 /*
@@ -734,8 +735,6 @@ const double INDICATOR_SIDE_LENGTH = 20;
                 self.loopObjects = loops;
                 self.project[@"loops"] = self.loopObjects;
             
-                NSLog(@"loop array length %@", _project[@"loops"]);
-
                 [self.project saveInBackground];
                 [loopDataObject saveInBackground];
             
