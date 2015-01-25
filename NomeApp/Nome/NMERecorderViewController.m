@@ -550,11 +550,13 @@ const double INDICATOR_SIDE_LENGTH = 20;
     
     float volume = [[loop objectForKey:@"volume"] floatValue];
     
+    cell.volumeSlider.backgroundColor = [UIColor clearColor];
     cell.volumeSlider.maximumValue = 1.f;
     cell.volumeSlider.minimumValue = 0.f;
     cell.volumeSlider.value = volume;
-    cell.volumeSlider.backgroundColor = [UIColor colorWithWhite:.3 alpha:1.];
     cell.volumeSlider.tag = indexPath.row;
+    cell.volumeSlider.maximumTrackTintColor = [UIColor blackColor];
+    cell.volumeSlider.minimumTrackTintColor = [UIColor colorWithRed:.00 green:.55 blue:.2 alpha:1.f];
     
     return cell;
 }
