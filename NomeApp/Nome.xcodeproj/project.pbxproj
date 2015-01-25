@@ -33,7 +33,6 @@
 		B9859DF219968D13000984E5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B9859DF019968D13000984E5 /* InfoPlist.strings */; };
 		B9859DF419968D13000984E5 /* NomeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859DF319968D13000984E5 /* NomeTests.m */; };
 		B9859E05199692BD000984E5 /* NMEProjectsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E04199692BD000984E5 /* NMEProjectsTableViewController.m */; };
-		B9859E08199696B9000984E5 /* NMEDiscoveryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E07199696B9000984E5 /* NMEDiscoveryTableViewController.m */; };
 		B9859E0E199697B4000984E5 /* NMEAddProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E0D199697B4000984E5 /* NMEAddProjectViewController.m */; };
 		B9859E1219969ABA000984E5 /* NMERecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9859E1119969ABA000984E5 /* NMERecorderViewController.m */; };
 		B9859E1D1996AED1000984E5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E1C1996AED1000984E5 /* AudioToolbox.framework */; };
@@ -50,7 +49,6 @@
 		B9859E38199731F9000984E5 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9859E37199731F9000984E5 /* Parse.framework */; };
 		B9C767A819979F9F006627A1 /* Top_Charts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C767A719979F9F006627A1 /* Top_Charts@2x.png */; };
 		B9C767AA19979FB0006627A1 /* Search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C767A919979FB0006627A1 /* Search@2x.png */; };
-		B9C767AD1997CA41006627A1 /* NMEDiscoverTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9C767AC1997CA41006627A1 /* NMEDiscoverTableCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,8 +97,6 @@
 		B9859DF319968D13000984E5 /* NomeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NomeTests.m; sourceTree = "<group>"; };
 		B9859E03199692BD000984E5 /* NMEProjectsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEProjectsTableViewController.h; sourceTree = "<group>"; };
 		B9859E04199692BD000984E5 /* NMEProjectsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEProjectsTableViewController.m; sourceTree = "<group>"; };
-		B9859E06199696B9000984E5 /* NMEDiscoveryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEDiscoveryTableViewController.h; sourceTree = "<group>"; };
-		B9859E07199696B9000984E5 /* NMEDiscoveryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEDiscoveryTableViewController.m; sourceTree = "<group>"; };
 		B9859E0C199697B4000984E5 /* NMEAddProjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEAddProjectViewController.h; sourceTree = "<group>"; };
 		B9859E0D199697B4000984E5 /* NMEAddProjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEAddProjectViewController.m; sourceTree = "<group>"; };
 		B9859E1019969ABA000984E5 /* NMERecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMERecorderViewController.h; sourceTree = "<group>"; };
@@ -121,8 +117,6 @@
 		B9859E37199731F9000984E5 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		B9C767A719979F9F006627A1 /* Top_Charts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Top_Charts@2x.png"; sourceTree = "<group>"; };
 		B9C767A919979FB0006627A1 /* Search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search@2x.png"; sourceTree = "<group>"; };
-		B9C767AB1997CA41006627A1 /* NMEDiscoverTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NMEDiscoverTableCell.h; sourceTree = "<group>"; };
-		B9C767AC1997CA41006627A1 /* NMEDiscoverTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NMEDiscoverTableCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,7 +285,6 @@
 				B91C4E3819A295A50081B0D7 /* Settings */,
 				B9859E1319969AC2000984E5 /* Recorder */,
 				B9859E0919969751000984E5 /* Projects Table */,
-				B9859E0A19969769000984E5 /* Discovery Table */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -307,17 +300,6 @@
 				B9859E2F1996BDD3000984E5 /* NMEProjectsTableCell.m */,
 			);
 			name = "Projects Table";
-			sourceTree = "<group>";
-		};
-		B9859E0A19969769000984E5 /* Discovery Table */ = {
-			isa = PBXGroup;
-			children = (
-				B9859E06199696B9000984E5 /* NMEDiscoveryTableViewController.h */,
-				B9859E07199696B9000984E5 /* NMEDiscoveryTableViewController.m */,
-				B9C767AB1997CA41006627A1 /* NMEDiscoverTableCell.h */,
-				B9C767AC1997CA41006627A1 /* NMEDiscoverTableCell.m */,
-			);
-			name = "Discovery Table";
 			sourceTree = "<group>";
 		};
 		B9859E1319969AC2000984E5 /* Recorder */ = {
@@ -482,8 +464,6 @@
 				B9859E301996BDD3000984E5 /* NMEProjectsTableCell.m in Sources */,
 				B9859E331996C68C000984E5 /* NMERecorderTableViewCell.m in Sources */,
 				B91C4E3719A2959E0081B0D7 /* NMESettingsViewController.m in Sources */,
-				B9859E08199696B9000984E5 /* NMEDiscoveryTableViewController.m in Sources */,
-				B9C767AD1997CA41006627A1 /* NMEDiscoverTableCell.m in Sources */,
 				B9859E05199692BD000984E5 /* NMEProjectsTableViewController.m in Sources */,
 				AA494DB51996FBF10078D70F /* NMESecrets.m in Sources */,
 				B9859DD919968D13000984E5 /* NMEAppDelegate.m in Sources */,

@@ -10,18 +10,24 @@ typedef enum : NSUInteger {
     projectName,
     collaborators,
     bpm,
-    totalBeats,
+    numMeasures,
     tags,
 } textFields;
 
 #import "NMEAddProjectViewController.h"
 #import "Parse/Parse.h"
 
+const int BPM_MAX = 500;
+const int BEATS_PER_MEASURE_MAX = 20;
+const int NUM_MEASURES_MAX = 40;
+
 @interface NMEAddProjectViewController () <UITextFieldDelegate,UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *projectNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *bpmTextField;
-@property (strong, nonatomic) IBOutlet UITextField *totalBeatsTextField;
+
+@property (weak, nonatomic) IBOutlet UITextField *numMeasuresTextField;
+
 @property (strong, nonatomic) IBOutlet UITextField *beatsPerMeasureTextField;
 @property (strong, nonatomic) UITapGestureRecognizer* tapRecognizer;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -35,20 +41,42 @@ typedef enum : NSUInteger {
     //Get all of the info that was typed in
     NSString *projectName = self.projectNameTextField.text;
     NSString *bpm = self.bpmTextField.text;
-    NSString *totalBeats = self.totalBeatsTextField.text;
+    NSString *numMeasures = self.numMeasuresTextField.text;
     NSString *beatsPerMeasure = self.beatsPerMeasureTextField.text;
     NSArray* loops = [[NSArray alloc] init];
     
     //Check that user entered information for every field
     if ([projectName isEqualToString:@""] ||
         [bpm isEqualToString:@""]         ||
-        [totalBeats isEqualToString:@""]  ||
-        [totalBeats isEqualToString:@""])   {
+        [numMeasures isEqualToString:@""]  ||
+        [beatsPerMeasure isEqualToString:@""])   {
         
-        //Also we need to make sure that the bpm and totalbeats are integers
         UIAlertView *badInfo = [[UIAlertView alloc]
                                 initWithTitle:@"Bad info"
                                 message:@"Please make sure to fill all the fields!"
+                                delegate:self
+                                cancelButtonTitle:@"Dismiss"
+                                otherButtonTitles: nil];
+        [badInfo show];
+    } else if ([bpm integerValue] < 1 ||
+               [numMeasures integerValue] < 1 ||
+               [beatsPerMeasure integerValue] < 1) {
+        
+        //Checking for numbers that are zero or non-numbers
+        UIAlertView *badInfo = [[UIAlertView alloc]
+                                initWithTitle:@"Bad info"
+                                message:@"Make sure the number fields are positive numbers!"
+                                delegate:self
+                                cancelButtonTitle:@"Dismiss"
+                                otherButtonTitles: nil];
+        [badInfo show];
+    } else if ([bpm integerValue] > BPM_MAX ||
+               [numMeasures integerValue] > NUM_MEASURES_MAX ||
+               [beatsPerMeasure integerValue] > BEATS_PER_MEASURE_MAX) {
+        //Checking that numbers are not above limits
+        UIAlertView *badInfo = [[UIAlertView alloc]
+                                initWithTitle:@"Bad info"
+                                message:@"Some of your numbers are too high!"
                                 delegate:self
                                 cancelButtonTitle:@"Dismiss"
                                 otherButtonTitles: nil];
@@ -62,7 +90,7 @@ typedef enum : NSUInteger {
         projectObject[@"projectName"] = projectName;
         projectObject[@"collaborators"] = @[[[PFUser currentUser] username]];
         projectObject[@"bpm"] = @([bpm integerValue]);
-        projectObject[@"totalBeats"] = @([totalBeats integerValue] * [beatsPerMeasure integerValue]);
+        projectObject[@"totalBeats"] = @([numMeasures integerValue] * [beatsPerMeasure integerValue]);
         projectObject[@"beatsPerMeasure"] = @([beatsPerMeasure integerValue]);
         projectObject[@"loops"] = loops;
         
@@ -113,8 +141,8 @@ typedef enum : NSUInteger {
     [self.bpmTextField setDelegate:self];
     [self.bpmTextField setTag:bpm];
     
-    [self.totalBeatsTextField setDelegate:self];
-    [self.totalBeatsTextField setTag:totalBeats];
+    [self.numMeasuresTextField setDelegate:self];
+    [self.numMeasuresTextField setTag:numMeasures];
     
     self.view.backgroundColor = [UIColor colorWithHue:0 saturation:0 brightness:.2 alpha:1.];
 }
