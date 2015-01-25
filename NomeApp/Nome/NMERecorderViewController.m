@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Julian Locke. All rights reserved.
 //
 
-
 typedef enum : NSUInteger {
     playingState,
     loopingPlayState,
@@ -294,12 +293,12 @@ const double INDICATOR_SIDE_LENGTH = 20;
         NSLog(@"AVAudioSession error setting category:%@",error);
     }
     
-    //set the audioSession override
-    success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
-                                         error:&error];
-    if (!success) {
-        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
-    }
+//    //set the audioSession override
+//    success = [session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker
+//                                         error:&error];
+//    if (!success) {
+//        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+//    }
     
     //activate the audio session
     success = [session setActive:YES error:&error];
