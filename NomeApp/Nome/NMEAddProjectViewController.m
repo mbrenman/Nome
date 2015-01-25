@@ -18,16 +18,14 @@ typedef enum : NSUInteger {
 #import "Parse/Parse.h"
 
 const int BPM_MAX = 500;
-const int BEATS_PER_MEASURE_MAX = 20;
-const int NUM_MEASURES_MAX = 40;
+const int BPM_MIN = 30;
+const int MAX_SECONDS = 30;
 
 @interface NMEAddProjectViewController () <UITextFieldDelegate,UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *projectNameTextField;
 @property (strong, nonatomic) IBOutlet UITextField *bpmTextField;
-
 @property (weak, nonatomic) IBOutlet UITextField *numMeasuresTextField;
-
 @property (strong, nonatomic) IBOutlet UITextField *beatsPerMeasureTextField;
 @property (strong, nonatomic) UITapGestureRecognizer* tapRecognizer;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -44,6 +42,8 @@ const int NUM_MEASURES_MAX = 40;
     NSString *numMeasures = self.numMeasuresTextField.text;
     NSString *beatsPerMeasure = self.beatsPerMeasureTextField.text;
     NSArray* loops = [[NSArray alloc] init];
+    
+    int numseconds = (60.0f / [bpm floatValue]) * [beatsPerMeasure integerValue] * [numMeasures integerValue];
     
     //Check that user entered information for every field
     if ([projectName isEqualToString:@""] ||
@@ -70,13 +70,20 @@ const int NUM_MEASURES_MAX = 40;
                                 cancelButtonTitle:@"Dismiss"
                                 otherButtonTitles: nil];
         [badInfo show];
-    } else if ([bpm integerValue] > BPM_MAX ||
-               [numMeasures integerValue] > NUM_MEASURES_MAX ||
-               [beatsPerMeasure integerValue] > BEATS_PER_MEASURE_MAX) {
-        //Checking that numbers are not above limits
+    } else if ([bpm integerValue] > BPM_MAX || [bpm integerValue] < BPM_MIN) {
+        //Checking that BPM in range
         UIAlertView *badInfo = [[UIAlertView alloc]
-                                initWithTitle:@"Bad info"
-                                message:@"Some of your numbers are too high!"
+                                initWithTitle:@"Bad BPM"
+                                message:[NSString stringWithFormat:@"BPM limited to range %d-%d", BPM_MIN, BPM_MAX]
+                                delegate:self
+                                cancelButtonTitle:@"Dismiss"
+                                otherButtonTitles: nil];
+        [badInfo show];
+    } else if (numseconds > MAX_SECONDS) {
+        //Limit rec time to 30 seconds
+        UIAlertView *badInfo = [[UIAlertView alloc]
+                                initWithTitle:@"Too long"
+                                message:[NSString stringWithFormat:@"Recording limited to %d seconds", MAX_SECONDS]
                                 delegate:self
                                 cancelButtonTitle:@"Dismiss"
                                 otherButtonTitles: nil];
